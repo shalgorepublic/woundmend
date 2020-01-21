@@ -4,11 +4,30 @@ import 'package:flutter/material.dart';
 import './email_page.dart';
 
 class PasswordScreen extends StatefulWidget {
+  final Map<String,dynamic> formData;
+  PasswordScreen(this.formData);
   @override
-  _PasswordScreen createState() => _PasswordScreen();
+  _PasswordScreen createState() => _PasswordScreen(formData);
 }
 
 class _PasswordScreen extends State<PasswordScreen> {
+  Map<String,dynamic> _formData;
+  _PasswordScreen(this._formData);
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _password = null;
+  void _submitForm() async {
+    print("helo last name");
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+    _formData = {
+      'firstName':_formData['firstName'],
+      'lastName':_formData['lastName'],
+      'email': _formData['email'],
+      'password' : _password
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,10 +76,13 @@ class _PasswordScreen extends State<PasswordScreen> {
                               .of(context)
                               .backgroundColor ,
                         ) ,
+                  Form(
+                    key: _formKey,
+                    child:
                         Container(
                            // margin: const EdgeInsets.only(right: 30, left: 30),
                             padding: EdgeInsets.only(bottom: 20 , top: 20,left: 30,right: 30) ,
-                            child: TextField(
+                            child: TextFormField(
                               textAlignVertical: TextAlignVertical.center,
                               textAlign: TextAlign.center,
                               decoration: InputDecoration(
@@ -72,8 +94,17 @@ class _PasswordScreen extends State<PasswordScreen> {
                                   filled: true ,
                                   fillColor: Colors.white) ,
                               keyboardType: TextInputType.number ,
+                              validator: (String value) {
+                                if (value.isEmpty || value.length < 6) {
+                                  // ignore: missing_return, missing_return
+                                  return 'Please enter a valid password';
+                                }
+                              },
+                              onSaved: (String value) {
+                                _password = value;
+                              },
 
-                            )) ,
+                            )), ),
                       ] ,
                     )) ,
               ) ,
@@ -117,12 +148,14 @@ class _PasswordScreen extends State<PasswordScreen> {
 
                       ) ,
                       onTap: (){
+                        _submitForm();
+                        if (_formKey.currentState.validate()) {
                         Navigator.push<dynamic>(
                           context,
                           MaterialPageRoute<dynamic>(
-                              builder: (context) => DobScreen()),
+                              builder: (context) => DobScreen(_formData)),
                         );
-                      },
+                      }},
                     )
                   ] ,
                 ) ,

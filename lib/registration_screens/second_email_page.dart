@@ -5,12 +5,30 @@ import './email_page.dart';
 
 
 class SecondEmailPage extends StatefulWidget {
+  final Map<String,dynamic> _formData;
+  SecondEmailPage(this._formData);
   @override
-  _SecondEmailPageState createState() => _SecondEmailPageState();
+  _SecondEmailPageState createState() => _SecondEmailPageState(_formData);
 }
 
 class _SecondEmailPageState extends State<SecondEmailPage> {
-    bool promoflag = false;
+   Map<String,dynamic> _formdata;
+  _SecondEmailPageState(this._formdata);
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _email = null;
+  void _submitForm() async {
+    print("helo last name");
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+    _formdata = {
+      'firstName':_formdata['firstName'],
+      'lastName':_formdata['lastName'],
+      'email': _email
+    };
+  }
+  bool promoflag = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,6 +71,9 @@ class _SecondEmailPageState extends State<SecondEmailPage> {
                           height: 2,
                           color: Theme.of(context).backgroundColor,
                         ),
+                  Form(
+                    key: _formKey,
+                    child:
                         Container(
                             margin: const EdgeInsets.only(right: 30, left: 30),
                             padding: EdgeInsets.only(bottom: 40, top: 20),
@@ -75,7 +96,7 @@ class _SecondEmailPageState extends State<SecondEmailPage> {
                                   }
                                 },
                                 onSaved: (String value) {
-                                  // _formData['email'] = value;
+                                   _email = value;
                                 },
                               ),
                               promoflag ?
@@ -103,7 +124,7 @@ class _SecondEmailPageState extends State<SecondEmailPage> {
                               )):
                                   Container(),
                             ],),
-                            ),
+                            ),),
                       ],
                     )),
               ),
@@ -138,12 +159,15 @@ class _SecondEmailPageState extends State<SecondEmailPage> {
                             color: Colors.white,
                           ),
                           onPressed: () {
-                            Navigator.push<dynamic>(
-                              context,
-                              MaterialPageRoute<dynamic>(
-                                  builder: (context) => PasswordScreen()),
-                            );
-                          },
+                            _submitForm();
+                            if (_formKey.currentState.validate()) {
+                              Navigator.push<dynamic>(
+                                context ,
+                                MaterialPageRoute<dynamic>(
+                                    builder: (context) => PasswordScreen(_formdata)) ,
+                              );
+                            }
+                          }
                         ),
                       ),
                     )

@@ -1,14 +1,35 @@
+import 'package:derm_pro/Profile_screen/profile_screen.dart';
 import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
 import '../registration_screens/signup.dart';
 
 
 class PasswordScreen extends StatefulWidget {
+  final String email;
+  const PasswordScreen(this.email);
+
   @override
-  _PasswordScreen createState() => _PasswordScreen();
+  _PasswordScreen createState() => _PasswordScreen(email);
 }
 
+
 class _PasswordScreen extends State<PasswordScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  Map<String, dynamic> _formData = {
+    'email': null,
+    'password': null,
+  };
+  final String emailName;
+  _PasswordScreen(this.emailName);
+   String _password = null;
+   void _submitForm() async {
+     print("helo password");
+     if (!_formKey.currentState.validate()) {
+       return;
+     }
+     _formKey.currentState.save();
+   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +48,7 @@ class _PasswordScreen extends State<PasswordScreen> {
               ),
             ),
           ),
+
           Container(
             padding: EdgeInsets.all(20),
             decoration: new BoxDecoration(
@@ -52,12 +74,15 @@ class _PasswordScreen extends State<PasswordScreen> {
                   height: 2,
                   color: Theme.of(context).backgroundColor,
                 ),
+              Form(
+                key: _formKey,
+                child:
                 Container(
                     margin: const EdgeInsets.only(right: 10, left: 10),
                     padding: EdgeInsets.only(bottom: 20, top: 20),
                     child: Column(
                       children: <Widget>[
-                        TextField(
+                        TextFormField(
                           textAlignVertical: TextAlignVertical.center,
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
@@ -68,6 +93,15 @@ class _PasswordScreen extends State<PasswordScreen> {
                               filled: true,
                               fillColor: Colors.white),
                           keyboardType: TextInputType.number,
+                          validator: (String value) {
+                            if (value.isEmpty || value.length < 6) {
+                              // ignore: missing_return, missing_return
+                              return 'Please enter a valid password';
+                            }
+                          },
+                          onSaved: (String value) {
+                            _password = value;
+                          },
                         ),
                         GestureDetector(
                           child: Row(
@@ -85,7 +119,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                           ),
                         )
                       ],
-                    )),
+                    )),),
               ],
             )),
           ),
@@ -135,7 +169,15 @@ class _PasswordScreen extends State<PasswordScreen> {
                         ],
                       )),
                   onTap: () {
-                    Navigator.pushReplacementNamed(context, '/profilePage');
+                    _submitForm();
+                    if(_formKey.currentState.validate()) {
+                      Navigator.push<dynamic>(
+                        context ,
+                        MaterialPageRoute<dynamic>(
+                          builder: (context) => ProfileScreen(),) ,
+                      );
+                    }
+                   // Navigator.pushReplacementNamed(context, '/profilePage');
                   },
                 )
               ],

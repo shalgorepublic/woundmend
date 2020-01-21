@@ -3,11 +3,33 @@ import 'package:flutter/material.dart';
 import '../registration_screens/verification_code_screen.dart';
 import './email_page.dart';
 class PhoneScreen extends StatefulWidget {
+  final Map<String,dynamic> formData;
+  PhoneScreen(this.formData);
   @override
-  _PhoneScreen createState() => _PhoneScreen();
+  _PhoneScreen createState() => _PhoneScreen(formData);
 }
 
 class _PhoneScreen extends State<PhoneScreen> {
+  Map<String, dynamic> _formData;
+  _PhoneScreen(this._formData);
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _phoneNumber = null;
+  void _submitForm() async {
+    print("helo phone number");
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+    _formData = {
+      'firstName':_formData['firstName'],
+      'lastName':_formData['lastName'],
+      'email': _formData['email'],
+      'password' : _formData['password'],
+      'dob' :_formData['date'],
+      'phoneNumber': _phoneNumber
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,12 +73,15 @@ class _PhoneScreen extends State<PhoneScreen> {
                           height: 2,
                           color: Theme.of(context).backgroundColor,
                         ),
+                  Form(
+                    key: _formKey,
+                    child:
                         Container(
                            // margin: const EdgeInsets.only(right: 10, left: 10),
                             padding: EdgeInsets.only(bottom: 30, top: 30,left: 30,right: 30),
                             child: Column(
                               children: <Widget>[
-                                TextField(
+                                TextFormField(
                                   textAlignVertical: TextAlignVertical.center,
                                   textAlign: TextAlign.center,
                                   decoration: InputDecoration(
@@ -67,9 +92,18 @@ class _PhoneScreen extends State<PhoneScreen> {
                                       filled: true,
                                       fillColor: Colors.white),
                                   keyboardType: TextInputType.number,
+                                  validator: (String value) {
+                                    if (value.isEmpty || value.length < 11) {
+                                      // ignore: missing_return, missing_return
+                                      return 'Please enter a valid number';
+                                    }
+                                  },
+                                  onSaved: (String value) {
+                                    _phoneNumber = value;
+                                  },
                                 ),
                               ],
-                            )),
+                            )),),
                       ],
                     )),
               ),
@@ -109,11 +143,14 @@ class _PhoneScreen extends State<PhoneScreen> {
 
                         ),
                         onTap: () {
-                          Navigator.push<dynamic>(
-                            context,
-                            MaterialPageRoute<dynamic>(
-                                builder: (context) => VarificationScreen()),
-                          );
+                          _submitForm();
+                          if (_formKey.currentState.validate()) {
+                            Navigator.push<dynamic>(
+                              context ,
+                              MaterialPageRoute<dynamic>(
+                                  builder: (context) => VarificationScreen(_formData)) ,
+                            );
+                          }
                         }
 
                     )

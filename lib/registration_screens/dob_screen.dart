@@ -4,18 +4,37 @@ import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
 import '../registration_screens/phone_number_screen.dart';
 import './email_page.dart';
-import 'dart:async';
 import 'package:intl/intl.dart';
 
 class DobScreen extends StatefulWidget {
+  final Map<String,dynamic> formData;
+  DobScreen(this.formData);
   @override
-  _DobScreen createState() => _DobScreen();
+  _DobScreen createState() => _DobScreen(formData);
 }
 
 class _DobScreen extends State<DobScreen> {
+  Map<String,dynamic> _formData;
+  _DobScreen(this._formData);
   String dateHint = '01 January 2020';
   DateTime selectedDate = DateTime.now();
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  void _submitForm() async {
+    print("helo last name");
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+    _formData = {
+      'firstName':_formData['firstName'],
+      'lastName':_formData['lastName'],
+      'email': _formData['email'],
+      'password' : _formData['password'],
+      'date': dateHint
+    };
+    print(_formData);
+    print('helo');
+  }
   Future<Null> _selectDate(BuildContext context) async {
      DateTime picked = await showDatePicker(
         context: context,
@@ -73,6 +92,9 @@ class _DobScreen extends State<DobScreen> {
                   height: 2,
                   color: Theme.of(context).backgroundColor,
                 ),
+            Form(
+                key: _formKey,
+                child:
                 Container(
                     // margin: const EdgeInsets.only(right: 10, left: 10),
                     padding: EdgeInsets.only(
@@ -134,7 +156,7 @@ class _DobScreen extends State<DobScreen> {
                               ],
                             )),
                       ],
-                    )),
+                    )),),
               ],
             )),
           ),
@@ -171,11 +193,14 @@ class _DobScreen extends State<DobScreen> {
                       ),
                     ),
                     onTap: () {
-                      Navigator.push<dynamic>(
-                        context,
-                        MaterialPageRoute<dynamic>(
-                            builder: (context) => PhoneScreen()),
-                      );
+                      _submitForm();
+                      if (_formKey.currentState.validate()) {
+                        Navigator.push<dynamic>(
+                          context ,
+                          MaterialPageRoute<dynamic>(
+                              builder: (context) => PhoneScreen(_formData)) ,
+                        );
+                      }
                     })
               ],
             ),

@@ -2,14 +2,40 @@ import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
 import 'package:derm_pro/Profile_screen/profile_screen.dart';
 
-
 class VarificationScreen extends StatefulWidget {
+  final Map<String, dynamic> formData;
+
+  VarificationScreen(this.formData);
+
   @override
-  _VarificationScreen createState() => _VarificationScreen();
+  _VarificationScreen createState() => _VarificationScreen(formData);
 }
 
 class _VarificationScreen extends State<VarificationScreen> {
+  Map<String, dynamic> _formData;
+
+  _VarificationScreen(this._formData);
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _verifycode = null;
+
+  void _submitForm() async {
+    print("helo verifiy code");
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+    _formData = {
+      'firstName': _formData['firstName'],
+      'lastName': _formData['lastName'],
+      'email': _formData['email'],
+      'password': _formData['password'],
+      'dob': _formData['dob'],
+      'phoneNumber': _formData['phoneNumber'],
+      'verifyCode': _verifycode
+    };
+    print(_formData);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +65,10 @@ class _VarificationScreen extends State<VarificationScreen> {
                 child: Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.only(top: 20, bottom: 10,),
+                  padding: EdgeInsets.only(
+                    top: 20,
+                    bottom: 10,
+                  ),
                   child: Text(
                     "ENTER VERIFICATION CODE",
                     textAlign: TextAlign.center,
@@ -54,24 +83,38 @@ class _VarificationScreen extends State<VarificationScreen> {
                   height: 2,
                   color: Theme.of(context).backgroundColor,
                 ),
-                Container(
-                    padding: EdgeInsets.only(bottom: 30, top: 30,right: 30,left: 30),
-                    child: TextField(
-                      textAlignVertical: TextAlignVertical.center,
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue)),
-                          labelText: 'Verification Code',
-                          labelStyle: TextStyle(fontSize: 18),
-                          filled: true,
-                          fillColor: Colors.white),
-                      keyboardType: TextInputType.number,
-                    )),
+                Form(
+                    key: _formKey,
+                    child: Container(
+                        padding: EdgeInsets.only(
+                            bottom: 30, top: 30, right: 30, left: 30),
+                        child: TextFormField(
+                          textAlignVertical: TextAlignVertical.center,
+                          textAlign: TextAlign.center,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.blue)),
+                              labelText: 'Verification Code',
+                              labelStyle: TextStyle(fontSize: 18),
+                              filled: true,
+                              fillColor: Colors.white),
+                          keyboardType: TextInputType.number,
+                          validator: (String value) {
+                            if (value.isEmpty || value.length <= 3 || value.length > 4) {
+                              // ignore: missing_return, missing_return
+                              return 'Please enter a 4 digit Code';
+                            }
+                          },
+                          onSaved: (String value) {
+                            _verifycode = value;
+                          },
+                        ))),
               ],
             )),
           ),
-          SizedBox(height: 30,),
+          SizedBox(
+            height: 30,
+          ),
           Container(
             padding: EdgeInsets.only(top: 20),
             child: Row(
@@ -119,10 +162,12 @@ class _VarificationScreen extends State<VarificationScreen> {
                     ),
                   ),
                   onTap: () {
-                  //  Navigator.pushReplacement(
+                    _submitForm();
+                    //  Navigator.pushReplacement(
                     //    context, MaterialPageRoute(builder: (BuildContext context) => ProfileScreen()));
-                    Navigator.pushReplacementNamed(context, '/profilePage');
-
+                    if (_formKey.currentState.validate()) {
+                      Navigator.pushReplacementNamed(context, '/profilePage');
+                    }
                   },
                 )
               ],

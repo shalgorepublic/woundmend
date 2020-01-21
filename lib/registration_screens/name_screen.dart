@@ -10,6 +10,17 @@ class NameScreen extends StatefulWidget {
 }
 
 class _NameScreenState extends State<NameScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _firstName = null;
+  void _submitForm() async {
+    print("helo first name");
+    if (!_formKey.currentState.validate()) {
+      return;
+    }
+    _formKey.currentState.save();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,6 +65,9 @@ class _NameScreenState extends State<NameScreen> {
                           height: 2,
                           color: Theme.of(context).backgroundColor,
                         ),
+                  Form(
+                    key: _formKey,
+                    child:
                         Container(
                             margin: const EdgeInsets.only(right: 10, left: 10),
                             padding: EdgeInsets.only(bottom: 20, top: 20),
@@ -68,16 +82,16 @@ class _NameScreenState extends State<NameScreen> {
                               validator: (String value) {
                                 if (value.isEmpty ||
                                     // ignore: missing_return
-                                    !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                                    !RegExp(r'^[a-z A-Z,.\-]+$')
                                         .hasMatch(value)) {
                                   // ignore: missing_return, missing_return
-                                  return 'Please enter a valid email';
+                                  return 'Please enter a valid name';
                                 }
                               },
                               onSaved: (String value) {
-                               // _formData['email'] = value;
+                                _firstName = value;
                               },
-                            )),
+                            )),),
                       ],
                     )),
               ),
@@ -112,11 +126,14 @@ class _NameScreenState extends State<NameScreen> {
                             color: Colors.white,
                           ),
                           onPressed: () {
-                            Navigator.push<dynamic>(
-                              context,
-                              MaterialPageRoute<dynamic>(
-                                  builder: (context) => LastNameScreen()),
-                            );
+                            _submitForm();
+                            if(_formKey.currentState.validate()) {
+                              Navigator.push<dynamic>(
+                                context ,
+                                MaterialPageRoute<dynamic>(
+                                    builder: (context) => LastNameScreen(_firstName)) ,
+                              );
+                            }
                           },
                         ),
                       ),

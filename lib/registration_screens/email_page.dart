@@ -9,7 +9,14 @@ class EmailPage extends StatefulWidget {
 }
 
 class _EmailPageState extends State<EmailPage> {
-
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String _email = null;
+    void _submitForm() async {
+      if (!_formKey.currentState.validate()) {
+        return;
+      }
+      _formKey.currentState.save();
+    }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +35,9 @@ class _EmailPageState extends State<EmailPage> {
               ),
             ),
           ),
+      Form(
+          key: _formKey,
+          child:
           Container(
             padding: EdgeInsets.all(20),
             decoration: new BoxDecoration(
@@ -73,12 +83,12 @@ class _EmailPageState extends State<EmailPage> {
                         }
                       },
                       onSaved: (String value) {
-                        //_formData['email'] = value;
+                        _email = value;
                       },
                     )),
               ],
             )),
-          ),
+          )),
           Container(
             padding: EdgeInsets.only(top: 20),
             child: Row(
@@ -110,11 +120,14 @@ class _EmailPageState extends State<EmailPage> {
                         color: Colors.white,
                       ),
                         onPressed: () {
-                          Navigator.push<dynamic>(
-                            context,
-                            MaterialPageRoute<dynamic>(
-                                builder: (context) => PasswordScreen()),
-                          );
+                          _submitForm();
+                          if(_formKey.currentState.validate()) {
+                            Navigator.push<dynamic>(
+                              context ,
+                              MaterialPageRoute<dynamic>(
+                                  builder: (context) => PasswordScreen(_email),) ,
+                            );
+                          }
                         },
                     ),
                   ),
