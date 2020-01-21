@@ -1,4 +1,7 @@
+import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
+import '../registration_screens/signup.dart';
+
 
 class PasswordScreen extends StatefulWidget {
   @override
@@ -12,6 +15,7 @@ class _PasswordScreen extends State<PasswordScreen> {
         body: ListView(
       children: <Widget>[
         Column(children: <Widget>[
+          AppBarLine(),
           Container(
             padding: EdgeInsets.only(left: 40, right: 40, top: 30),
             child: Center(
@@ -69,12 +73,14 @@ class _PasswordScreen extends State<PasswordScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: <Widget>[
-                              Container(padding: EdgeInsets.only(top: 5),child:
-                              Text(
-                                "Forgot Password?",
-                                style: TextStyle(
-                                    color: Theme.of(context).backgroundColor),
-                              ))
+                              Container(
+                                  padding: EdgeInsets.only(top: 5),
+                                  child: Text(
+                                    "Forgot Password?",
+                                    style: TextStyle(
+                                        color:
+                                            Theme.of(context).backgroundColor),
+                                  ))
                             ],
                           ),
                         )
@@ -105,56 +111,75 @@ class _PasswordScreen extends State<PasswordScreen> {
                 )),
                 GestureDetector(
                   child: Container(
-                    height: 50,
-                    width: 50,
-                    color: Theme.of(context).backgroundColor,
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  /* onTap: (){
-                        Navigator.push<dynamic>(
-                          context,
-                          MaterialPageRoute<dynamic>(
-                              builder: (context) => DobScreen()),
-                        );
-                      },*/
+                      height: 50,
+                      width: 120,
+                      color: Theme.of(context).backgroundColor,
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.only(left: 20),
+                            child: Text(
+                              "LOGIN",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.white),
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(
+                              Icons.arrow_forward_ios,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      )),
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, '/profilePage');
+                  },
                 )
               ],
             ),
           ),
+          SizedBox(height: 130,),
           Container(
-            padding: EdgeInsets.only(top: 30),
-            child: SizedBox(
-              width: 220.0,
-              height: 40.0,
-              child: new RaisedButton(
-                color: Theme.of(context).accentColor,
-                shape: new RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                child: Text(
-                  'SIGNUP',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Colors.white),
-                ),
-                onPressed: () {
-                  print("pressed me");
-                },
-                /* onPressed: () {
-                      Navigator.push<dynamic>(
-                        context,
-                        MaterialPageRoute<dynamic>(
-                            builder: (context) => SignupScreen()),
-                      );
-                    },*/
+            width: 250,
+            height: 40,
+            child: RaisedButton(
+              elevation: 4,
+              padding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
               ),
+              color: Theme.of(context).accentColor,
+              child: FittedBox(
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      '- - - - - - -',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 60),
+                      child: Text('SIGNUP',style: TextStyle( fontWeight: FontWeight.bold ,
+                          fontSize: 18 ),),
+                    ),
+                    Text(
+                      '- - - - - - -',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push<dynamic>(
+                  context,
+                  MaterialPageRoute<dynamic>(builder: (context) => SignupScreen()),
+                );
+              },
             ),
-          ),
+          )
         ])
       ],
     ));

@@ -1,6 +1,11 @@
+import 'dart:async';
 import 'package:derm_pro/registration_screens/email_page.dart';
+import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
 import '../registration_screens/phone_number_screen.dart';
+import './email_page.dart';
+import 'dart:async';
+import 'package:intl/intl.dart';
 
 class DobScreen extends StatefulWidget {
   @override
@@ -8,12 +13,30 @@ class DobScreen extends StatefulWidget {
 }
 
 class _DobScreen extends State<DobScreen> {
+  String dateHint = '01 January 2020';
+  DateTime selectedDate = DateTime.now();
+
+  Future<Null> _selectDate(BuildContext context) async {
+     DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    setState(() {
+      selectedDate = picked;
+      String formattedDate = DateFormat('dd-MMM-yyyy').format(picked);
+      print(picked);
+      dateHint = formattedDate;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: ListView(
       children: <Widget>[
         Column(children: <Widget>[
+          AppBarLine(),
           Container(
             padding: EdgeInsets.only(left: 40, right: 40, top: 30),
             child: Center(
@@ -51,35 +74,65 @@ class _DobScreen extends State<DobScreen> {
                   color: Theme.of(context).backgroundColor,
                 ),
                 Container(
-                    margin: const EdgeInsets.only(right: 10, left: 10),
-                    padding: EdgeInsets.only(bottom: 20, top: 20),
+                    // margin: const EdgeInsets.only(right: 10, left: 10),
+                    padding: EdgeInsets.only(
+                        bottom: 40, top: 20, right: 20, left: 20),
                     child: Column(
                       children: <Widget>[
-                        TextField(onTap: (){
-                          print("calender open");
-                        },
-                          textAlignVertical: TextAlignVertical.center,
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.blue)),
-                              labelText: '01 January 2020',
-                              labelStyle: TextStyle(fontSize: 18),
-                              filled: true,
-                              fillColor: Colors.white),
-                          keyboardType: TextInputType.number,
-                        ),
-                        Container(padding:EdgeInsets.only(top: 3),child:
-                        Row(
-                          children: <Widget>[
-                            Text(
-                              "You must be over the age of 16 to use",
-                              style: TextStyle(
-                                  color: Theme.of(context).backgroundColor),
+                        GestureDetector(
+                          onTap: () async {
+                            _selectDate(context);
+                          },
+                          child: Container(
+                            alignment: Alignment.centerLeft,
+                            padding: EdgeInsets.only(left: 10),
+                            //   margin: EdgeInsets.symmetric(horizontal: 20),
+                            height: 50,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  dateHint,
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                                Container(
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.calendar_today,
+                                      color: Theme.of(context).backgroundColor,
+
+                                    ),
+                                    onPressed: () {
+                                      _selectDate(context);
+                                    },
+                                  ),
+                                )
+                              ],
                             ),
-                            Text("DERM PRO",style: TextStyle(color: Theme.of(context).accentColor),)
-                          ],
-                        )),
+                            decoration: BoxDecoration(
+                                border:
+                                    Border.all(width: 1.0, color: Colors.grey),
+                                borderRadius: BorderRadius.circular(5)),
+                          ),
+                        ),
+                        Container(
+                            padding: EdgeInsets.only(top: 3),
+                            child: Row(
+                              children: <Widget>[
+                                Text(
+                                  "You must be over the age of 16 to use ",
+                                  style: TextStyle(
+                                      color: Theme.of(context).backgroundColor,
+                                      fontSize: 12),
+                                ),
+                                Text(
+                                  "DERM PRO",
+                                  style: TextStyle(
+                                      color: Theme.of(context).accentColor,
+                                      fontSize: 12),
+                                )
+                              ],
+                            )),
                       ],
                     )),
               ],
@@ -106,66 +159,71 @@ class _DobScreen extends State<DobScreen> {
                   ),
                 )),
                 GestureDetector(
-                  child: Container(
+                    child: Container(
                       height: 50,
                       width: 50,
                       color: Theme.of(context).backgroundColor,
-                      child:
-                          IconButton(
-                            icon: Icon(
-                              Icons.arrow_forward_ios,
-                              color: Colors.white,
-                            ),
-                          ),
-
-
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.arrow_forward_ios,
+                          color: Colors.white,
+                        ),
                       ),
+                    ),
                     onTap: () {
                       Navigator.push<dynamic>(
                         context,
                         MaterialPageRoute<dynamic>(
                             builder: (context) => PhoneScreen()),
                       );
-                    }
-
-                )
+                    })
               ],
             ),
           ),
-          Container(
-            padding: EdgeInsets.only(top: 30),
-            child: SizedBox(
-              width: 220.0,
-              height: 40.0,
-              child: new RaisedButton(
-                color: Theme.of(context).accentColor,
-                shape: new RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                child: Text(
-                  'LOGIN',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Colors.white),
-                ),
-                onPressed: () {
-                  Navigator.push<dynamic>(
-                    context,
-                    MaterialPageRoute<dynamic>(
-                        builder: (context) => EmailPage()),
-                  );
-                }
-
-                /* onPressed: () {
-                      Navigator.push<dynamic>(
-                        context,
-                        MaterialPageRoute<dynamic>(
-                            builder: (context) => SignupScreen()),
-                      );
-                    },*/
-              ),
-            ),
+          SizedBox(
+            height: 60,
           ),
+          Container(
+            width: 250,
+            height: 40,
+            child: RaisedButton(
+              elevation: 4,
+              padding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+              color: Theme.of(context).accentColor,
+              child: FittedBox(
+                child: Row(
+                  children: <Widget>[
+                    Text(
+                      '- - - - - - -',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 60),
+                      child: Text(
+                        'LOG IN',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                    ),
+                    Text(
+                      '- - - - - - -',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
+              ),
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.push<dynamic>(
+                  context,
+                  MaterialPageRoute<dynamic>(builder: (context) => EmailPage()),
+                );
+              },
+            ),
+          )
         ])
       ],
     ));

@@ -1,6 +1,8 @@
+import 'package:derm_pro/Profile_screen/profile_screen.dart';
 import 'package:flutter/material.dart';
 import './registration_screens/email_page.dart';
 import './ui_elements/dashed_line.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -20,19 +22,17 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/': (BuildContext context) => MyHomePage(),
+        '/emailPage': (BuildContext context) => EmailPage(),
+        '/profilePage': (BuildContext context) => ProfileScreen(),
       },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
 
-class _MyHomePageState extends State<MyHomePage> {
+
+class MyHomePage extends StatelessWidget {
   double screenHeight;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
             // SizedBox(height: 10,),
             Container(
               padding:
-                  EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 30),
+                  EdgeInsets.only(top: 20, bottom: 40, left: 30, right: 30),
               child: Text(
                   'Check your skin forsign of skin cancer by taking a photowith your smart phone',
                   textAlign: TextAlign.center),
@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
               width: 220.0,
               height: 40.0,
               child: new RaisedButton(
-                color: Colors.blue,
+                color: Theme.of(context).backgroundColor,
                 shape: new RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5)),
                 child: new Text(
@@ -99,33 +99,47 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 40,
             ),
             Container(
-              padding: EdgeInsets.only(top: 30),
-              child:  SizedBox(
-                width: 220.0,
-                height: 40.0,
-                child: new RaisedButton(
-                  color: Colors.blue,
-                  shape: new RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5)),
-                  child:  Text(
-                    'LOGIN',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Colors.white),
-                  ),
-                  onPressed: () {
-                    Navigator.push<dynamic>(
-                      context,
-                      MaterialPageRoute<dynamic>(builder: (context) => EmailPage()),
-                    );
-                  },
+              width: 220,
+              height: 40,
+              child: RaisedButton(
+                elevation: 4,
+                padding: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
                 ),
+                color: Theme.of(context).accentColor,
+                child: FittedBox(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        '- - - - - - -',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 60),
+                        child: Text('LOG IN',style: TextStyle( fontWeight: FontWeight.bold ,
+                            fontSize: 18 ),),
+                      ),
+                      Text(
+                        '- - - - - - -',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+                textColor: Colors.white,
+                onPressed: () {
+                  Navigator.push<dynamic>(
+                    context,
+                    MaterialPageRoute<dynamic>(builder: (context) => EmailPage()),
+                  );
+                },
               ),
             )
+
           ],
         ),
       ),

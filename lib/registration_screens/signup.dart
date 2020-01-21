@@ -1,7 +1,8 @@
 import 'package:derm_pro/registration_screens/name_screen.dart';
+import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
 import '../ui_elements/dashed_line.dart';
-
+import './email_page.dart';
 class SignupScreen extends StatefulWidget {
   @override
   _SignupScreenState createState() => _SignupScreenState();
@@ -13,39 +14,21 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
-
     return Scaffold(
-      body: SafeArea(
-        child: Column(
+      body: ListView(children: <Widget>[
+        Column(
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                Container(
-                  height: 10 ,
-                  width: screenWidth / 2 ,
-                  color: Colors.green ,
-                ) ,
-                Container(
-                  height: 10 ,
-                  width: screenWidth / 2 ,
-                  color: Colors.blue ,
-                ) ,
-              ] ,
-            ) ,
+            AppBarLine(),
             Container(
-              alignment: Alignment.centerLeft ,
-              child:IconButton(
-                icon: Icon(
-                Icons.arrow_back ,
-                color: Colors.blue ,
-              ) ,
-              onPressed: (){
-                  Navigator.pop(context);
-              },)
+                alignment: Alignment.centerLeft ,
+                child:IconButton(
+                  icon: Icon(
+                    Icons.arrow_back ,
+                    color: Colors.blue ,
+                  ) ,
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },)
             ) ,
             Container(
               padding: EdgeInsets.only( left: 40 , right: 40) ,
@@ -86,94 +69,120 @@ class _SignupScreenState extends State<SignupScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center ,
                 children: <Widget>[
-                Checkbox(
-                value: checkBoxValue ,
-                    activeColor: Colors.green,
-                    onChanged:(bool newValue){
-                      setState(() {
-                        checkBoxValue = newValue;
-                      });
-                  }
+                  Checkbox(
+                      value: checkBoxValue ,
+                      activeColor: Colors.green,
+                      onChanged:(bool newValue){
+                        setState(() {
+                          checkBoxValue = newValue;
+                        });
+                      }
+                  ) ,
+                  Expanded(child: Container(
+                    child: RichText(
+                        text: TextSpan(
+                          text: "I have read and agree with the " ,
+                          style: TextStyle(fontSize: 14.0 , color: Colors.black) ,
+                          children: <TextSpan>[
+                            TextSpan(text: "Terms & Conditions " ,
+                              style: TextStyle(fontSize: 14.0 , color: Theme.of(context).backgroundColor,decoration: TextDecoration.underline,) ,
+
+                            ) ,
+                            TextSpan(text: "and " ,
+                              style: TextStyle(fontSize: 14.0 , color: Colors.black) ,
+
+                            ) ,
+                            TextSpan(text: "Privicy Policy." ,
+                              style: TextStyle(fontSize: 14.0 , color: Theme.of(context).backgroundColor,decoration: TextDecoration.underline,) ,
+
+                            ) ,
+
+
+                          ] ,
+                        )) ,) ,
+                  ),
+                ] ,
               ) ,
-              Expanded(child: Container(
-              child: RichText(
-                  text: TextSpan(
-                    text: "I have read and agree with the " ,
-                    style: TextStyle(fontSize: 12.0 , color: Colors.black) ,
-                    children: <TextSpan>[
-                      TextSpan(text: "Terms & Conditions " ,
-                        style: TextStyle(fontSize: 12.0 , color: Colors.blue,decoration: TextDecoration.underline,) ,
-
-                      ) ,
-                      TextSpan(text: "and " ,
-                        style: TextStyle(fontSize: 12.0 , color: Colors.black) ,
-
-                      ) ,
-                      TextSpan(text: "Privicy Policy." ,
-                        style: TextStyle(fontSize: 12.0 , color: Colors.blue,decoration: TextDecoration.underline,) ,
-
-                      ) ,
-
-
-                    ] ,
-                  )) ,) ,
-              ),
-          ] ,
-        ) ,
-      ) ,
-      Container(child: Center(child: IconButton(icon: Icon(Icons.lock_outline,size: 35,color: Colors.blue,),)),),
+            ) ,
+            Container(child: Center(child: IconButton(icon: Icon(Icons.lock_outline,size: 35,color: Colors.blue,),)),),
             Container(
               padding:
-              EdgeInsets.only(bottom: 20 , left: 30 , right: 30) ,
+              EdgeInsets.only(bottom: 30 , left: 30 , right: 30) ,
               child: Text(
                   'We care about your privacy.We are IOS certified for information Security and Medical Device Quality Management.' ,
                   textAlign: TextAlign.center) ,
             ) ,
             Container(
-        width: 200.0 ,
-        height: 40.0 ,
-        child: new RaisedButton(
-          color: Colors.blue ,
-          shape: new RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5)) ,
-          child: new Text(
-            'Continue' ,
-            style: TextStyle(
-                fontWeight: FontWeight.bold ,
-                fontSize: 18 ,
-                color: Colors.white) ,
-          ) ,
-          onPressed: () {
-            Navigator.push<dynamic>(
-              context,
-              MaterialPageRoute<dynamic>(
-                  builder: (context) => NameScreen()),
-            );
-          },
-        ) ,
-      ) ,
-            Container(
-              margin: EdgeInsets.only(top: 15),
-              width: 200.0 ,
+              width: 220.0 ,
               height: 40.0 ,
               child: new RaisedButton(
-                color: Colors.blue ,
+                color: Theme.of(context).backgroundColor,
                 shape: new RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5)) ,
                 child: new Text(
-                  'LOGIN' ,
+                  'CONTINUE' ,
                   style: TextStyle(
                       fontWeight: FontWeight.bold ,
                       fontSize: 18 ,
                       color: Colors.white) ,
                 ) ,
                 onPressed: () {
-                  print("helo");
-                } ,
+                  Navigator.push<dynamic>(
+                    context,
+                    MaterialPageRoute<dynamic>(
+                        builder: (context) => NameScreen()),
+                  );
+                },
               ) ,
             ) ,
-      ] ,
-    ),)
+            SizedBox(height: 40,),
+            Container(
+              margin: EdgeInsets.only(bottom: 30),
+              width: 220,
+              height: 40,
+              child: RaisedButton(
+                elevation: 4,
+                padding: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                color: Theme.of(context).accentColor,
+                child: FittedBox(
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        '- - - - - - -',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 60),
+                        child: Text('LOG IN',style: TextStyle( fontWeight: FontWeight.bold ,
+                            fontSize: 18 ),),
+                      ),
+                      Text(
+                        '- - - - - - -',
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ],
+                  ),
+                ),
+                textColor: Colors.white,
+                onPressed: () {
+                  Navigator.push<dynamic>(
+                    context,
+                    MaterialPageRoute<dynamic>(builder: (context) => EmailPage()),
+                  );
+                },
+              ),
+            )
+
+
+
+          ] ,
+        ),
+      ],
+
+      )
     ,
     );
   }

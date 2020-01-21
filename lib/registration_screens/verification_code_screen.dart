@@ -1,5 +1,7 @@
-import 'package:derm_pro/registration_screens/signup_password_screen.dart';
+import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
+import 'package:derm_pro/Profile_screen/profile_screen.dart';
+
 
 class VarificationScreen extends StatefulWidget {
   @override
@@ -15,6 +17,7 @@ class _VarificationScreen extends State<VarificationScreen> {
         body: ListView(
       children: <Widget>[
         Column(children: <Widget>[
+          AppBarLine(),
           Container(
             padding: EdgeInsets.only(left: 40, right: 40, top: 30),
             child: Center(
@@ -36,7 +39,7 @@ class _VarificationScreen extends State<VarificationScreen> {
                 child: Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.only(top: 20, bottom: 10),
+                  padding: EdgeInsets.only(top: 20, bottom: 10,),
                   child: Text(
                     "ENTER VERIFICATION CODE",
                     textAlign: TextAlign.center,
@@ -52,8 +55,7 @@ class _VarificationScreen extends State<VarificationScreen> {
                   color: Theme.of(context).backgroundColor,
                 ),
                 Container(
-                    margin: const EdgeInsets.only(right: 10, left: 10),
-                    padding: EdgeInsets.only(bottom: 20, top: 20),
+                    padding: EdgeInsets.only(bottom: 30, top: 30,right: 30,left: 30),
                     child: TextField(
                       textAlignVertical: TextAlignVertical.center,
                       textAlign: TextAlign.center,
@@ -69,6 +71,7 @@ class _VarificationScreen extends State<VarificationScreen> {
               ],
             )),
           ),
+          SizedBox(height: 30,),
           Container(
             padding: EdgeInsets.only(top: 20),
             child: Row(
@@ -92,7 +95,7 @@ class _VarificationScreen extends State<VarificationScreen> {
                 GestureDetector(
                   child: Container(
                     height: 50,
-                    width: 110,
+                    width: 130,
                     color: Theme.of(context).backgroundColor,
                     child: Row(
                       children: <Widget>[
@@ -116,43 +119,13 @@ class _VarificationScreen extends State<VarificationScreen> {
                     ),
                   ),
                   onTap: () {
-                    Navigator.push<dynamic>(
-                      context,
-                      MaterialPageRoute<dynamic>(
-                          builder: (context) => PasswordScreen()),
-                    );
+                  //  Navigator.pushReplacement(
+                    //    context, MaterialPageRoute(builder: (BuildContext context) => ProfileScreen()));
+                    Navigator.pushReplacementNamed(context, '/profilePage');
+
                   },
                 )
               ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.only(top: 30),
-            child: SizedBox(
-              width: 220.0,
-              height: 40.0,
-              child: new RaisedButton(
-                color: Theme.of(context).accentColor,
-                shape: new RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                child: Text(
-                  'LOGIN',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Colors.white),
-                ),
-                onPressed: () {
-                  print("pressed me");
-                },
-                /* onPressed: () {
-                      Navigator.push<dynamic>(
-                        context,
-                        MaterialPageRoute<dynamic>(
-                            builder: (context) => SignupScreen()),
-                      );
-                    },*/
-              ),
             ),
           ),
         ])

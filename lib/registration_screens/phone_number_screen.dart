@@ -1,6 +1,7 @@
+import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
 import '../registration_screens/verification_code_screen.dart';
-
+import './email_page.dart';
 class PhoneScreen extends StatefulWidget {
   @override
   _PhoneScreen createState() => _PhoneScreen();
@@ -13,6 +14,7 @@ class _PhoneScreen extends State<PhoneScreen> {
         body: ListView(
           children: <Widget>[
             Column(children: <Widget>[
+              AppBarLine(),
               Container(
                 padding: EdgeInsets.only(left: 40, right: 40, top: 30),
                 child: Center(
@@ -50,8 +52,8 @@ class _PhoneScreen extends State<PhoneScreen> {
                           color: Theme.of(context).backgroundColor,
                         ),
                         Container(
-                            margin: const EdgeInsets.only(right: 10, left: 10),
-                            padding: EdgeInsets.only(bottom: 20, top: 20),
+                           // margin: const EdgeInsets.only(right: 10, left: 10),
+                            padding: EdgeInsets.only(bottom: 30, top: 30,left: 30,right: 30),
                             child: Column(
                               children: <Widget>[
                                 TextField(
@@ -118,35 +120,45 @@ class _PhoneScreen extends State<PhoneScreen> {
                   ],
                 ),
               ),
+              SizedBox(height: 80,),
               Container(
-                padding: EdgeInsets.only(top: 30),
-                child: SizedBox(
-                  width: 220.0,
-                  height: 40.0,
-                  child: new RaisedButton(
-                    color: Theme.of(context).accentColor,
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Text(
-                      'LOGIN',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.white),
-                    ),
-                    onPressed: () {
-                      print("pressed me");
-                    },
-                    /* onPressed: () {
-                      Navigator.push<dynamic>(
-                        context,
-                        MaterialPageRoute<dynamic>(
-                            builder: (context) => SignupScreen()),
-                      );
-                    },*/
+                width: 250,
+                height: 40,
+                child: RaisedButton(
+                  elevation: 4,
+                  padding: EdgeInsets.zero,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
                   ),
+                  color: Theme.of(context).accentColor,
+                  child: FittedBox(
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          '- - - - - - -',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 60),
+                          child: Text('LOG IN',style: TextStyle( fontWeight: FontWeight.bold ,
+                              fontSize: 18 ),),
+                        ),
+                        Text(
+                          '- - - - - - -',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ],
+                    ),
+                  ),
+                  textColor: Colors.white,
+                  onPressed: () {
+                    Navigator.push<dynamic>(
+                      context,
+                      MaterialPageRoute<dynamic>(builder: (context) => EmailPage()),
+                    );
+                  },
                 ),
-              ),
+              )
             ])
           ],
         ));
