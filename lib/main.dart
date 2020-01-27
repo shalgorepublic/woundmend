@@ -1,4 +1,7 @@
-import 'package:derm_pro/Profile_screen/profile_screen.dart';
+import 'package:derm_pro/Home_screens/Library.dart';
+import 'package:derm_pro/Home_screens/inbox_page.dart';
+import 'package:derm_pro/Home_screens/profile_screen.dart';
+import 'package:derm_pro/registration_screens/signup.dart';
 import 'package:flutter/material.dart';
 import './registration_screens/email_page.dart';
 import './ui_elements/dashed_line.dart';
@@ -14,16 +17,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(backgroundColor: hexToColor('#2BA2D6'),//blue
+      theme: ThemeData(hoverColor: hexToColor('#F9F9F9'),
+        backgroundColor: hexToColor('#2BA2D6'),//blue
         primarySwatch: Colors.blue,
         brightness: Brightness.light,
         accentColor: hexToColor('#8CC63F'),//green
         splashColor: Colors.pink,
       ),
       routes: {
-        '/': (BuildContext context) => MyHomePage(),
+        '/MyHomePage': (BuildContext context) => MyHomePage(),
         '/emailPage': (BuildContext context) => EmailPage(),
-        '/profilePage': (BuildContext context) => ProfileScreen(),
+        '/': (BuildContext context) => ProfileScreen(),
+        '/signup': (BuildContext context) => SignupScreen(),
+        '/library': (BuildContext context) => LibraryScreen(),
+        '/inboxScreen': (BuildContext context) => InboxScreen(),
       },
     );
   }
@@ -36,12 +43,12 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Column(
+      body: ListView(children: <Widget>[
+        Column(
           children: <Widget>[
             Container(
               padding:
-                  EdgeInsets.only(left: 40, right: 40, bottom: 30, top: 80),
+              EdgeInsets.only(left: 40, right: 40, bottom: 30, top: 60),
               child: Center(
                 //child: Text("helo"),
                 child: Image.asset(
@@ -61,7 +68,7 @@ class MyHomePage extends StatelessWidget {
             const MySeparator(color: Colors.blue),
             Container(
               padding:
-                  EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 30),
+              EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 30),
               child: Text(
                   '1 in 5 people get skin cancer.Early detection is the key to treating it.',
                   textAlign: TextAlign.center),
@@ -75,7 +82,7 @@ class MyHomePage extends StatelessWidget {
             // SizedBox(height: 10,),
             Container(
               padding:
-                  EdgeInsets.only(top: 20, bottom: 40, left: 30, right: 30),
+              EdgeInsets.only(top: 20, bottom: 40, left: 30, right: 30),
               child: Text(
                   'Check your skin forsign of skin cancer by taking a photowith your smart phone',
                   textAlign: TextAlign.center),
@@ -138,10 +145,13 @@ class MyHomePage extends StatelessWidget {
                   );
                 },
               ),
-            )
+            ),
+            SizedBox(height: 20,)
 
           ],
         ),
+      ],
+
       ),
     );
   }

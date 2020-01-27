@@ -192,10 +192,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                   ),
                   textColor: Colors.white,
                   onPressed: () {
-                    Navigator.push<dynamic>(
-                      context,
-                      MaterialPageRoute<dynamic>(builder: (context) => EmailPage()),
-                    );
+                    Navigator.pushReplacementNamed(context, '/emailPage');
                   },
                 ),
               )

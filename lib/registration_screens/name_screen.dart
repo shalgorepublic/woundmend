@@ -173,10 +173,7 @@ class _NameScreenState extends State<NameScreen> {
                   ),
                   textColor: Colors.white,
                   onPressed: () {
-                    Navigator.push<dynamic>(
-                      context,
-                      MaterialPageRoute<dynamic>(builder: (context) => EmailPage()),
-                    );
+                    Navigator.pushReplacementNamed(context, '/emailPage');
                   },
                 ),
               )

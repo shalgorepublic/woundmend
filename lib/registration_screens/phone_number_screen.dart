@@ -189,10 +189,8 @@ class _PhoneScreen extends State<PhoneScreen> {
                   ),
                   textColor: Colors.white,
                   onPressed: () {
-                    Navigator.push<dynamic>(
-                      context,
-                      MaterialPageRoute<dynamic>(builder: (context) => EmailPage()),
-                    );
+                    Navigator.pushReplacementNamed(context, '/emailPage');
+
                   },
                 ),
               )

@@ -238,10 +238,7 @@ class _SecondEmailPageState extends State<SecondEmailPage> {
                   ),
                   textColor: Colors.white,
                   onPressed: () {
-                    Navigator.push<dynamic>(
-                      context,
-                      MaterialPageRoute<dynamic>(builder: (context) => EmailPage()),
-                    );
+                    Navigator.pushReplacementNamed(context, '/emailPage');
                   },
                 ),
               ),

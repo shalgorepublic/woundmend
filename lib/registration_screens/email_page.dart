@@ -167,10 +167,7 @@ class _EmailPageState extends State<EmailPage> {
               ),
               textColor: Colors.white,
               onPressed: () {
-                Navigator.push<dynamic>(
-                  context,
-                  MaterialPageRoute<dynamic>(builder: (context) => SignupScreen()),
-                );
+                Navigator.pushReplacementNamed(context, '/signup');
               },
             ),
           )

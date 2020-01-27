@@ -1,6 +1,6 @@
 import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
-import 'package:derm_pro/Profile_screen/profile_screen.dart';
+import 'package:derm_pro/Home_screens/profile_screen.dart';
 
 class VarificationScreen extends StatefulWidget {
   final Map<String, dynamic> formData;

@@ -1,4 +1,4 @@
-import 'package:derm_pro/Profile_screen/profile_screen.dart';
+import 'package:derm_pro/Home_screens/profile_screen.dart';
 import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
 import '../registration_screens/signup.dart';
@@ -174,7 +174,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                       Navigator.push<dynamic>(
                         context ,
                         MaterialPageRoute<dynamic>(
-                          builder: (context) => ProfileScreen(),) ,
+                          builder: (BuildContext context) => ProfileScreen(),) ,
                       );
                     }
                    // Navigator.pushReplacementNamed(context, '/profilePage');
@@ -215,10 +215,7 @@ class _PasswordScreen extends State<PasswordScreen> {
               ),
               textColor: Colors.white,
               onPressed: () {
-                Navigator.push<dynamic>(
-                  context,
-                  MaterialPageRoute<dynamic>(builder: (context) => SignupScreen()),
-                );
+                Navigator.pushReplacementNamed(context, '/signup');
               },
             ),
           )

@@ -242,10 +242,7 @@ class _DobScreen extends State<DobScreen> {
               ),
               textColor: Colors.white,
               onPressed: () {
-                Navigator.push<dynamic>(
-                  context,
-                  MaterialPageRoute<dynamic>(builder: (context) => EmailPage()),
-                );
+                Navigator.pushReplacementNamed(context, '/emailPage');
               },
             ),
           )
