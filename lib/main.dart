@@ -24,10 +24,11 @@ class MyApp extends StatelessWidget {
         accentColor: hexToColor('#8CC63F'),//green
         splashColor: Colors.pink,
       ),
+     initialRoute: '/',
       routes: {
-        '/MyHomePage': (BuildContext context) => MyHomePage(),
+        '/': (BuildContext context) => MyHomePage(),
         '/emailPage': (BuildContext context) => EmailPage(),
-        '/': (BuildContext context) => ProfileScreen(),
+        '/profilePage': (BuildContext context) => ProfileScreen(),
         '/signup': (BuildContext context) => SignupScreen(),
         '/library': (BuildContext context) => LibraryScreen(),
         '/inboxScreen': (BuildContext context) => InboxScreen(),

@@ -192,7 +192,9 @@ class _PasswordScreen extends State<PasswordScreen> {
                   ),
                   textColor: Colors.white,
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/emailPage');
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil('/emailPage',
+                        ModalRoute.withName("/signup"));
                   },
                 ),
               )

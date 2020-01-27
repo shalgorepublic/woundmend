@@ -166,7 +166,8 @@ class _VarificationScreen extends State<VarificationScreen> {
                     //  Navigator.pushReplacement(
                     //    context, MaterialPageRoute(builder: (BuildContext context) => ProfileScreen()));
                     if (_formKey.currentState.validate()) {
-                      Navigator.pushReplacementNamed(context, '/profilePage');
+                   //   Navigator.of(context).pushNamedAndRemoveUntil('/ProfilePage', (Route<dynamic> route) => false);
+                    Navigator.of(context).pushReplacementNamed('/profilePage');
                     }
                   },
                 )

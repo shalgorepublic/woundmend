@@ -411,6 +411,13 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                         flagtwo = false;
                                       }
                                     });
+                                    Navigator.push<dynamic>(
+                                      context,
+                                      MaterialPageRoute<dynamic>(
+                                        builder: (BuildContext context) =>
+                                            SkinType(),
+                                      ),
+                                    );
                                   },
                                 )),
                           ],

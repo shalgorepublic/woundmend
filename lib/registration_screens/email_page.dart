@@ -167,7 +167,9 @@ class _EmailPageState extends State<EmailPage> {
               ),
               textColor: Colors.white,
               onPressed: () {
-                Navigator.pushReplacementNamed(context, '/signup');
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/signup',
+                    ModalRoute.withName("/signup"));
               },
             ),
           )

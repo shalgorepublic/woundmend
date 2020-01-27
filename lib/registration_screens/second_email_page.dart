@@ -238,7 +238,9 @@ class _SecondEmailPageState extends State<SecondEmailPage> {
                   ),
                   textColor: Colors.white,
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/emailPage');
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil('/emailPage',
+                        ModalRoute.withName("/signup"));
                   },
                 ),
               ),
