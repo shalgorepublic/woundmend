@@ -177,7 +177,6 @@ class _PasswordScreen extends State<PasswordScreen> {
                           builder: (BuildContext context) => ProfileScreen(),) ,
                       );
                     }
-                   // Navigator.pushReplacementNamed(context, '/profilePage');
                   },
                 )
               ],
