@@ -1,9 +1,13 @@
+import 'package:derm_pro/models/auth.dart';
 import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
-import 'package:derm_pro/Home_screens/profile_screen.dart';
+import 'package:scoped_model/scoped_model.dart';
+import '../scoped_models/main.dart';
+import 'dart:async';
 
 class VarificationScreen extends StatefulWidget {
   final Map<String, dynamic> formData;
+  bool codeFlag = false;
 
   VarificationScreen(this.formData);
 
@@ -16,25 +20,22 @@ class _VarificationScreen extends State<VarificationScreen> {
 
   _VarificationScreen(this._formData);
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String _verifycode = null;
 
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  AuthMode _authMode = AuthMode.SignUp;
+  String _verifyCode;
+  @override
+  void initState() {
+    // TODO: implement initState
+    print("otp in verification screen");
+    print(_formData['otp']);
+    super.initState();
+  }
   void _submitForm() async {
-    print("helo verifiy code");
     if (!_formKey.currentState.validate()) {
       return;
     }
     _formKey.currentState.save();
-    _formData = {
-      'firstName': _formData['firstName'],
-      'lastName': _formData['lastName'],
-      'email': _formData['email'],
-      'password': _formData['password'],
-      'dob': _formData['dob'],
-      'phoneNumber': _formData['phoneNumber'],
-      'verifyCode': _verifycode
-    };
-    print(_formData);
   }
 
   @override
@@ -100,13 +101,15 @@ class _VarificationScreen extends State<VarificationScreen> {
                               fillColor: Colors.white),
                           keyboardType: TextInputType.number,
                           validator: (String value) {
-                            if (value.isEmpty || value.length <= 3 || value.length > 4) {
+                            if (value.isEmpty ||
+                                value.length <= 3 ||
+                                value.length > 4) {
                               // ignore: missing_return, missing_return
-                              return 'Please enter a 4 digit Code';
+                              return 'Please enter 4 digit Code';
                             }
                           },
                           onSaved: (String value) {
-                            _verifycode = value;
+                            _verifyCode = value;
                           },
                         ))),
               ],
@@ -163,17 +166,41 @@ class _VarificationScreen extends State<VarificationScreen> {
                   ),
                   onTap: () {
                     _submitForm();
-                    //  Navigator.pushReplacement(
-                    //    context, MaterialPageRoute(builder: (BuildContext context) => ProfileScreen()));
-                    if (_formKey.currentState.validate()) {
-                   //   Navigator.of(context).pushNamedAndRemoveUntil('/ProfilePage', (Route<dynamic> route) => false);
-                    Navigator.of(context).pushReplacementNamed('/profilePage');
+                      if(_formData['otp'] == _verifyCode) {
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            '/profilePage' , (Route<dynamic> route) => false);
+                        //     Navigator.of(context).pushReplacementNamed('/profilePage');
                     }
+                      else
+                        {
+                          setState(() {
+                            widget.codeFlag = true;
+                          });
+                          Timer(Duration(seconds:3), () {
+                            setState(() {
+                              widget.codeFlag = false;
+                            });
+
+                            print("Yeah, this line is printed after 3 second");
+                          });
+
+                          print('This line is printed first');
+                        }
                   },
                 )
               ],
             ),
           ),
+          SizedBox(height: 40,),
+          widget.codeFlag ?
+          Container(padding:EdgeInsets.all(5),child: Text("Invalid code"),decoration: BoxDecoration(
+            border: Border.all(
+                width: 1.0
+            ),
+            borderRadius: BorderRadius.all(
+                Radius.circular(5.0) //                 <--- border radius here
+            ),
+          ),):Container(),
         ])
       ],
     ));

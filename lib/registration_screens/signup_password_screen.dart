@@ -16,7 +16,6 @@ class _PasswordScreen extends State<PasswordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _password = null;
   void _submitForm() async {
-    print("helo last name");
     if (!_formKey.currentState.validate()) {
       return;
     }

@@ -1,6 +1,9 @@
 import 'package:derm_pro/Home_screens/profile_screen.dart';
+import 'package:derm_pro/models/auth.dart';
+import 'package:derm_pro/scoped_models/main.dart';
 import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 import '../registration_screens/signup.dart';
 
 
@@ -22,12 +25,62 @@ class _PasswordScreen extends State<PasswordScreen> {
   final String emailName;
   _PasswordScreen(this.emailName);
    String _password = null;
-   void _submitForm() async {
-     print("helo password");
+   void _submitForm(Function authenticate) async {
      if (!_formKey.currentState.validate()) {
        return;
      }
      _formKey.currentState.save();
+     Map<String, dynamic> successInformation;
+     print("helo login responce");
+     successInformation = await authenticate(emailName, _password);
+     print("shahid");
+     print(successInformation);
+     print("helo");
+     if(successInformation['success']){
+     if (successInformation['data']['data']['success']) {
+       Navigator.push<dynamic>(
+         context ,
+         MaterialPageRoute<dynamic>(
+           builder: (BuildContext context) => ProfileScreen(),) ,
+       );
+     } else {
+       showDialog<dynamic>(
+         context: context,
+         builder: (BuildContext context) {
+           return AlertDialog(
+             title: Text('En Error Occured'),
+             content: Text(successInformation['data']['data']['message']),
+             actions: <Widget>[
+               FlatButton(
+                 child: Text('Okey'),
+                 onPressed: () {
+                   Navigator.of(context).pop();
+                 },
+               )
+             ],
+           );
+         },
+       );
+     }
+     }
+     else
+       showDialog<dynamic>(
+         context: context,
+         builder: (BuildContext context) {
+           return AlertDialog(
+             title: Text('En Error Occured'),
+             content: Text("Some thing went wrong"),
+             actions: <Widget>[
+               FlatButton(
+                 child: Text('Okey'),
+                 onPressed: () {
+                   Navigator.of(context).pop();
+                 },
+               )
+             ],
+           );
+         },
+       );
    }
 
   @override
@@ -143,6 +196,8 @@ class _PasswordScreen extends State<PasswordScreen> {
                     },
                   ),
                 )),
+      ScopedModelDescendant<MainModel>(
+        builder: (context, child, model) =>
                 GestureDetector(
                   child: Container(
                       height: 50,
@@ -169,16 +224,17 @@ class _PasswordScreen extends State<PasswordScreen> {
                         ],
                       )),
                   onTap: () {
-                    _submitForm();
-                    if(_formKey.currentState.validate()) {
+                    model.changeMode(AuthMode.Login);
+                    _submitForm(model.authenticate);
+                   /* if(_formKey.currentState.validate()) {
                       Navigator.push<dynamic>(
                         context ,
                         MaterialPageRoute<dynamic>(
                           builder: (BuildContext context) => ProfileScreen(),) ,
                       );
-                    }
+                    }*/
                   },
-                )
+                )),
               ],
             ),
           ),

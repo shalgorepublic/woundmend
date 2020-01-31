@@ -1,22 +1,48 @@
 import 'package:derm_pro/Home_screens/Library.dart';
 import 'package:derm_pro/Home_screens/inbox_page.dart';
 import 'package:derm_pro/Home_screens/profile_screen.dart';
+import 'package:derm_pro/models/auth.dart';
 import 'package:derm_pro/registration_screens/signup.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import './registration_screens/email_page.dart';
 import './ui_elements/dashed_line.dart';
+import 'package:scoped_model/scoped_model.dart';
+import './scoped_models/main.dart';
 
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  final MainModel _model = MainModel();
+  bool _isAuthenticated = false;
+
   Color hexToColor(String code) {
     return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
+  }
+  @override
+  void initState() {
+    _model.autoAuthenticate();
+    _model.userSubject.listen((bool isAuthenticated) {
+      setState(() {
+        _isAuthenticated = isAuthenticated;
+      });
+    });
+    super.initState();
   }
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ScopedModel<MainModel>(
+        model: _model,
+        child:
+      MaterialApp(
       theme: ThemeData(hoverColor: hexToColor('#F9F9F9'),
         backgroundColor: hexToColor('#2BA2D6'),//blue
         primarySwatch: Colors.blue,
@@ -26,14 +52,16 @@ class MyApp extends StatelessWidget {
       ),
      initialRoute: '/',
       routes: {
-        '/': (BuildContext context) => MyHomePage(),
+        '/': (BuildContext context) =>
+        !_isAuthenticated ? MyHomePage():  ProfileScreen(),
         '/emailPage': (BuildContext context) => EmailPage(),
-        '/profilePage': (BuildContext context) => ProfileScreen(),
+        '/profilePage': (BuildContext context) =>
+        !_isAuthenticated ? MyHomePage() :  ProfileScreen(),
         '/signup': (BuildContext context) => SignupScreen(),
         '/library': (BuildContext context) => LibraryScreen(),
         '/inboxScreen': (BuildContext context) => InboxScreen(),
       },
-    );
+    ),);
   }
 }
 
@@ -109,6 +137,8 @@ class MyHomePage extends StatelessWidget {
             SizedBox(
               height: 40,
             ),
+    ScopedModelDescendant<MainModel>(
+    builder: (context, child, model) =>
             Container(
               width: 220,
               height: 40,
@@ -140,13 +170,14 @@ class MyHomePage extends StatelessWidget {
                 ),
                 textColor: Colors.white,
                 onPressed: () {
+                  model.changeMode(AuthMode.Login);
                   Navigator.push<dynamic>(
                     context,
                     MaterialPageRoute<dynamic>(builder: (context) => EmailPage()),
                   );
                 },
               ),
-            ),
+            )),
             SizedBox(height: 20,)
 
           ],

@@ -13,7 +13,6 @@ class _NameScreenState extends State<NameScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _firstName = null;
   void _submitForm() async {
-    print("helo first name");
     if (!_formKey.currentState.validate()) {
       return;
     }

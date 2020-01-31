@@ -32,8 +32,6 @@ class _DobScreen extends State<DobScreen> {
       'password' : _formData['password'],
       'date': dateHint
     };
-    print(_formData);
-    print('helo');
   }
   Future<Null> _selectDate(BuildContext context) async {
      DateTime picked = await showDatePicker(

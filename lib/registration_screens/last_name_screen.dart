@@ -21,7 +21,6 @@ class _LastNameScreenState extends State<LastNameScreen> {
   };
   String _lastName = null;
   void _submitForm() async {
-    print("helo last name");
     if (!_formKey.currentState.validate()) {
       return;
     }
@@ -33,7 +32,6 @@ class _LastNameScreenState extends State<LastNameScreen> {
   }
   @override
   void initState() {
-    print(firstname);
     // TODO: implement initState
     super.initState();
   }

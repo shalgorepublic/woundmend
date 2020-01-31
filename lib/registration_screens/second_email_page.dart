@@ -17,7 +17,6 @@ class _SecondEmailPageState extends State<SecondEmailPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _email = null;
   void _submitForm() async {
-    print("helo last name");
     if (!_formKey.currentState.validate()) {
       return;
     }
