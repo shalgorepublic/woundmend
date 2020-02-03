@@ -35,7 +35,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
       drawer: DrawerBuilder(),
       appBar: AppBar(title: Text("Support"),centerTitle: true,leading: new IconButton(
         icon: new Icon(Icons.arrow_back),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pop(context);
+        },
       ),
         actions: [
           Container(padding:EdgeInsets.only(right: 15),child: Row(children: <Widget>[

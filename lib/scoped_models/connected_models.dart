@@ -8,8 +8,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rxdart/subjects.dart';
 
 class ConnectedModel extends Model {
-//  List<Product> _products = [];
-//  String _selProductId;
   User _authenticatedUser;
   bool _isLoading = false;
 }
@@ -41,8 +39,8 @@ class UserModel extends ConnectedModel {
       String phoneNumber]) async {
     _isLoading = true;
     notifyListeners();
+    http.Response response;
     try {
-      http.Response response;
       if (mode == AuthMode.SignUp) {
         final Map<String , dynamic> signUpAuthData = {
           'email': email ,
@@ -71,14 +69,10 @@ class UserModel extends ConnectedModel {
             dob: finalData['user']['dob'] ,
             phoneNumber: finalData['user']['contact_no'] ,
             otp: finalData['user']['confirmation_code'] ,
-            token: finalData['auth_token'] ,
+            token: finalData['auth_token'],
             password: password ,
           );
           _userSubject.add(true);
-          print('shhaid');
-          print(_userSubject);
-          _authenticatedUser = _authenticatedUser;
-          print(_authenticatedUser.otp);
           _isLoading = false;
           notifyListeners();
           final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -121,8 +115,8 @@ class UserModel extends ConnectedModel {
             token: finalData['auth_token'] ,
             password: password ,
           );
-          _authenticatedUser = _authenticatedUser;
           print(_authenticatedUser.otp);
+          print(_authenticatedUser.token);
           _isLoading = false;
           notifyListeners();
           final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -141,27 +135,24 @@ class UserModel extends ConnectedModel {
       }
     }catch(error){
       _isLoading = false;
-      return{'success':false,'data':{null}
-    };
+      return{'success':false,'data':{null} };
   }}
 
    void autoAuthenticate() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.get('token');
     if (token != null) {
-      _userSubject.add(false);
+      _userSubject.add(true);
       notifyListeners();
     }
     final String userEmail = prefs.get('userEmail');
-    final int userId = prefs.get('userId');
-    _authenticatedUser = User(id: userId,email: userEmail,token: token);
     _userSubject.add(true);
     notifyListeners();
   }
   void logout() async {
-    print('Logout');
-    _authenticatedUser = null;
     _userSubject.add(false);
+    _authenticatedUser = null;
+    notifyListeners();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('token');
     prefs.remove('userEmail');

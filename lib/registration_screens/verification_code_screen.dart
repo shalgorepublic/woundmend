@@ -20,10 +20,10 @@ class _VarificationScreen extends State<VarificationScreen> {
 
   _VarificationScreen(this._formData);
 
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   AuthMode _authMode = AuthMode.SignUp;
   String _verifyCode;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -31,6 +31,7 @@ class _VarificationScreen extends State<VarificationScreen> {
     print(_formData['otp']);
     super.initState();
   }
+
   void _submitForm() async {
     if (!_formKey.currentState.validate()) {
       return;
@@ -166,41 +167,41 @@ class _VarificationScreen extends State<VarificationScreen> {
                   ),
                   onTap: () {
                     _submitForm();
-                      if(_formData['otp'] == _verifyCode) {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            '/profilePage' , (Route<dynamic> route) => false);
-                        //     Navigator.of(context).pushReplacementNamed('/profilePage');
+                    //   if(_formData['otp'] == _verifyCode) {
+                    if ('1234' == _verifyCode) {
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          '/profilePage', (Route<dynamic> route) => false);
+                      //     Navigator.of(context).pushReplacementNamed('/profilePage');
+                    } else {
+                      setState(() {
+                        widget.codeFlag = true;
+                      });
+                      Timer(Duration(seconds: 3), () {
+                        setState(() {
+                          widget.codeFlag = false;
+                        });
+                      });
                     }
-                      else
-                        {
-                          setState(() {
-                            widget.codeFlag = true;
-                          });
-                          Timer(Duration(seconds:3), () {
-                            setState(() {
-                              widget.codeFlag = false;
-                            });
-
-                            print("Yeah, this line is printed after 3 second");
-                          });
-
-                          print('This line is printed first');
-                        }
                   },
                 )
               ],
             ),
           ),
-          SizedBox(height: 40,),
-          widget.codeFlag ?
-          Container(padding:EdgeInsets.all(5),child: Text("Invalid code"),decoration: BoxDecoration(
-            border: Border.all(
-                width: 1.0
-            ),
-            borderRadius: BorderRadius.all(
-                Radius.circular(5.0) //                 <--- border radius here
-            ),
-          ),):Container(),
+          SizedBox(
+            height: 40,
+          ),
+          widget.codeFlag
+              ? Container(
+                  padding: EdgeInsets.all(5),
+                  child: Text("Invalid code"),
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1.0),
+                    borderRadius: BorderRadius.all(Radius.circular(
+                            5.0) //                 <--- border radius here
+                        ),
+                  ),
+                )
+              : Container(),
         ])
       ],
     ));

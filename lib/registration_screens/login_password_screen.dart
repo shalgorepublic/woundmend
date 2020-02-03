@@ -31,13 +31,9 @@ class _PasswordScreen extends State<PasswordScreen> {
      }
      _formKey.currentState.save();
      Map<String, dynamic> successInformation;
-     print("helo login responce");
      successInformation = await authenticate(emailName, _password);
-     print("shahid");
-     print(successInformation);
-     print("helo");
      if(successInformation['success']){
-     if (successInformation['data']['data']['success']) {
+     if (successInformation['data']['data']['success'] == true) {
        Navigator.push<dynamic>(
          context ,
          MaterialPageRoute<dynamic>(

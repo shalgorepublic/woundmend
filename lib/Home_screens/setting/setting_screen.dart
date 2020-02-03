@@ -30,7 +30,9 @@ class _SettingScreenState extends State<SettingScreen> {
                 onPressed: () {
                   Navigator.of(context).pop(true);
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                      '/', ModalRoute.withName("/"));
+                      '/myHomePage', (Route<dynamic> route) => false);
+                //  Navigator.of(context).pushNamedAndRemoveUntil(
+                  //    '/emailPage', ModalRoute.withName("/"));
                 },
               ),
             ],
@@ -142,8 +144,9 @@ class _SettingScreenState extends State<SettingScreen> {
                   padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
                   child: Container(child: Text("Log out")),
                 ),onTap: (){
-                model.logout();
-               _onBackPressed();
+                 model.logout();
+                _onBackPressed();
+
               },),
             )
               ],

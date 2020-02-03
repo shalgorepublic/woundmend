@@ -53,13 +53,13 @@ class _MyAppState extends State<MyApp> {
      initialRoute: '/',
       routes: {
         '/': (BuildContext context) =>
-        !_isAuthenticated ? MyHomePage():  ProfileScreen(),
+        _isAuthenticated ? ProfileScreen():  MyHomePage(),
         '/emailPage': (BuildContext context) => EmailPage(),
-        '/profilePage': (BuildContext context) =>
-        !_isAuthenticated ? MyHomePage() :  ProfileScreen(),
+        '/profilePage': (BuildContext context) =>  ProfileScreen(),
         '/signup': (BuildContext context) => SignupScreen(),
         '/library': (BuildContext context) => LibraryScreen(),
         '/inboxScreen': (BuildContext context) => InboxScreen(),
+        '/myHomePage': (BuildContext context) => MyHomePage(),
       },
     ),);
   }
