@@ -1,8 +1,6 @@
 import 'package:derm_pro/models/auth.dart';
 import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
-import '../scoped_models/main.dart';
 import 'dart:async';
 
 class VarificationScreen extends StatefulWidget {

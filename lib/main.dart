@@ -1,10 +1,11 @@
 import 'package:derm_pro/Home_screens/Library.dart';
 import 'package:derm_pro/Home_screens/inbox_page.dart';
 import 'package:derm_pro/Home_screens/profile_screen.dart';
+import 'package:derm_pro/Home_screens/skin_type_screen.dart';
 import 'package:derm_pro/models/auth.dart';
 import 'package:derm_pro/registration_screens/signup.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 import './registration_screens/email_page.dart';
 import './ui_elements/dashed_line.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -53,13 +54,14 @@ class _MyAppState extends State<MyApp> {
      initialRoute: '/',
       routes: {
         '/': (BuildContext context) =>
-        _isAuthenticated ? ProfileScreen():  MyHomePage(),
+        _isAuthenticated ? ProfileScreen(_model):  MyHomePage(),
         '/emailPage': (BuildContext context) => EmailPage(),
-        '/profilePage': (BuildContext context) =>  ProfileScreen(),
+        '/profilePage': (BuildContext context) =>  ProfileScreen(_model),
         '/signup': (BuildContext context) => SignupScreen(),
         '/library': (BuildContext context) => LibraryScreen(),
         '/inboxScreen': (BuildContext context) => InboxScreen(),
         '/myHomePage': (BuildContext context) => MyHomePage(),
+        '/skinPage': (BuildContext context) => SkinType(_model),
       },
     ),);
   }

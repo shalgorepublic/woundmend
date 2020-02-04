@@ -13,6 +13,7 @@ class ConnectedModel extends Model {
 }
 
 class UserModel extends ConnectedModel {
+
   AuthMode _mode = AuthMode.SignUp;
 
   AuthMode get mode => _mode;
@@ -157,6 +158,9 @@ class UserModel extends ConnectedModel {
     prefs.remove('token');
     prefs.remove('userEmail');
     prefs.remove('userId');
+  }
+  void forgotPassword(){
+
   }
 }
 

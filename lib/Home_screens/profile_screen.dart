@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:derm_pro/Home_screens/Library.dart';
 import 'package:derm_pro/Home_screens/edit_profile.dart';
-import 'package:derm_pro/Home_screens/skin_type_screen.dart';
 import 'package:derm_pro/Home_screens/ui_elements_home/drawer.dart';
 import 'package:derm_pro/Home_screens/weather/weatherPage.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatefulWidget {
+  final model;
+  ProfileScreen(this.model);
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
@@ -17,7 +18,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
   File _image;
   File imageSource;
   bool imagePickerflag = false;
-
+  @override
+  void initState() {
+    // TODO: implement initState
+   // widget.model.fetchQuestions();
+    super.initState();
+  }
   Future imagepicker() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
     setState(() {
@@ -367,13 +373,7 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                             flagthree = false;
                                           }
                                         });
-                                        Navigator.push<dynamic>(
-                                          context,
-                                          MaterialPageRoute<dynamic>(
-                                            builder: (BuildContext context) =>
-                                                SkinType(),
-                                          ),
-                                        );
+                                        Navigator.pushNamed(context, '/skinPage');
                                       },
                                     ))),
                             Container(
@@ -411,13 +411,7 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                         flagtwo = false;
                                       }
                                     });
-                                    Navigator.push<dynamic>(
-                                      context,
-                                      MaterialPageRoute<dynamic>(
-                                        builder: (BuildContext context) =>
-                                            SkinType(),
-                                      ),
-                                    );
+                                    Navigator.pushNamed(context, '/skinPage');
                                   },
                                 )),
                           ],

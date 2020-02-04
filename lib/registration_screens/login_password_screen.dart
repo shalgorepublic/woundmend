@@ -34,11 +34,7 @@ class _PasswordScreen extends State<PasswordScreen> {
      successInformation = await authenticate(emailName, _password);
      if(successInformation['success']){
      if (successInformation['data']['data']['success'] == true) {
-       Navigator.push<dynamic>(
-         context ,
-         MaterialPageRoute<dynamic>(
-           builder: (BuildContext context) => ProfileScreen(),) ,
-       );
+       Navigator.pushNamed(context, '/profilePage');
      } else {
        showDialog<dynamic>(
          context: context,
@@ -152,7 +148,9 @@ class _PasswordScreen extends State<PasswordScreen> {
                             _password = value;
                           },
                         ),
-                        GestureDetector(
+                        GestureDetector(onTap: (){
+
+                        },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: <Widget>[
