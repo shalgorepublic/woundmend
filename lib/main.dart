@@ -47,6 +47,7 @@ class _MyAppState extends State<MyApp> {
       MaterialApp(
       theme: ThemeData(hoverColor: hexToColor('#F9F9F9'),
         backgroundColor: hexToColor('#2BA2D6'),//blue
+        disabledColor: hexToColor('#F1F1F1'),//blue
         primarySwatch: Colors.blue,
         brightness: Brightness.light,
         accentColor: hexToColor('#8CC63F'),//green
