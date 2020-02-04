@@ -127,7 +127,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                     padding: EdgeInsets.only(bottom: 20, top: 20),
                     child: Column(
                       children: <Widget>[
-                        TextFormField(
+                        TextFormField(obscureText: true,
                           textAlignVertical: TextAlignVertical.center,
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
@@ -170,6 +170,10 @@ class _PasswordScreen extends State<PasswordScreen> {
               ],
             )),
           ),
+          ScopedModelDescendant<MainModel>(
+              builder: (BuildContext context, Widget child, MainModel model) {
+                return model.isLoading ? CircularProgressIndicator() : Container();
+              }),
           Container(
             padding: EdgeInsets.only(top: 20),
             child: Row(

@@ -101,6 +101,8 @@ class UserModel extends ConnectedModel {
         final Map<String , dynamic> responseData = json.decode(response.body);
         final Map<String , dynamic> finalData = responseData['data'];
         bool hasError = true;
+        _isLoading = true;
+        notifyListeners();
         String message = 'Something went wrong.';
         if (finalData['success'] == true) {
           hasError = false;
