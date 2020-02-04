@@ -146,9 +146,10 @@ class UserModel extends ConnectedModel {
       _userSubject.add(true);
       notifyListeners();
     }
-    final String userEmail = prefs.get('userEmail');
-    _userSubject.add(true);
-    notifyListeners();
+    else{
+      _userSubject.add(false);
+      notifyListeners();
+    }
   }
   void logout() async {
     _userSubject.add(false);

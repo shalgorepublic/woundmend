@@ -70,13 +70,17 @@ class ResultScreen extends StatelessWidget {
                 },
               ),
             ),),
+            GestureDetector(child:
             Container(padding:EdgeInsets.only(top: 20,bottom: 20),alignment: Alignment.center,
               child: Text(
                 "Retake",
                 style: TextStyle(
                     fontSize: 18, color: Theme.of(context).backgroundColor),
               ),
-            )
+            ),onTap: (){
+
+              Navigator.pushReplacementNamed(context, '/skinPage');
+            },)
           ],
         ));
   }

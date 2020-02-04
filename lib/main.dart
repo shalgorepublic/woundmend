@@ -33,6 +33,7 @@ class _MyAppState extends State<MyApp> {
     _model.userSubject.listen((bool isAuthenticated) {
       setState(() {
         _isAuthenticated = isAuthenticated;
+        print(_isAuthenticated);
       });
     });
     super.initState();
@@ -54,7 +55,7 @@ class _MyAppState extends State<MyApp> {
      initialRoute: '/',
       routes: {
         '/': (BuildContext context) =>
-        _isAuthenticated ? ProfileScreen(_model):  MyHomePage(),
+        _isAuthenticated ?   ProfileScreen(_model):MyHomePage(),
         '/emailPage': (BuildContext context) => EmailPage(),
         '/profilePage': (BuildContext context) =>  ProfileScreen(_model),
         '/signup': (BuildContext context) => SignupScreen(),

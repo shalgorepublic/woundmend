@@ -1,11 +1,14 @@
 import 'dart:io';
 import 'package:derm_pro/Home_screens/Library.dart';
 import 'package:derm_pro/Home_screens/edit_profile.dart';
+import 'package:derm_pro/Home_screens/skin_result.dart';
 import 'package:derm_pro/Home_screens/ui_elements_home/drawer.dart';
 import 'package:derm_pro/Home_screens/weather/weatherPage.dart';
+import 'package:derm_pro/scoped_models/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class ProfileScreen extends StatefulWidget {
   final model;
@@ -21,7 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     // TODO: implement initState
-   // widget.model.fetchQuestions();
+    widget.model.fetchQuestions();
     super.initState();
   }
   Future imagepicker() async {
@@ -335,6 +338,8 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                         );
                                       },
                                     ))),
+                        ScopedModelDescendant<MainModel>(
+                          builder: (context, child, model) =>
                             Flexible(
                                 flex: 1,
                                 child: Container(
@@ -373,9 +378,10 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                             flagthree = false;
                                           }
                                         });
-                                        Navigator.pushNamed(context, '/skinPage');
+                                        Navigator.pushNamed(
+                                        context , '/skinPage');
                                       },
-                                    ))),
+                                    ))),),
                             Container(
                                 height: 25,
                                 padding: EdgeInsets.only(right: 10),
