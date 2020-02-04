@@ -18,6 +18,7 @@ class PasswordScreen extends StatefulWidget {
 
 class _PasswordScreen extends State<PasswordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool passwordVisible =false;
   Map<String, dynamic> _formData = {
     'email': null,
     'password': null,
@@ -127,16 +128,34 @@ class _PasswordScreen extends State<PasswordScreen> {
                     padding: EdgeInsets.only(bottom: 20, top: 20),
                     child: Column(
                       children: <Widget>[
-                        TextFormField(obscureText: true,
+                        TextFormField(
+                          obscureText: passwordVisible,
                           textAlignVertical: TextAlignVertical.center,
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.blue)),
+                                  borderSide: BorderSide(color: Theme.of(context).backgroundColor)),
                               labelText: 'Password',
+                              hintText: 'Enter your password',
                               labelStyle: TextStyle(fontSize: 18),
                               filled: true,
-                              fillColor: Colors.white),
+                              fillColor: Colors.white,
+                          suffixIcon:IconButton(
+                            icon: Icon(
+                              // Based on passwordVisible state choose the icon
+                              passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Theme.of(context).backgroundColor,
+                            ),
+                            onPressed: () {
+                              // Update the state i.e. toogle the state of passwordVisible variable
+                              setState(() {
+                                passwordVisible = !passwordVisible;
+                              });
+                            },
+                          ), ),
+
                           keyboardType: TextInputType.number,
                           validator: (String value) {
                             if (value.isEmpty || value.length < 6) {
