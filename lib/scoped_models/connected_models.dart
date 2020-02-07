@@ -23,6 +23,7 @@ class UserModel extends ConnectedModel {
   User get user {
     return _authenticatedUser;
   }
+
   PublishSubject<bool> get userSubject {
     return _userSubject;
   }
@@ -33,11 +34,11 @@ class UserModel extends ConnectedModel {
     print(_mode);
   }
 
-  Future<Map<String, dynamic>> authenticate(String email, String password,
-      [String firstName,
-      String lastName,
-      String date,
-      String phoneNumber]) async {
+  Future<Map<String , dynamic>> authenticate(String email , String password ,
+      [String firstName ,
+        String lastName ,
+        String date ,
+        String phoneNumber]) async {
     _isLoading = true;
     notifyListeners();
     http.Response response;
@@ -70,7 +71,7 @@ class UserModel extends ConnectedModel {
             dob: finalData['user']['dob'] ,
             phoneNumber: finalData['user']['contact_no'] ,
             otp: finalData['user']['confirmation_code'] ,
-            token: finalData['auth_token'],
+            token: finalData['auth_token'] ,
             password: password ,
           );
           _userSubject.add(true);
@@ -88,7 +89,7 @@ class UserModel extends ConnectedModel {
         }
         _isLoading = false;
         notifyListeners();
-        return {'success': true, 'data': json.decode(response.body)};
+        return {'success': true , 'data': json.decode(response.body)};
       } else {
         final Map<String , dynamic> loginAuthData = {
           'email': email ,
@@ -134,26 +135,28 @@ class UserModel extends ConnectedModel {
         }
         _isLoading = false;
         notifyListeners();
-        return {'success': true,'data': json.decode(response.body)};
+        return {'success': true , 'data': json.decode(response.body)};
       }
-    }catch(error){
+    } catch (error) {
       _isLoading = false;
       notifyListeners();
-      return{'success':false,'data':{null} };
-  }}
+      return {'success': false , 'data': {null}};
+    }
+  }
 
-   void autoAuthenticate() async {
+  void autoAuthenticate() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.get('token');
     if (token != null) {
       _userSubject.add(true);
       notifyListeners();
     }
-    else{
+    else {
       _userSubject.add(false);
       notifyListeners();
     }
   }
+
   void logout() async {
     _userSubject.add(false);
     _authenticatedUser = null;
@@ -163,28 +166,39 @@ class UserModel extends ConnectedModel {
     prefs.remove('userEmail');
     prefs.remove('userId');
   }
-  void forgotPassword(emails) async{
 
+  Future<Map<String , dynamic>> forgotPassword(name) async {
     http.Response response;
     _isLoading = true;
-    print(_isLoading);
-    print(emails);
     notifyListeners();
-    final Map<String, dynamic> userEmail = {'email':emails};
+    final Map<String , dynamic> userEmail = {'email': name};
     try {
       response = await http.post(
-        'http://dermpro.herokuapp.com//api/v1/users/forget_password?',body: userEmail
+          'http://dermpro.herokuapp.com//api/v1/users/forget_password?' ,
+          body: userEmail
       );
       final Map<String , dynamic> responseData = json.decode(response.body);
 
-      print("forgot password");
-      print(responseData);
+      final Map<String , dynamic> finalData = responseData['data'];
+      bool hasError = true;
+      _isLoading = true;
+      notifyListeners();
+      print(finalData);
+      String message = 'Something went wrong.';
+      if (finalData['success'] == true) {
+        hasError = false;
+        message = 'Authentication Succeeded';
+        _isLoading = false;
+        notifyListeners();
+        return{'success':true, 'message':finalData['message']};
+      } else
+        _isLoading = false;
+      notifyListeners();
+      return {'success': true , 'message': finalData['message']};
+    } catch (error) {
       _isLoading = false;
       notifyListeners();
-    }catch(error){
-    //  _isLoading = false;
-      notifyListeners();
-      return null;
+      return {'success': false , 'message': "Some thing went wrong"};
     }
   }
 }

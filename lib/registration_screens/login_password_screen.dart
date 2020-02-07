@@ -1,11 +1,9 @@
-import 'package:derm_pro/Home_screens/profile_screen.dart';
 import 'package:derm_pro/models/auth.dart';
 import 'package:derm_pro/registration_screens/forgot_password.dart';
 import 'package:derm_pro/scoped_models/main.dart';
 import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
-import '../registration_screens/signup.dart';
 
 
 class PasswordScreen extends StatefulWidget {
@@ -172,7 +170,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                           Navigator.push<dynamic>(
                             context ,
                             MaterialPageRoute<dynamic>(
-                              builder: (BuildContext context) => ForgotPasswordScreen(),) ,
+                              builder: (BuildContext context) => ForgotPasswordScreen(emailName),) ,
                           );
                         },
                           child: Row(

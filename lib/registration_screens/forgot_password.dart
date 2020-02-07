@@ -1,12 +1,66 @@
+import 'package:derm_pro/registration_screens/forgot_password_success.dart';
 import 'package:derm_pro/scoped_models/main.dart';
 import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
+  final email;
+  ForgotPasswordScreen(this.email);
+
   final _text = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    void _submitForm(Function forgotPassword) async {
+
+      Map<String, dynamic> successInformation;
+      successInformation = await forgotPassword(_text.text);
+      if(successInformation['success']){
+        if (successInformation['message'] == 'Password sent to email') {
+          Navigator.push<dynamic>(
+            context ,
+            MaterialPageRoute<dynamic>(
+              builder: (context) => ForgotPasswordSuccessScreen(_text.text),) ,
+          );
+        } else {
+          showDialog<dynamic>(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('En Error Occured'),
+                content: Text(successInformation['message']),
+                actions: <Widget>[
+                  FlatButton(
+                    child: Text('Okey'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              );
+            },
+          );
+        }
+      }
+      else
+        showDialog<dynamic>(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('En Error Occured'),
+              content: Text("Some thing went wrong"),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('Okey'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          },
+        );
+    }
     return Scaffold(
         body: ListView(
       children: <Widget>[
@@ -100,15 +154,8 @@ class ForgotPasswordScreen extends StatelessWidget {
                                   ],
                                 )),
                             onTap: () {
-                              model.forgotPassword(_text.text);
-                            //  _submitForm(model.authenticate);
-                              /* if(_formKey.currentState.validate()) {
-                      Navigator.push<dynamic>(
-                        context ,
-                        MaterialPageRoute<dynamic>(
-                          builder: (BuildContext context) => ProfileScreen(),) ,
-                      );
-                    }*/
+                          //    model.forgotPassword(_text.text);
+                               _submitForm(model.forgotPassword);
                             },
                           )),
                 ],
