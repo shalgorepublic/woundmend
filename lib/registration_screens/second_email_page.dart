@@ -57,7 +57,7 @@ class _SecondEmailPageState extends State<SecondEmailPage> {
                         Container(
                           padding: EdgeInsets.only(top: 30, bottom: 20,left: 30,right: 30),
                           child: Text(
-                            "At which email do you want to receive result about your health?",
+                            "Enter your email to receive results about your health",
     textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 16,
@@ -98,7 +98,7 @@ class _SecondEmailPageState extends State<SecondEmailPage> {
                                    _email = value;
                                 },
                               ),
-                              promoflag ?
+                             /* promoflag ?
                                   Container(padding:EdgeInsets.only(top: 10),child:
                               TextFormField(
                                 decoration: InputDecoration(
@@ -120,8 +120,9 @@ class _SecondEmailPageState extends State<SecondEmailPage> {
                                 onSaved: (String value) {
                                   // _formData['email'] = value;
                                 },
-                              )):
-                                  Container(),
+                              )
+                                  ):
+                                  Container(),*/
                             ],),
                             ),),
                       ],
@@ -173,7 +174,7 @@ class _SecondEmailPageState extends State<SecondEmailPage> {
                   ],
                 ),
               ),
-              Container(
+             /* Container(
                 padding: EdgeInsets.only(top: 70,bottom: 40),
                 child: SizedBox(
                   width: 250.0,
@@ -194,56 +195,16 @@ class _SecondEmailPageState extends State<SecondEmailPage> {
                       promoflag = true;
                     });
                     },
-                    /* onPressed: () {
+                    *//* onPressed: () {
                       Navigator.push<dynamic>(
                         context,
                         MaterialPageRoute<dynamic>(
                             builder: (context) => SignupScreen()),
                       );
-                    },*/
+                    },*//*
                   ),
                 ),
-              ),
-              Container(
-                width: 250,
-                height: 40,
-                child: RaisedButton(
-                  elevation: 4,
-                  padding: EdgeInsets.zero,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  color: Theme.of(context).accentColor,
-                  child: FittedBox(
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          '- - - - - - -',
-                          style: TextStyle(fontSize: 12),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 60),
-                          child: Text('LOG IN',style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: Colors.white),),
-                        ),
-                        Text(
-                          '- - - - - - -',
-                          style: TextStyle(fontSize: 12),
-                        ),
-                      ],
-                    ),
-                  ),
-                  textColor: Colors.white,
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil('/emailPage',
-                        ModalRoute.withName("/signup"));
-                  },
-                ),
-              ),
-              SizedBox(height: 30,)
+              ),*/
             ])
           ],
         ));

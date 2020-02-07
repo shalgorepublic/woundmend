@@ -50,7 +50,7 @@ class _EmailPageState extends State<EmailPage> {
                 Container(
                   padding: EdgeInsets.only(top: 20, bottom: 10),
                   child: Text(
-                    "WHAT IS YOUR EMAIL?",
+                    "Enter Your Email to Login",
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

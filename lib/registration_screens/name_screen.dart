@@ -50,7 +50,7 @@ class _NameScreenState extends State<NameScreen> {
                         Container(
                           padding: EdgeInsets.only(top: 20, bottom: 10),
                           child: Text(
-                            "WHAT IS YOUR FIRST NAME?",
+                            "Enter Your First Name?",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 //letterSpacing: 1.0,
@@ -141,7 +141,7 @@ class _NameScreenState extends State<NameScreen> {
                 ),
               ),
               SizedBox(height: 150,),
-              Container(
+              /*Container(
                 width: 250,
                 height: 40,
                 child: RaisedButton(
@@ -177,7 +177,7 @@ class _NameScreenState extends State<NameScreen> {
                         ModalRoute.withName("/signup"));
                   },
                 ),
-              )
+              )*/
 
             ])
           ],

@@ -2,6 +2,7 @@ import 'package:derm_pro/Home_screens/Library.dart';
 import 'package:derm_pro/Home_screens/inbox_page.dart';
 import 'package:derm_pro/Home_screens/profile_screen.dart';
 import 'package:derm_pro/Home_screens/skin_type_screen.dart';
+import 'package:derm_pro/Home_screens/welcome_page.dart';
 import 'package:derm_pro/models/auth.dart';
 import 'package:derm_pro/registration_screens/signup.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +65,7 @@ class _MyAppState extends State<MyApp> {
         '/inboxScreen': (BuildContext context) => InboxScreen(),
         '/myHomePage': (BuildContext context) => MyHomePage(),
         '/skinPage': (BuildContext context) => SkinType(_model),
+        '/welcomePage': (BuildContext context) => WelcomePage(),
       },
     ),);
   }
@@ -94,7 +96,7 @@ class MyHomePage extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(20),
               child: Text(
-                'Worried about a skin spot?',
+                'Skin spot can become a worry',
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
             ),
@@ -103,7 +105,7 @@ class MyHomePage extends StatelessWidget {
               padding:
               EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 30),
               child: Text(
-                  '1 in 5 people get skin cancer.Early detection is the key to treating it.',
+                  '1 in 5 people get skin cancer. Don’t worry! DermPro is here to assist in early detection and treatment of your spot.',
                   textAlign: TextAlign.center),
             ),
             // SizedBox(height: 10,),
@@ -115,9 +117,9 @@ class MyHomePage extends StatelessWidget {
             // SizedBox(height: 10,),
             Container(
               padding:
-              EdgeInsets.only(top: 20, bottom: 40, left: 30, right: 30),
+              EdgeInsets.only(top: 20, bottom: 20, left: 30, right: 30),
               child: Text(
-                  'Check your skin forsign of skin cancer by taking a photowith your smart phone',
+                  'Get your skin checked now by simply taking a photo using your smartphone.',
                   textAlign: TextAlign.center),
             ),
 
@@ -129,7 +131,7 @@ class MyHomePage extends StatelessWidget {
                 shape: new RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5)),
                 child: new Text(
-                  'FIND OUT MORE',
+                  'Learn More',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,

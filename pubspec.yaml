@@ -59,6 +59,12 @@ flutter:
     - assets/book.png
     - assets/gear.png
     - assets/mail.png
+    - assets/sun.png
+    - assets/scan.png
+    - assets/polaroids.png
+    - assets/checked.png
+    - assets/clipboard.png
+    - assets/letter.png
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

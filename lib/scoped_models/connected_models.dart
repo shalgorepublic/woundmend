@@ -138,6 +138,7 @@ class UserModel extends ConnectedModel {
       }
     }catch(error){
       _isLoading = false;
+      notifyListeners();
       return{'success':false,'data':{null} };
   }}
 
@@ -162,8 +163,29 @@ class UserModel extends ConnectedModel {
     prefs.remove('userEmail');
     prefs.remove('userId');
   }
-  void forgotPassword(){
+  void forgotPassword(emails) async{
 
+    http.Response response;
+    _isLoading = true;
+    print(_isLoading);
+    print(emails);
+    notifyListeners();
+    final Map<String, dynamic> userEmail = {'email':emails};
+    try {
+      response = await http.post(
+        'http://dermpro.herokuapp.com//api/v1/users/forget_password?',body: userEmail
+      );
+      final Map<String , dynamic> responseData = json.decode(response.body);
+
+      print("forgot password");
+      print(responseData);
+      _isLoading = false;
+      notifyListeners();
+    }catch(error){
+    //  _isLoading = false;
+      notifyListeners();
+      return null;
+    }
   }
 }
 

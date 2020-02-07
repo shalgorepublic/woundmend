@@ -1,5 +1,6 @@
 import 'package:derm_pro/Home_screens/profile_screen.dart';
 import 'package:derm_pro/models/auth.dart';
+import 'package:derm_pro/registration_screens/forgot_password.dart';
 import 'package:derm_pro/scoped_models/main.dart';
 import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class _PasswordScreen extends State<PasswordScreen> {
      successInformation = await authenticate(emailName, _password);
      if(successInformation['success']){
      if (successInformation['data']['data']['success'] == true) {
-       Navigator.pushNamed(context, '/profilePage');
+       Navigator.pushNamed(context, '/welcomePage');
      } else {
        showDialog<dynamic>(
          context: context,
@@ -107,7 +108,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                 Container(
                   padding: EdgeInsets.only(top: 20, bottom: 10),
                   child: Text(
-                    "ENTER YOUR PASSWORD",
+                    "Enter Your Password",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 16,
@@ -168,7 +169,11 @@ class _PasswordScreen extends State<PasswordScreen> {
                           },
                         ),
                         GestureDetector(onTap: (){
-
+                          Navigator.push<dynamic>(
+                            context ,
+                            MaterialPageRoute<dynamic>(
+                              builder: (BuildContext context) => ForgotPasswordScreen(),) ,
+                          );
                         },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,

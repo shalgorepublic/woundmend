@@ -44,7 +44,7 @@ class _SignupScreenState extends State<SignupScreen> {
             Container(
               padding: EdgeInsets.all(20) ,
               child: Text(
-                'Join DERM PRO Today' ,
+                'Join DERM PRO' ,
                 style: TextStyle(fontSize: 22 , fontWeight: FontWeight.bold) ,
               ) ,
             ) ,
@@ -57,7 +57,7 @@ class _SignupScreenState extends State<SignupScreen> {
               padding:
               EdgeInsets.only(top: 10 , bottom: 20 , left: 30 , right: 30) ,
               child: Text(
-                  'We need you to create an account so you can secuerly store your skin risk assessments.' ,
+                  'Account registration is required to store your skin risk assessment and to provide feedback' ,
                   textAlign: TextAlign.center) ,
             ) ,
             const MySeparator(color: Colors.blue) ,
@@ -109,7 +109,7 @@ class _SignupScreenState extends State<SignupScreen> {
               padding:
               EdgeInsets.only(bottom: 30 , left: 30 , right: 30) ,
               child: Text(
-                  'We care about your privacy.We are IOS certified for information Security and Medical Device Quality Management.' ,
+                  'Your privacy is out most responsibility' ,
                   textAlign: TextAlign.center) ,
             ) ,
             Container(

@@ -131,7 +131,7 @@ class _PhoneScreen extends State<PhoneScreen> {
                 Container(
                   padding: EdgeInsets.only(top: 20, bottom: 10),
                   child: Text(
-                    "ENTER YOUR NUMBER",
+                    "Enter Your Number",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 16,
@@ -229,7 +229,7 @@ class _PhoneScreen extends State<PhoneScreen> {
           SizedBox(
             height: 80,
           ),
-          Container(
+         /* Container(
             width: 250,
             height: 40,
             child: RaisedButton(
@@ -267,7 +267,7 @@ class _PhoneScreen extends State<PhoneScreen> {
                     '/emailPage', ModalRoute.withName("/signup"));
               },
             ),
-          )
+          )*/
         ])
       ],
     ));

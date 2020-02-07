@@ -77,7 +77,7 @@ class _DobScreen extends State<DobScreen> {
                 Container(
                   padding: EdgeInsets.only(top: 20, bottom: 10),
                   child: Text(
-                    "WHAT IS YOUR DATE OF BIRTH",
+                    "Enter Your Date of Birth",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 16,
@@ -206,7 +206,7 @@ class _DobScreen extends State<DobScreen> {
           SizedBox(
             height: 60,
           ),
-          Container(
+          /*Container(
             width: 250,
             height: 40,
             child: RaisedButton(
@@ -245,7 +245,7 @@ class _DobScreen extends State<DobScreen> {
                     ModalRoute.withName("/signup"));
               },
             ),
-          )
+          )*/
         ])
       ],
     ));

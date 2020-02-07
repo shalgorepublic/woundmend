@@ -58,7 +58,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                         Container(
                           padding: EdgeInsets.only(top: 20 , bottom: 10,) ,
                           child: Text(
-                            "ENTER YOUR PASSWORD" ,
+                            "Enter Your Password" ,
                             textAlign: TextAlign.center ,
                             style: TextStyle(
                                 fontSize: 16 ,
@@ -159,7 +159,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                   ] ,
                 ) ,
               ) ,
-              SizedBox(height: 80,),
+              /*SizedBox(height: 80,),
               Container(
                 width: 250,
                 height: 40,
@@ -196,7 +196,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                         ModalRoute.withName("/signup"));
                   },
                 ),
-              )
+              )*/
 
             ])
           ] ,

@@ -67,7 +67,7 @@ class _LastNameScreenState extends State<LastNameScreen> {
                         Container(
                           padding: EdgeInsets.only(top: 20, bottom: 10),
                           child: Text(
-                            "WHAT IS YOUR LAST NAME?",
+                            "Enter Your Last Name",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 16,
@@ -155,7 +155,7 @@ class _LastNameScreenState extends State<LastNameScreen> {
                 ),
               ),
               SizedBox(height: 150,),
-              Container(
+             /* Container(
                 width: 250,
                 height: 40,
                 child: RaisedButton(
@@ -191,7 +191,7 @@ class _LastNameScreenState extends State<LastNameScreen> {
                         ModalRoute.withName("/signup"));
                   },
                 ),
-              )
+              )*/
             ])
           ],
         ));
