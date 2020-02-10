@@ -7,20 +7,23 @@ import 'package:scoped_model/scoped_model.dart';
 class ForgotPasswordScreen extends StatelessWidget {
   final email;
   ForgotPasswordScreen(this.email);
-
-  final _text = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+   String  _email = null;
   @override
   Widget build(BuildContext context) {
     void _submitForm(Function forgotPassword) async {
-
+      if (!_formKey.currentState.validate()) {
+        return;
+      }
+      _formKey.currentState.save();
       Map<String, dynamic> successInformation;
-      successInformation = await forgotPassword(_text.text);
+      successInformation = await forgotPassword(_email);
       if(successInformation['success']){
         if (successInformation['message'] == 'Password sent to email') {
           Navigator.push<dynamic>(
             context ,
             MaterialPageRoute<dynamic>(
-              builder: (context) => ForgotPasswordSuccessScreen(_text.text),) ,
+              builder: (context) => ForgotPasswordSuccessScreen(_email),) ,
           );
         } else {
           showDialog<dynamic>(
@@ -62,7 +65,8 @@ class ForgotPasswordScreen extends StatelessWidget {
         );
     }
     return Scaffold(
-        body: ListView(
+        body: SafeArea(child:
+        ListView(
       children: <Widget>[
         AppBarLine(),
         Column(
@@ -92,20 +96,69 @@ class ForgotPasswordScreen extends StatelessWidget {
                 padding: EdgeInsets.only(left: 20, right: 20, top: 20),
                 alignment: Alignment.center,
                 child: Card(
-                    child: Container(
-                  padding:
-                      EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 10),
-                  child: TextField(
-                    controller: _text,
-                    textAlignVertical: TextAlignVertical.center,
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        labelText: 'Email',
-                        hintText: 'Enter your email'),
-                  ),
-                ))),
+                    child:
+                    Form(
+                        key: _formKey,
+                        child:
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          decoration: new BoxDecoration(
+                            //new Color.fromRGBO(255, 0, 0, 0.0),
+                            borderRadius: new BorderRadius.all(Radius.circular(50)),
+                          ),
+                          child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    padding: EdgeInsets.only(top: 20, bottom: 10),
+                                    child: Text(
+                                      "Enter Your Email",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Theme.of(context).backgroundColor),
+                                    ),
+                                  ),
+                                  Container(
+                                    width: 50,
+                                    height: 2,
+                                    color: Theme.of(context).backgroundColor,
+                                  ),
+                                  Container(
+                                      margin: const EdgeInsets.only(right: 10, left: 10),
+                                      padding: EdgeInsets.only(bottom: 20, top: 20),
+                                      child: TextFormField(initialValue: email,
+                                        decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                                borderSide: BorderSide(color: Colors.blue)),
+                                            labelText: 'E-Mail',
+                                            filled: true,
+                                            fillColor: Colors.white),
+                                        keyboardType: TextInputType.emailAddress,
+                                        validator: (String value) {
+                                          if (value.isEmpty ||
+                                              // ignore: missing_return
+                                              !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                                                  .hasMatch(value)) {
+                                            // ignore: missing_return, missing_return
+                                            return 'Please enter a valid email';
+                                          }
+                                        },
+                                        onSaved: (String value) {
+                                         _email  = value ;
+                                        },
+                                      )),
+                                ],
+                              ),
+                        )),
+                )),
             ScopedModelDescendant<MainModel>(
-              builder: (context, child, model) => model.isLoading ? CircularProgressIndicator(): Container() ),
+              builder: (context, child, model) => model.isLoading ?  Container(padding: EdgeInsets.only(top: 20),
+                child: Row(mainAxisAlignment:MainAxisAlignment.center,children: [
+                  CircularProgressIndicator(),
+                  SizedBox(width: 20,),
+                  Text("Please Wait....",style: TextStyle(color: Colors.blueAccent),)
+                ]),
+              ): Container() ),
             SizedBox(height: 50,),
             Container(
               padding: EdgeInsets.only(top: 20),
@@ -202,6 +255,6 @@ class ForgotPasswordScreen extends StatelessWidget {
           ],
         )
       ],
-    ));
+    )));
   }
 }

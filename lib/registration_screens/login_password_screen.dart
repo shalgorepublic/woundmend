@@ -18,6 +18,7 @@ class PasswordScreen extends StatefulWidget {
 class _PasswordScreen extends State<PasswordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool passwordVisible =false;
+  bool  loading = false;
   Map<String, dynamic> _formData = {
     'email': null,
     'password': null,
@@ -30,6 +31,10 @@ class _PasswordScreen extends State<PasswordScreen> {
        return;
      }
      _formKey.currentState.save();
+     setState(() {
+       loading = true;
+     });
+
      Map<String, dynamic> successInformation;
      successInformation = await authenticate(emailName, _password);
      if(successInformation['success']){
@@ -194,7 +199,13 @@ class _PasswordScreen extends State<PasswordScreen> {
           ),
           ScopedModelDescendant<MainModel>(
               builder: (BuildContext context, Widget child, MainModel model) {
-                return model.isLoading ? CircularProgressIndicator() : Container();
+                return model.isLoading ? Center(
+                  child: Row(mainAxisAlignment:MainAxisAlignment.center,children: [
+                    CircularProgressIndicator(),
+                    SizedBox(width: 20,),
+                    Text("Please Wait....",style: TextStyle(color: Colors.blueAccent),)
+                  ]),
+                ) : Container();
               }),
           Container(
             padding: EdgeInsets.only(top: 20),

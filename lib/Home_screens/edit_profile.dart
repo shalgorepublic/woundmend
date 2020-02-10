@@ -1,4 +1,6 @@
+import 'package:derm_pro/scoped_models/main.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -55,7 +57,7 @@ class _EditProfileState extends State<EditProfile> {
                     onChanged: _handleRadioValueChange1,
                   ),
                   new Text(
-                    'Mr',
+                    'Male',
                     style: new TextStyle(
                         fontSize: 16.0,
                         color: _radioValue1 == 0
@@ -69,7 +71,7 @@ class _EditProfileState extends State<EditProfile> {
                     onChanged: _handleRadioValueChange1,
                   ),
                   new Text(
-                    'Mrs',
+                    'Femail',
                     style: new TextStyle(
                         fontSize: 16.0,
                         color: _radioValue1 == 1
@@ -169,14 +171,18 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return
+      ScopedModelDescendant<MainModel>(
+          builder: (BuildContext context, Widget child, MainModel model) {
+            return
+      Container(
         padding: EdgeInsets.only(left: 20, right: 20),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              TextFormField(
+              TextFormField(initialValue: '${model.user.firstName}',
                 decoration: const InputDecoration(
                   labelText: 'First Name',
                   contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -190,7 +196,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 },
               ),
               const SizedBox(height: 16.0),
-              TextFormField(
+              TextFormField(initialValue: '${model.user.lastName}',
                 decoration: const InputDecoration(
                   labelText: 'Last Name',
                   contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -204,7 +210,8 @@ class _RegisterFormState extends State<RegisterForm> {
                 },
               ),
               const SizedBox(height: 16.0),
-              TextFormField( onSaved: (String value) {
+              TextFormField(initialValue: '${model.user.dob}',
+                onSaved: (String value) {
               //  _email = value;
               },
                 decoration: const InputDecoration(
@@ -246,7 +253,7 @@ class _RegisterFormState extends State<RegisterForm> {
                   ),
             ],
           ),
-        ));
+        ));});
   }
 
   void _submit() {

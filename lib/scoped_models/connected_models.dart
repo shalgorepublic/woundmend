@@ -126,7 +126,12 @@ class UserModel extends ConnectedModel {
           final SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setString('token' , finalData['auth_token']);
           prefs.setString('userEmail' , email);
+          prefs.setString('password' , password);
           prefs.setInt('userId' , finalData['user']['id']);
+          prefs.setString('first_name' , finalData['user']['first_name']);
+          prefs.setString('last_name' , finalData['user']['last_name']);
+          prefs.setString('dob' , finalData['user']['dob']);
+          prefs.setString('contact_no' , finalData['user']['contact_no']);
         } else if (finalData['message'] ==
             'Account already exists for this email') {
           message = 'This Email is already exists.';
@@ -147,8 +152,30 @@ class UserModel extends ConnectedModel {
   void autoAuthenticate() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.get('token');
+    final int UserId = prefs.get('userId');
+    final String userEmail = prefs.get('userEmail');
+    final String first_name = prefs.get('first_name');
+    final String last_name = prefs.get('last_name');
+    final String dob = prefs.get('dob');
+    final String contact_no = prefs.get('contact_no');
+    final String password = prefs.get('password');
+    print(first_name);
     if (token != null) {
       _userSubject.add(true);
+      _authenticatedUser = User(
+        id: UserId ,
+        email: userEmail ,
+        firstName: first_name ,
+        lastName: last_name ,
+        dob: dob ,
+        phoneNumber: contact_no ,
+        otp: null ,
+        token: token ,
+        password: password ,
+      );
+      print("helo auto");
+      print(_authenticatedUser);
+
       notifyListeners();
     }
     else {

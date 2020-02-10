@@ -15,7 +15,7 @@ class ForgotPasswordSuccessScreen extends StatelessWidget {
           children: <Widget>[
             AppBarLine(),
             Container(
-              padding: EdgeInsets.only(left: 40, right: 40, top: 80),
+              padding: EdgeInsets.only(left: 40, right: 40, top: 60),
               child: Center(
                 //child: Text("helo"),
                 child: Image.asset(
@@ -26,11 +26,11 @@ class ForgotPasswordSuccessScreen extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(bottom: 20, top: 10),
+              padding: EdgeInsets.only(bottom: 20,left: 20,right: 20),
               alignment: Alignment.center,
               child: Text(
-                "Wehave	sent	you	an	email	to	verify	your	account.",
-                style: TextStyle(fontSize: 24, color: Colors.grey),
+                "We have	sent	you	an	email	to	verify	your	account.",
+                style: TextStyle(fontSize: 24, color: Colors.grey),textAlign: TextAlign.center,
               ),
             ),
             Container(

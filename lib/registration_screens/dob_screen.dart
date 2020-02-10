@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'package:derm_pro/registration_screens/email_page.dart';
 import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
 import '../registration_screens/phone_number_screen.dart';
-import './email_page.dart';
 import 'package:intl/intl.dart';
 
 class DobScreen extends StatefulWidget {
