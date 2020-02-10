@@ -173,9 +173,6 @@ class UserModel extends ConnectedModel {
         token: token ,
         password: password ,
       );
-      print("helo auto");
-      print(_authenticatedUser);
-
       notifyListeners();
     }
     else {

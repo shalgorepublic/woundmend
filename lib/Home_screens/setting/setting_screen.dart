@@ -1,3 +1,4 @@
+import 'package:derm_pro/Home_screens/edit_profile.dart';
 import 'package:derm_pro/Home_screens/setting/notification_screen.dart';
 import 'package:derm_pro/Home_screens/ui_elements_home/drawer.dart';
 import 'package:derm_pro/scoped_models/main.dart';
@@ -59,11 +60,15 @@ class _SettingScreenState extends State<SettingScreen> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   )),
                 ),
+                GestureDetector(child:
                 Container(
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
                   child: Container(child: Text("Personal Details")),
-                ),
+                ),onTap: (){
+                  Navigator.of(context).push(MaterialPageRoute<dynamic>(
+                      builder: (BuildContext context) => EditProfile()));
+                },),
                 Container(
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
