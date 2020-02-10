@@ -1,6 +1,7 @@
 import 'package:derm_pro/models/auth.dart';
 import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'dart:async';
 
 class VarificationScreen extends StatefulWidget {
@@ -15,12 +16,13 @@ class VarificationScreen extends StatefulWidget {
 
 class _VarificationScreen extends State<VarificationScreen> {
   Map<String, dynamic> _formData;
-
   _VarificationScreen(this._formData);
+  bool _onEditing = true;
+  String _code;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   AuthMode _authMode = AuthMode.SignUp;
-  String _verifyCode;
+//  String _verifyCode;
 
   @override
   void initState() {
@@ -30,12 +32,12 @@ class _VarificationScreen extends State<VarificationScreen> {
     super.initState();
   }
 
-  void _submitForm() async {
+ /* void _submitForm() async {
     if (!_formKey.currentState.validate()) {
       return;
     }
     _formKey.currentState.save();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +85,30 @@ class _VarificationScreen extends State<VarificationScreen> {
                   height: 2,
                   color: Theme.of(context).backgroundColor,
                 ),
-                Form(
+                VerificationCode(
+                  keyboardType: TextInputType.number,
+                  length: 4,
+                  autofocus: false,
+                  onCompleted: (String value) {
+                    print(value);
+                    setState(() {
+                      _code = value;
+                    });
+                  },
+                  onEditing: (bool value) {
+                    setState(() {
+                      _onEditing = value;
+                    });
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: (_onEditing != false)
+                        ? Container():Container(),
+                  ),
+                ),
+               /* Form(
                     key: _formKey,
                     child: Container(
                         padding: EdgeInsets.only(
@@ -110,7 +135,7 @@ class _VarificationScreen extends State<VarificationScreen> {
                           onSaved: (String value) {
                             _verifyCode = value;
                           },
-                        ))),
+                        ))),*/
               ],
             )),
           ),
@@ -164,9 +189,8 @@ class _VarificationScreen extends State<VarificationScreen> {
                     ),
                   ),
                   onTap: () {
-                    _submitForm();
                     //   if(_formData['otp'] == _verifyCode) {
-                    if ('1234' == _verifyCode) {
+                    if ('1234' ==_code) {
                       Navigator.of(context).pushNamedAndRemoveUntil(
                           '/profilePage', (Route<dynamic> route) => false);
                       //     Navigator.of(context).pushReplacementNamed('/profilePage');

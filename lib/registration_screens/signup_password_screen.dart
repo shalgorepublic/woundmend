@@ -92,7 +92,6 @@ class _PasswordScreen extends State<PasswordScreen> {
                                   labelStyle: TextStyle(fontSize: 18),
                                   filled: true ,
                                   fillColor: Colors.white) ,
-                              keyboardType: TextInputType.number ,
                               validator: (String value) {
                                 if (value.isEmpty || value.length < 6) {
                                   // ignore: missing_return, missing_return
