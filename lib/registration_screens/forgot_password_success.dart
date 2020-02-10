@@ -29,14 +29,14 @@ class ForgotPasswordSuccessScreen extends StatelessWidget {
               padding: EdgeInsets.only(bottom: 20, top: 10),
               alignment: Alignment.center,
               child: Text(
-                "Email Was sent",
+                "Wehave	sent	you	an	email	to	verify	your	account.",
                 style: TextStyle(fontSize: 24, color: Colors.grey),
               ),
             ),
             Container(
               padding: EdgeInsets.only(left: 30, right: 30),
               child: Text(
-                "We've sent an  email  to ${email}. Click the link in the email to reset your password.if you can not find the email, check your other folders such as junk,spam or social",
+                "Please	check	your	inbox	and	follow	the	provided	directions	in	the	emailto	complete	the	verification	process.",
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
             ),
@@ -65,11 +65,14 @@ class ForgotPasswordSuccessScreen extends StatelessWidget {
             Container(padding:EdgeInsets.only(top: 20),
               alignment: Alignment.center,
               child: Text(
-                "I did not receive receive the email",
+                "Did	not	receive	email?	Click	to	resen",
                 style: TextStyle(
                     fontSize: 14, color: Theme.of(context).backgroundColor),
               ),
-            )),
+            ),
+            onTap: (){
+
+            },),
             Container(padding: EdgeInsets.only(left: 50,right: 50,top: 20),
               child: RaisedButton(
                 elevation: 4,
