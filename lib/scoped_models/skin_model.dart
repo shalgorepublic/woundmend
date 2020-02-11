@@ -71,7 +71,7 @@ class SkinModel extends ConnectedModel {
     http.Response response;
     try {
       response = await http.get(
-        'http://dermpro.herokuapp.com//api/v1/questions?quiz_id=1',
+        'http://dermpro.herokuapp.com//api/v1/questions?quiz_id=2',
         headers: {HttpHeaders.authorizationHeader: token},
       );
       var finalData = json.decode(response.body);
