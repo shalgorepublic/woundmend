@@ -74,10 +74,6 @@ class SkinModel extends ConnectedModel {
         'http://dermpro.herokuapp.com//api/v1/questions?quiz_id=1',
         headers: {HttpHeaders.authorizationHeader: token},
       );
-      /* if (response.statusCode == 200 || response.statusCode == 201) {
-      print("helo checking responce");
-      print(response.body);
-    }*/
       var finalData = json.decode(response.body);
       var questionList = finalData['data'];
       if (finalData['data']['success'] == true) {

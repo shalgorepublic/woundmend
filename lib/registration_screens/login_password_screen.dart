@@ -160,7 +160,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                             },
                           ), ),
 
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.text,
                           validator: (String value) {
                             if (value.isEmpty || value.length < 6) {
                               // ignore: missing_return, missing_return

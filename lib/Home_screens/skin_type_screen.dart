@@ -6,6 +6,7 @@ import 'package:scoped_model/scoped_model.dart';
 import '../scoped_models/main.dart';
 
 class SkinType extends StatefulWidget {
+
   final MainModel model;
 
   SkinType(this.model);

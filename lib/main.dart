@@ -6,7 +6,6 @@ import 'package:derm_pro/Home_screens/welcome_page.dart';
 import 'package:derm_pro/models/auth.dart';
 import 'package:derm_pro/registration_screens/signup.dart';
 import 'package:flutter/material.dart';
-//import 'package:shared_preferences/shared_preferences.dart';
 import './registration_screens/email_page.dart';
 import './ui_elements/dashed_line.dart';
 import 'package:scoped_model/scoped_model.dart';

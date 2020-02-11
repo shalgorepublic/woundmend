@@ -76,13 +76,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   backgroundColor: Theme.of(context).backgroundColor,
                   floating: false,
                   pinned: true,
-                  flexibleSpace: FlexibleSpaceBar(
+                  flexibleSpace:
+                  ScopedModelDescendant<MainModel>(
+                    builder: (context, child, model) =>
+                  FlexibleSpaceBar(
                     centerTitle: true,
                     title: Text(
-                      "Johen Micheal",
+                      '${model.user.firstName} ${model.user.lastName}',
                       style: TextStyle(fontSize: 22),
                     ),
-                      ),
+                      )),
                 ),
                 new SliverPadding(
                   padding: new EdgeInsets.all(0.0),
@@ -230,6 +233,8 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
   bool flagthree = false;
   final double circleRadius = 80.0;
   final double circleBorderWidth = 3.0;
+  String skinPage;
+  String riskPage;
 
   @override
   Widget build(BuildContext context) {
@@ -417,7 +422,7 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                         flagtwo = false;
                                       }
                                     });
-                                    Navigator.pushNamed(context, '/skinPage');
+                                    Navigator.of(context).pushNamed('/skinPage');
                                   },
                                 )),
                           ],

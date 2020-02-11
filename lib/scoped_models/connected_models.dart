@@ -23,6 +23,9 @@ class UserModel extends ConnectedModel {
   User get user {
     return _authenticatedUser;
   }
+  bool get loading {
+    return _isLoading;
+  }
 
   PublishSubject<bool> get userSubject {
     return _userSubject;
@@ -121,6 +124,7 @@ class UserModel extends ConnectedModel {
           );
           print(_authenticatedUser.otp);
           print(_authenticatedUser.token);
+          print(_authenticatedUser.id);
           _isLoading = false;
           notifyListeners();
           final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -159,7 +163,6 @@ class UserModel extends ConnectedModel {
     final String dob = prefs.get('dob');
     final String contact_no = prefs.get('contact_no');
     final String password = prefs.get('password');
-    print(first_name);
     if (token != null) {
       _userSubject.add(true);
       _authenticatedUser = User(
@@ -169,9 +172,9 @@ class UserModel extends ConnectedModel {
         lastName: last_name ,
         dob: dob ,
         phoneNumber: contact_no ,
-        otp: null ,
-        token: token ,
-        password: password ,
+        otp: null,
+        token: token,
+        password: password,
       );
       notifyListeners();
     }
@@ -225,6 +228,62 @@ class UserModel extends ConnectedModel {
       return {'success': false , 'message': "Some thing went wrong"};
     }
   }
+  Future<Map<String , dynamic>> update(String name,String lastName,String dob,int userId,String gender) async {
+    http.Response response;
+    _isLoading = true;
+    notifyListeners();
+    final Map<String , dynamic> updatedData = {'first_name': name,'last_name':lastName,'dob':dob,'gender': gender};
+    String token = _authenticatedUser.token;
+    try {
+      response = await http.put(
+          'http://dermpro.herokuapp.com//api/v1/users/${userId}',
+          body: updatedData,headers:{'Authorization':'Bearer $token'}
+      );
+      final Map<String , dynamic> responseData = json.decode(response.body);
+      final Map<String , dynamic> finalData = responseData['data'];
+      bool hasError = true;
+      _isLoading = true;
+      print("helo shahdi");
+      print(finalData);
+      notifyListeners();
+      String message = 'Something went wrong.';
+      if (finalData['message'] == "Updated") {
+        print("helo checking");
+        hasError = false;
+        message = 'Authentication Succeeded';
+        _isLoading = false;
+        _authenticatedUser = User(
+          id: finalData['user']['id'] ,
+          email: finalData['user']['email'] ,
+          firstName: finalData['user']['first_name'] ,
+          lastName: finalData['user']['last_name'] ,
+          dob: finalData['user']['dob'],
+          phoneNumber: finalData['user']['contact_no'] ,
+          otp: finalData['user']['confirmation_code'] ,
+          token: finalData['auth_token'],
+          password: _authenticatedUser.password
+        );
+        final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('token' , finalData['auth_token']);
+        prefs.setString('userEmail' , finalData['user']['email']);
+        prefs.setString('password' , _authenticatedUser.password);
+        prefs.setInt('userId' , finalData['user']['id']);
+        prefs.setString('first_name' , finalData['user']['first_name']);
+        prefs.setString('last_name' , finalData['user']['last_name']);
+        prefs.setString('dob' , finalData['user']['dob']);
+        prefs.setString('contact_no' , finalData['user']['contact_no']);
+        notifyListeners();
+        return{'success':true, 'message':finalData['message']};
+      } else
+        _isLoading = false;
+      notifyListeners();
+      return {'success': true , 'message': finalData['message']};
+    } catch (error) {
+      _isLoading = false;
+      notifyListeners();
+      return {'success': false , 'message': "Some thing went wrong"};
+    }
+}
 }
 
 class UtilityModel extends ConnectedModel {
