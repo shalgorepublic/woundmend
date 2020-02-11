@@ -5,7 +5,6 @@ import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-
 class PasswordScreen extends StatefulWidget {
   final String email;
   const PasswordScreen(this.email);
@@ -17,7 +16,7 @@ class PasswordScreen extends StatefulWidget {
 
 class _PasswordScreen extends State<PasswordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool passwordVisible =false;
+  bool passwordVisible =true;
   bool  loading = false;
   Map<String, dynamic> _formData = {
     'email': null,
