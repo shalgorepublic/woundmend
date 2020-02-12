@@ -80,11 +80,13 @@ class _VarificationScreen extends State<VarificationScreen> {
                         color: Theme.of(context).backgroundColor),
                   ),
                 ),
+                SizedBox(height: 10,),
                 Container(
                   width: 50,
                   height: 2,
                   color: Theme.of(context).backgroundColor,
                 ),
+                SizedBox(height: 20,),
                 VerificationCode(
                   keyboardType: TextInputType.number,
                   length: 4,
@@ -101,6 +103,7 @@ class _VarificationScreen extends State<VarificationScreen> {
                     });
                   },
                 ),
+                SizedBox(height: 30,),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
@@ -192,7 +195,7 @@ class _VarificationScreen extends State<VarificationScreen> {
                     //   if(_formData['otp'] == _verifyCode) {
                     if ('1234' ==_code) {
                       Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/profilePage', (Route<dynamic> route) => false);
+                          '/welcomePage', (Route<dynamic> route) => false);
                       //     Navigator.of(context).pushReplacementNamed('/profilePage');
                     } else {
                       setState(() {

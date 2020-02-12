@@ -28,7 +28,7 @@ class _DrawerBuilderState extends State<DrawerBuilder> {
         'assets/user.png',
       ),
       new MenuItem(
-        "Library",
+        "Photo log",
         'assets/book.png',
       ),
       new MenuItem(
@@ -68,8 +68,7 @@ class _DrawerBuilderState extends State<DrawerBuilder> {
                       ScopedModelDescendant<MainModel>(
                           builder: (context, child, model) => Container(
                                 padding: EdgeInsets.only(left: 20, top: 25),
-                                child: Text(
-                                  'Johenmicheal@gmail.com',
+                                child: Text(model.user.email,
                                   style: TextStyle(color: Colors.white,fontSize: 18),
                                 ),
                               ))

@@ -81,7 +81,7 @@ class _NameScreenState extends State<NameScreen> {
                               validator: (String value) {
                                 if (value.isEmpty ||
                                     // ignore: missing_return
-                                    !RegExp(r'^[a-z A-Z,.\-]+$')
+                                    !RegExp(r'^[a-z A-Z,1-9.\-]+$')
                                         .hasMatch(value)) {
                                   // ignore: missing_return, missing_return
                                   return 'Please enter a valid name';

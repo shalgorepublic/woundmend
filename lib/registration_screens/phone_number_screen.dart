@@ -165,7 +165,7 @@ class _PhoneScreen extends State<PhoneScreen> {
                                 fillColor: Colors.white),
                             keyboardType: TextInputType.number,
                             validator: (String value) {
-                              if (value.isEmpty || value.length < 11) {
+                              if (value.isEmpty) {
                                 // ignore: missing_return, missing_return
                                 return 'Please enter a valid number';
                               }

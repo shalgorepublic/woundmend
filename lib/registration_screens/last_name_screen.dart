@@ -95,7 +95,7 @@ class _LastNameScreenState extends State<LastNameScreen> {
                                   fillColor: Colors.white),
                               keyboardType: TextInputType.text,
                               validator: (String value) {
-                                if (value.isEmpty || value.length < 6 ||  !RegExp(r'^[a-z A-Z,.\-]+$')
+                                if (value.isEmpty ||  !RegExp(r'^[a-z A-Z,1-9.\-]+$')
                                         .hasMatch(value)) {
                                   // ignore: missing_return, missing_return
                                   return 'Please enter a valid name';

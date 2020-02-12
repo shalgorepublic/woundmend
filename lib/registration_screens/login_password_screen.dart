@@ -33,7 +33,6 @@ class _PasswordScreen extends State<PasswordScreen> {
      setState(() {
        loading = true;
      });
-
      Map<String, dynamic> successInformation;
      successInformation = await authenticate(emailName, _password);
      if(successInformation['success']){
@@ -44,7 +43,7 @@ class _PasswordScreen extends State<PasswordScreen> {
          context: context,
          builder: (BuildContext context) {
            return AlertDialog(
-             title: Text('En Error Occured'),
+             title: Text('An Error Occured'),
              content: Text(successInformation['data']['data']['message']),
              actions: <Widget>[
                FlatButton(
@@ -256,13 +255,6 @@ class _PasswordScreen extends State<PasswordScreen> {
                   onTap: () {
                     model.changeMode(AuthMode.Login);
                     _submitForm(model.authenticate);
-                   /* if(_formKey.currentState.validate()) {
-                      Navigator.push<dynamic>(
-                        context ,
-                        MaterialPageRoute<dynamic>(
-                          builder: (BuildContext context) => ProfileScreen(),) ,
-                      );
-                    }*/
                   },
                 )),
               ],
@@ -305,8 +297,8 @@ class _PasswordScreen extends State<PasswordScreen> {
                     ModalRoute.withName("/signup"));
               },
             ),
-          )
-        ])
+          ),
+        ]),
       ],
     ));
   }

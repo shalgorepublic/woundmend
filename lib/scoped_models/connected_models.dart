@@ -163,6 +163,10 @@ class UserModel extends ConnectedModel {
     final String dob = prefs.get('dob');
     final String contact_no = prefs.get('contact_no');
     final String password = prefs.get('password');
+    print(userEmail);
+    print(first_name);
+    print(last_name);
+    print(dob);
     if (token != null) {
       _userSubject.add(true);
       _authenticatedUser = User(
@@ -192,8 +196,12 @@ class UserModel extends ConnectedModel {
     prefs.remove('token');
     prefs.remove('userEmail');
     prefs.remove('userId');
+    prefs.remove('first_name');
+    prefs.remove('last_name');
+    prefs.remove('dob');
+    prefs.remove('contact_no');
+    prefs.remove('password');
   }
-
   Future<Map<String , dynamic>> forgotPassword(name) async {
     http.Response response;
     _isLoading = true;
