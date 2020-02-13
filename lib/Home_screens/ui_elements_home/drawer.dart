@@ -28,7 +28,7 @@ class _DrawerBuilderState extends State<DrawerBuilder> {
         'assets/user.png',
       ),
       new MenuItem(
-        "Photo log",
+        "Your Scans",
         'assets/book.png',
       ),
       new MenuItem(
@@ -58,16 +58,25 @@ class _DrawerBuilderState extends State<DrawerBuilder> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+                      Padding(padding: EdgeInsets.only(left:20.0,top: 25),child:
                       Container(
-                        padding: EdgeInsets.only(top: 40, left: 20),
-                        child: CircleAvatar(
-                          radius: 30,
-                          backgroundImage: AssetImage('assets/bill_gate.jpg'),
-                        ),
-                      ),
+                          width: 70,
+                          height: 70,
+                          decoration:
+                          ShapeDecoration(shape: CircleBorder(), color: Colors.white),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.all(Radius.circular(70)),
+                              child: FadeInImage(fit: BoxFit.cover,
+                                //   image: NetworkImage(product.image),
+                                image: AssetImage('assets/bill_gate.jpg'),
+                                placeholder: AssetImage('assets/profile.png',),
+                              ),
+
+                            ),
+                        )),
                       ScopedModelDescendant<MainModel>(
                           builder: (context, child, model) => Container(
-                                padding: EdgeInsets.only(left: 20, top: 25),
+                                padding: EdgeInsets.only(left: 20, top: 20),
                                 child: Text(model.user.email,
                                   style: TextStyle(color: Colors.white,fontSize: 18),
                                 ),
@@ -103,7 +112,7 @@ class _DrawerBuilderState extends State<DrawerBuilder> {
                               Navigator.pushReplacementNamed(
                                   context, '/profilePage');
                             }
-                            if (_currentSelected == 1) {
+                            if (_currentSelected == 1){
                               Navigator.pop(context);
                               Navigator.of(context).push(
                                   MaterialPageRoute<dynamic>(

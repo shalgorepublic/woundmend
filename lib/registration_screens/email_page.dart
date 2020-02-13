@@ -53,7 +53,7 @@ class _EmailPageState extends State<EmailPage> {
                     "Enter Your Email to Login",
                     style: TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Bold',
                         color: Theme.of(context).backgroundColor),
                   ),
                 ),
@@ -156,7 +156,7 @@ class _EmailPageState extends State<EmailPage> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 60),
                       child: Text('SIGNUP',style: TextStyle( fontWeight: FontWeight.bold ,
-                          fontSize: 18 ),),
+                          fontSize: 18 ,fontFamily: 'Bold'),),
                     ),
                     Text(
                       '- - - - - - -',

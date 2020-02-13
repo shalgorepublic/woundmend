@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'dart:async';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class VarificationScreen extends StatefulWidget {
   final Map<String, dynamic> formData;
   bool codeFlag = false;
@@ -29,15 +31,9 @@ class _VarificationScreen extends State<VarificationScreen> {
     // TODO: implement initState
     print("otp in verification screen");
     print(_formData['otp']);
+    print(_formData);
     super.initState();
   }
-
- /* void _submitForm() async {
-    if (!_formKey.currentState.validate()) {
-      return;
-    }
-    _formKey.currentState.save();
-  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +72,7 @@ class _VarificationScreen extends State<VarificationScreen> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Bold',
                         color: Theme.of(context).backgroundColor),
                   ),
                 ),
@@ -92,7 +88,6 @@ class _VarificationScreen extends State<VarificationScreen> {
                   length: 4,
                   autofocus: false,
                   onCompleted: (String value) {
-                    print(value);
                     setState(() {
                       _code = value;
                     });
@@ -111,34 +106,6 @@ class _VarificationScreen extends State<VarificationScreen> {
                         ? Container():Container(),
                   ),
                 ),
-               /* Form(
-                    key: _formKey,
-                    child: Container(
-                        padding: EdgeInsets.only(
-                            bottom: 30, top: 30, right: 30, left: 30),
-                        child: TextFormField(
-                          textAlignVertical: TextAlignVertical.center,
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.blue)),
-                              labelText: 'Verification Code',
-                              labelStyle: TextStyle(fontSize: 18),
-                              filled: true,
-                              fillColor: Colors.white),
-                          keyboardType: TextInputType.number,
-                          validator: (String value) {
-                            if (value.isEmpty ||
-                                value.length <= 3 ||
-                                value.length > 4) {
-                              // ignore: missing_return, missing_return
-                              return 'Please enter 4 digit Code';
-                            }
-                          },
-                          onSaved: (String value) {
-                            _verifyCode = value;
-                          },
-                        ))),*/
               ],
             )),
           ),
@@ -191,9 +158,17 @@ class _VarificationScreen extends State<VarificationScreen> {
                       ],
                     ),
                   ),
-                  onTap: () {
+                  onTap: () async {
                     //   if(_formData['otp'] == _verifyCode) {
                     if ('1234' ==_code) {
+                      final SharedPreferences prefs = await SharedPreferences.getInstance();
+                      prefs.setString('token' , _formData['auth_token']);
+                      prefs.setString('userEmail' , _formData['userEmail']);
+                      prefs.setInt('userId' , _formData['userId']);
+                      prefs.setString('first_name' , _formData['first_name']);
+                      prefs.setString('last_name' , _formData['last_name']);
+                      prefs.setString('dob' , _formData['dob']);
+                      prefs.setString('contact_no' , _formData['contact_no']);
                       Navigator.of(context).pushNamedAndRemoveUntil(
                           '/welcomePage', (Route<dynamic> route) => false);
                       //     Navigator.of(context).pushReplacementNamed('/profilePage');

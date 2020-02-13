@@ -55,7 +55,7 @@ class _NameScreenState extends State<NameScreen> {
                             style: TextStyle(
                                 //letterSpacing: 1.0,
                                 fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Bold',
                                 color: Theme.of(context).backgroundColor),
                           ),
                         ),
@@ -72,8 +72,15 @@ class _NameScreenState extends State<NameScreen> {
                             padding: EdgeInsets.only(bottom: 20, top: 20),
                             child: TextFormField(
                               decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(4)),
+                                    borderSide: BorderSide(
+                                        width: 1,
+                                        color: Theme.of(context).backgroundColor),
+                                  ),
                                   border: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.blue)),
+                                      borderSide: BorderSide()),
                                   labelText: 'First Name',
                                   filled: true,
                                   fillColor: Colors.white),

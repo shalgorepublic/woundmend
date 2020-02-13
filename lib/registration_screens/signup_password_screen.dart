@@ -62,7 +62,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                             textAlign: TextAlign.center ,
                             style: TextStyle(
                                 fontSize: 16 ,
-                                fontWeight: FontWeight.bold ,
+                                fontFamily: 'Bold' ,
                                 color: Theme
                                     .of(context)
                                     .backgroundColor) ,
@@ -82,12 +82,16 @@ class _PasswordScreen extends State<PasswordScreen> {
                            // margin: const EdgeInsets.only(right: 30, left: 30),
                             padding: EdgeInsets.only(bottom: 20 , top: 20,left: 30,right: 30) ,
                             child: TextFormField(
-                              textAlignVertical: TextAlignVertical.center,
-                              textAlign: TextAlign.center,
                               decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(4)),
+                                    borderSide: BorderSide(
+                                        width: 1,
+                                        color: Theme.of(context).backgroundColor),
+                                  ),
                                   border: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                          color: Colors.blue)) ,
+                                      borderSide: BorderSide()) ,
                                   labelText: 'Password' ,
                                   labelStyle: TextStyle(fontSize: 18),
                                   filled: true ,

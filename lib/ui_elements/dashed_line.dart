@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 class MySeparator extends StatelessWidget {
   final double height;
-  final Color color;
 
-  const MySeparator({this.height = 2, this.color = Colors.blue});
+  const MySeparator({this.height = 2,});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +19,7 @@ class MySeparator extends StatelessWidget {
               width: dashWidth,
               height: dashHeight,
               child: DecoratedBox(
-                decoration: BoxDecoration(color: color),
+                decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
               ),
             );
           }),

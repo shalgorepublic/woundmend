@@ -55,7 +55,8 @@ class _PhoneScreen extends State<PhoneScreen> {
           'password': _formData['password'],
           "date": _formData['date'],
           'phoneNumber': _phoneNumber,
-          'otp': successInformation['data']['data']['user']['confirmation_code']
+          'otp': successInformation['data']['data']['user']['confirmation_code'],
+          'token':successInformation['data']['data']['auth_token']
         };
         Navigator.push<dynamic>(
           context,
@@ -135,7 +136,7 @@ class _PhoneScreen extends State<PhoneScreen> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Bold',
                         color: Theme.of(context).backgroundColor),
                   ),
                 ),
@@ -153,11 +154,16 @@ class _PhoneScreen extends State<PhoneScreen> {
                       child: Column(
                         children: <Widget>[
                           TextFormField(
-                            textAlignVertical: TextAlignVertical.center,
-                            textAlign: TextAlign.center,
                             decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(4)),
+                                  borderSide: BorderSide(
+                                      width: 1,
+                                      color: Theme.of(context).backgroundColor),
+                                ),
                                 border: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.blue)),
+                                    borderSide: BorderSide()),
                                 labelText: 'Phone Number',
                                 hintText: '+61 4 ----',
                                 labelStyle: TextStyle(fontSize: 18),

@@ -43,8 +43,8 @@ class _PasswordScreen extends State<PasswordScreen> {
          context: context,
          builder: (BuildContext context) {
            return AlertDialog(
-             title: Text('An Error Occured'),
-             content: Text(successInformation['data']['data']['message']),
+             title: Text('An Error Occured',style: TextStyle(fontFamily: 'Bold'),),
+             content: Text(successInformation['data']['data']['message'],style: TextStyle(fontFamily: 'Reguler'),),
              actions: <Widget>[
                FlatButton(
                  child: Text('Okey'),
@@ -261,7 +261,7 @@ class _PasswordScreen extends State<PasswordScreen> {
             ),
           ),
           SizedBox(height: 130,),
-          Container(
+         /* Container(
             width: 250,
             height: 40,
             child: RaisedButton(
@@ -297,7 +297,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                     ModalRoute.withName("/signup"));
               },
             ),
-          ),
+          ),*/
         ]),
       ],
     ));

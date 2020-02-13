@@ -14,8 +14,8 @@ class DobScreen extends StatefulWidget {
 class _DobScreen extends State<DobScreen> {
   Map<String,dynamic> _formData;
   _DobScreen(this._formData);
-  String dateHint = '01 January 2020';
-  DateTime selectedDate = DateTime.now();
+  String dateHint = '01 January 1970';
+  DateTime selectedDate = DateTime.parse("1970-01-01T11:00:00.000Z");
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   void _submitForm() async {
     print("helo last name");
@@ -35,7 +35,7 @@ class _DobScreen extends State<DobScreen> {
      DateTime picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
+        firstDate: DateTime(1950, 8),
         lastDate: DateTime(2101));
     setState(() {
       selectedDate = picked;
@@ -79,7 +79,7 @@ class _DobScreen extends State<DobScreen> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Bold',
                         color: Theme.of(context).backgroundColor),
                   ),
                 ),

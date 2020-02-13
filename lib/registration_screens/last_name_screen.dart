@@ -71,7 +71,7 @@ class _LastNameScreenState extends State<LastNameScreen> {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Bold',
                                 color: Theme.of(context).backgroundColor),
                           ),
                         ),
@@ -88,9 +88,16 @@ class _LastNameScreenState extends State<LastNameScreen> {
                             padding: EdgeInsets.only(bottom: 20, top: 20),
                             child: TextFormField(
                               decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(4)),
+                                    borderSide: BorderSide(
+                                        width: 1,
+                                        color: Theme.of(context).backgroundColor),
+                                  ),
                                   border: OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.blue)),
-                                  labelText: 'Last Name',
+                                      borderSide: BorderSide()),
+                                  labelText: 'Last Name',hoverColor: Colors.red,
                                   filled: true,
                                   fillColor: Colors.white),
                               keyboardType: TextInputType.text,

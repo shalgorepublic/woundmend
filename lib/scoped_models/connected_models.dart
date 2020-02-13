@@ -80,10 +80,6 @@ class UserModel extends ConnectedModel {
           _userSubject.add(true);
           _isLoading = false;
           notifyListeners();
-          final SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setString('token' , finalData['auth_token']);
-          prefs.setString('userEmail' , email);
-          prefs.setInt('userId' , finalData['user']['id']);
         } else if (finalData['message'] ==
             'Account already exists for this email') {
           message = 'This Email is already exists.';
@@ -166,6 +162,7 @@ class UserModel extends ConnectedModel {
     print(userEmail);
     print(first_name);
     print(last_name);
+    print(token);
     print(dob);
     if (token != null) {
       _userSubject.add(true);
