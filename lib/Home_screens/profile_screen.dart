@@ -1,13 +1,15 @@
+import 'dart:async';
 import 'dart:io';
-import 'package:derm_pro/Home_screens/Library.dart';
+import 'package:derm_pro/Home_screens/alert_screen.dart';
+import 'package:derm_pro/Home_screens/contact_us_screen.dart';
 import 'package:derm_pro/Home_screens/edit_profile.dart';
-import 'package:derm_pro/Home_screens/skin_result.dart';
 import 'package:derm_pro/Home_screens/ui_elements_home/drawer.dart';
-import 'package:derm_pro/Home_screens/weather/weatherPage.dart';
+import 'package:derm_pro/Home_screens/weather/uv_index_page.dart';
 import 'package:derm_pro/scoped_models/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:location/location.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -23,21 +25,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
   File _image;
   File imageSource;
   bool imagePickerflag = false;
-
+  bool modelFlag = true;
   @override
   void initState() {
-    // TODO: implement initState
     widget.model.fetchQuestions();
     super.initState();
+    _showModel();
   }
-
+  void _showModel() async {
+    var Result = await widget.model.alertFlagTrue();
+    if (widget.model.alertFlag) {
+      _showAlert(context);
+    }
+  }
+  void _showAlert(BuildContext context) {
+    showDialog<void>(
+        context: context,
+        builder: (context) =>  AlertDialog( shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10.0))),
+          content: AlertScreen()));
+  }
   Future imagepicker() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
     setState(() {
       _image = image;
     });
   }
-
   Future<bool> _onBackPressed() {
     return showDialog(
         context: context,
@@ -71,7 +84,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Scaffold(
           body: Container(
             color: Colors.white,
-            // length: 0,
             child: NestedScrollView(
                 headerSliverBuilder:
                     (BuildContext context, bool innerBoxIsScrolled) {
@@ -94,7 +106,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       sliver: new SliverList(
                         delegate: new SliverChildListDelegate([
                           PreferredSize(
-                              preferredSize: const Size.fromHeight(160.0),
                               child: Container(
                                 child: Theme(
                                   data: Theme.of(context)
@@ -134,7 +145,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                           Container(
-                            padding: EdgeInsets.only(bottom: 80, top: 20),
+                            padding: EdgeInsets.only(top: 20),
                             child: Text(
                                 "Your skin checks will be stored in the here."),
                           )
@@ -202,7 +213,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                   ),
-                  Container(
+                  GestureDetector(child: Container(
                       padding: EdgeInsets.only(right: 50,top: 10),
                       child: Column(
                         children: <Widget>[
@@ -217,7 +228,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           )
                         ],
-                      )),
+                      )),onTap: (){
+                    Navigator.push<dynamic>(
+                      context ,
+                      MaterialPageRoute<dynamic>(
+                        builder: (context) => ContactUsScreen(),) ,
+                    );
+                  },)
+
                 ],
               ),
             ),
@@ -239,7 +257,26 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
   final double circleBorderWidth = 3.0;
   String skinPage;
   String riskPage;
+  LocationData currentPositionLocation;
 
+
+  void getLocation() async {
+    LocationData currentLocation;
+    var location = new Location();
+    bool enabled = await location.serviceEnabled();
+    currentLocation = await location.getLocation();
+    setState(() {
+      currentPositionLocation = currentLocation;
+    });
+    if(enabled && currentPositionLocation != null){
+      Navigator.push<dynamic>(
+        context,
+        MaterialPageRoute<dynamic>(
+          builder: (BuildContext context) =>
+              UvIndexPage({'lat':currentPositionLocation.latitude,'lng':currentPositionLocation.longitude}),
+        ),
+      );}
+  }
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -296,7 +333,7 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                       // color: Colors.white,
                       height: 80.0,
                       child: Container(
-                        padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+                        padding: EdgeInsets.only(top: 15, left: 20, right: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
@@ -338,13 +375,11 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                             flagthree = false;
                                           }
                                         });
-                                        Navigator.push<dynamic>(
-                                          context,
-                                          MaterialPageRoute<dynamic>(
-                                            builder: (BuildContext context) =>
-                                                WeatherScreen(),
-                                          ),
-                                        );
+                                        getLocation();
+                                        Timer(Duration(seconds: 4), () {
+                                          getLocation();
+                                        });
+
                                       },
                                     ))),
                             ScopedModelDescendant<MainModel>(

@@ -1,6 +1,7 @@
 import 'package:derm_pro/models/auth.dart';
 import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'dart:async';
 
@@ -24,20 +25,41 @@ class _VarificationScreen extends State<VarificationScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   AuthMode _authMode = AuthMode.SignUp;
-//  String _verifyCode;
+  Future<bool> _onBackedPress(){
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Are you sure?'),
+            content: Text('You are going to exit the application!!'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('NO'),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+              ),
+              FlatButton(
+                child: Text('YES'),
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                  SystemNavigator.pop();
+                },
+              ),
+            ],
+          );
+        });
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('/emailPage',
+        ModalRoute.withName("/signup"));
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    print("otp in verification screen");
-    print(_formData['otp']);
-    print(_formData);
-    super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: _onBackedPress,
+        child:
+      Scaffold(
         body: ListView(
       children: <Widget>[
         Column(children: <Widget>[
@@ -60,7 +82,8 @@ class _VarificationScreen extends State<VarificationScreen> {
               borderRadius: new BorderRadius.all(Radius.circular(50)),
             ),
             child: Card(
-                child: Column(
+                child: Container(child:
+                Column(
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.only(
@@ -86,7 +109,7 @@ class _VarificationScreen extends State<VarificationScreen> {
                 VerificationCode(
                   keyboardType: TextInputType.number,
                   length: 4,
-                  autofocus: false,
+                  autofocus: true,
                   onCompleted: (String value) {
                     setState(() {
                       _code = value;
@@ -107,7 +130,8 @@ class _VarificationScreen extends State<VarificationScreen> {
                   ),
                 ),
               ],
-            )),
+            ))
+            ),
           ),
           SizedBox(
             height: 30,
@@ -117,7 +141,8 @@ class _VarificationScreen extends State<VarificationScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                GestureDetector(
+                Container(),
+               /* GestureDetector(
                     child: Container(
                   height: 50,
                   width: 50,
@@ -131,7 +156,7 @@ class _VarificationScreen extends State<VarificationScreen> {
                       Navigator.pop(context);
                     },
                   ),
-                )),
+                )),*/
                 GestureDetector(
                   child: Container(
                     height: 50,
@@ -160,7 +185,7 @@ class _VarificationScreen extends State<VarificationScreen> {
                   ),
                   onTap: () async {
                     //   if(_formData['otp'] == _verifyCode) {
-                    if ('1234' ==_code) {
+                    if ( _code == '1234') {
                       final SharedPreferences prefs = await SharedPreferences.getInstance();
                       prefs.setString('token' , _formData['auth_token']);
                       prefs.setString('userEmail' , _formData['userEmail']);
@@ -204,6 +229,6 @@ class _VarificationScreen extends State<VarificationScreen> {
               : Container(),
         ])
       ],
-    ));
+    )));
   }
 }

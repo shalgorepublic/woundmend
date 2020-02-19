@@ -1,3 +1,4 @@
+import 'package:derm_pro/Home_screens/Library.dart';
 import 'package:derm_pro/Home_screens/edit_profile.dart';
 import 'package:derm_pro/Home_screens/setting/notification_screen.dart';
 import 'package:derm_pro/Home_screens/ui_elements_home/drawer.dart';
@@ -12,7 +13,7 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
 
-  Future<bool> _onBackPressed() {
+  Future<bool> _onBackPressed(Function logout) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -29,6 +30,7 @@ class _SettingScreenState extends State<SettingScreen> {
               FlatButton(
                 child: Text('YES'),
                 onPressed: () {
+                  logout();
                   Navigator.of(context).pop(true);
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       '/myHomePage', (Route<dynamic> route) => false);
@@ -106,11 +108,17 @@ class _SettingScreenState extends State<SettingScreen> {
                     style: TextStyle(fontWeight: FontWeight.bold),
                   )),
                 ),
+                GestureDetector(child:
                 Container(
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
                   child: Container(child: Text("FAQ")),
-                ),
+                ),onTap: (){
+                  Navigator.of(context).push(
+                      MaterialPageRoute<dynamic>(
+                          builder: (BuildContext context) =>
+                              LibraryScreen()));
+                },),
                 Container(
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
@@ -149,8 +157,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
                   child: Container(child: Text("Log out")),
                 ),onTap: (){
-                 model.logout();
-                _onBackPressed();
+                _onBackPressed(model.logout);
 
               },),
             )

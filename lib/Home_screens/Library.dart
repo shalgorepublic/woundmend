@@ -73,6 +73,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                             style: TextStyle(fontSize: 14),
                           )));
                     })),
+            flag ?
             Container(
                 alignment: Alignment.center,
                 child: InkWell(
@@ -90,7 +91,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                       flag = !flag;
                     });
                   },
-                )),
+                )):Container(),
             Container(
               alignment: Alignment.centerLeft,
               padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
@@ -114,6 +115,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                                 style: TextStyle(fontSize: 14),
                               )));
                     })),
+            secondFlag ?
             Container(
                 alignment: Alignment.center,
                 child: InkWell(
@@ -131,7 +133,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                       secondFlag = !secondFlag;
                     });
                   },
-                )),
+                )):Container(),
           ],
         ),
       ),

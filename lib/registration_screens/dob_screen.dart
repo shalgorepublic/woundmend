@@ -14,11 +14,11 @@ class DobScreen extends StatefulWidget {
 class _DobScreen extends State<DobScreen> {
   Map<String,dynamic> _formData;
   _DobScreen(this._formData);
-  String dateHint = '01 January 1970';
+  String dateHint;
+  DateTime lastDatePicking;
   DateTime selectedDate = DateTime.parse("1970-01-01T11:00:00.000Z");
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   void _submitForm() async {
-    print("helo last name");
     if (!_formKey.currentState.validate()) {
       return;
     }
@@ -36,13 +36,28 @@ class _DobScreen extends State<DobScreen> {
         context: context,
         initialDate: selectedDate,
         firstDate: DateTime(1950, 8),
-        lastDate: DateTime(2101));
+        lastDate: lastDatePicking);
     setState(() {
       selectedDate = picked;
       String formattedDate = DateFormat('dd-MMM-yyyy').format(picked);
       print(picked);
       dateHint = formattedDate;
     });
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    DateTime date2 = DateTime.now();
+    DateTime lastDate = date2.subtract(Duration(days: 5840,));
+    String formattedDate = DateFormat('dd-MMM-yyyy').format(lastDate);
+    setState(() {
+      dateHint = formattedDate;
+      selectedDate = lastDate;
+      lastDatePicking = lastDate;
+      print(lastDatePicking);
+      print(lastDatePicking);
+    });
+    super.initState();
   }
 
   @override

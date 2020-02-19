@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1070296388075",
+    "firebase_url": "https://derm-a3fda.firebaseio.com",
+    "project_id": "derm-a3fda",
+    "storage_bucket": "derm-a3fda.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1070296388075:android:852bdf76825fbd8fb3c9ae",
+        "android_client_info": {
+          "package_name": "com.algorepublic.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1070296388075-tf30a9ffmj4l209skgtamsaudbq8664p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.algorepublic.com",
+            "certificate_hash": "fcbc0657af852718a6b4178c3c097391890eecc9"
+          }
+        },
+        {
+          "client_id": "1070296388075-6rj0ib8j8s3hdmcf3hjr6i284q0m8rqr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDB7dNqr-GfUgvqx2f8lO_7bGxVEIxFH-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1070296388075-6rj0ib8j8s3hdmcf3hjr6i284q0m8rqr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

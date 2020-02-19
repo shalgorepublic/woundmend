@@ -10,6 +10,7 @@ import 'package:rxdart/subjects.dart';
 class ConnectedModel extends Model {
   User _authenticatedUser;
   bool _isLoading = false;
+  bool _alertFlag = false;
 }
 
 class UserModel extends ConnectedModel {
@@ -25,6 +26,9 @@ class UserModel extends ConnectedModel {
   }
   bool get loading {
     return _isLoading;
+  }
+  bool get alertFlag  {
+    return _alertFlag;
   }
 
   PublishSubject<bool> get userSubject {
@@ -61,6 +65,8 @@ class UserModel extends ConnectedModel {
         );
         final Map<String , dynamic> responseData = json.decode(response.body);
         final Map<String , dynamic> finalData = responseData['data'];
+        print("helo responce");
+        print(finalData);
         bool hasError = true;
         String message = 'Something went wrong.';
         if (finalData['success'] == true) {
@@ -289,6 +295,11 @@ class UserModel extends ConnectedModel {
       return {'success': false , 'message': "Some thing went wrong"};
     }
 }
+ alertFlagTrue(){
+    _alertFlag = true;
+    return true;
+ }
+
 }
 
 class UtilityModel extends ConnectedModel {

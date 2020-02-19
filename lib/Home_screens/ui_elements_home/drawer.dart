@@ -19,8 +19,9 @@ class _DrawerBuilderState extends State<DrawerBuilder> {
   initState() {
     super.initState();
     _menuItems = createMenuItems();
+    print("helo index checking");
+    print(_currentSelected);
   }
-
   List<MenuItem> createMenuItems() {
     final menuItems = [
       new MenuItem(
