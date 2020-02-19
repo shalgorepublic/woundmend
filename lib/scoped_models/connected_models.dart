@@ -183,6 +183,7 @@ class UserModel extends ConnectedModel {
         token: token,
         password: password,
       );
+      _alertFlag = true;
       notifyListeners();
     }
     else {
@@ -297,8 +298,13 @@ class UserModel extends ConnectedModel {
 }
  alertFlagTrue(){
     _alertFlag = true;
-    return true;
+ //   return true;
  }
+
+  alertFlagFalse(){
+    _alertFlag = false;
+    //   return true;
+  }
 
 }
 

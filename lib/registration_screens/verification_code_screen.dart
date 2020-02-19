@@ -2,9 +2,8 @@ import 'package:derm_pro/models/auth.dart';
 import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_verification_code/flutter_verification_code.dart';
+import 'package:pin_entry_text_field/pin_entry_text_field.dart';
 import 'dart:async';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 class VarificationScreen extends StatefulWidget {
@@ -22,6 +21,10 @@ class _VarificationScreen extends State<VarificationScreen> {
   _VarificationScreen(this._formData);
   bool _onEditing = true;
   String _code;
+  @override
+  void initState() {
+    super.initState();
+  }
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   AuthMode _authMode = AuthMode.SignUp;
@@ -57,7 +60,7 @@ class _VarificationScreen extends State<VarificationScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: _onBackedPress,
+      //  onWillPop: _onBackedPress,
         child:
       Scaffold(
         body: ListView(
@@ -106,20 +109,12 @@ class _VarificationScreen extends State<VarificationScreen> {
                   color: Theme.of(context).backgroundColor,
                 ),
                 SizedBox(height: 20,),
-                VerificationCode(
-                  keyboardType: TextInputType.number,
-                  length: 4,
-                  autofocus: true,
-                  onCompleted: (String value) {
-                    setState(() {
-                      _code = value;
-                    });
-                  },
-                  onEditing: (bool value) {
-                    setState(() {
-                      _onEditing = value;
-                    });
-                  },
+                PinEntryTextField(
+                  onSubmit: (String pin){
+                   setState(() {
+                     _code = pin;
+                   });
+                  }, // onSubmit
                 ),
                 SizedBox(height: 30,),
                 Padding(
@@ -185,18 +180,18 @@ class _VarificationScreen extends State<VarificationScreen> {
                   ),
                   onTap: () async {
                     //   if(_formData['otp'] == _verifyCode) {
-                    if ( _code == '1234') {
+                    if ( _code == "1234") {
+                      print("helo check data of shared");
                       final SharedPreferences prefs = await SharedPreferences.getInstance();
-                      prefs.setString('token' , _formData['auth_token']);
-                      prefs.setString('userEmail' , _formData['userEmail']);
+                      prefs.setString('token' , _formData['token']);
+                      prefs.setString('userEmail' , _formData['email']);
                       prefs.setInt('userId' , _formData['userId']);
-                      prefs.setString('first_name' , _formData['first_name']);
-                      prefs.setString('last_name' , _formData['last_name']);
+                      prefs.setString('first_name' , _formData['firstName']);
+                      prefs.setString('last_name' , _formData['lastName']);
                       prefs.setString('dob' , _formData['dob']);
-                      prefs.setString('contact_no' , _formData['contact_no']);
+                      prefs.setString('contact_no' , _formData['phoneNumber']);
                       Navigator.of(context).pushNamedAndRemoveUntil(
                           '/welcomePage', (Route<dynamic> route) => false);
-                      //     Navigator.of(context).pushReplacementNamed('/profilePage');
                     } else {
                       setState(() {
                         widget.codeFlag = true;

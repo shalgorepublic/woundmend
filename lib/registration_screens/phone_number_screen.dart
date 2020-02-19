@@ -44,20 +44,22 @@ class _PhoneScreen extends State<PhoneScreen> {
       _formData['date'],
       _phoneNumber,
     );
-    print(successInformation);
-
     if (successInformation['success'] == true) {
       if (successInformation['data']['data']['success']) {
-        _formData = {
-          'firstName': _formData['firstName'],
-          'lastName': _formData['lastName'],
-          'email': _formData['email'],
-          'password': _formData['password'],
-          "date": _formData['date'],
-          'phoneNumber': _phoneNumber,
-          'otp': successInformation['data']['data']['user']['confirmation_code'],
-          'token':successInformation['data']['data']['auth_token']
-        };
+        setState(() {
+          _formData = {
+            'firstName': _formData['firstName'],
+            'lastName': _formData['lastName'],
+            'email': _formData['email'],
+            'password': _formData['password'],
+            "dob": _formData['date'],
+            'phoneNumber': _phoneNumber,
+            'otp': successInformation['data']['data']['user']['confirmation_code'],
+            'token':successInformation['data']['data']['auth_token']
+          };
+          print("check in phone number screen");
+          print(_formData);
+        });
         Navigator.push<dynamic>(
           context,
           MaterialPageRoute<dynamic>(

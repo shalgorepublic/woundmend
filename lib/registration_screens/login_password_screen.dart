@@ -37,7 +37,7 @@ class _PasswordScreen extends State<PasswordScreen> {
      successInformation = await authenticate(emailName, _password);
      if(successInformation['success']){
      if (successInformation['data']['data']['success'] == true) {
-       Navigator.pushNamed(context, '/welcomePage');
+       Navigator.pushNamed(context,'/welcomePage');
      } else {
        showDialog<dynamic>(
          context: context,

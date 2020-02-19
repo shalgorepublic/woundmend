@@ -1,6 +1,8 @@
 import 'package:derm_pro/Home_screens/common/dot.dart';
+import 'package:derm_pro/scoped_models/main.dart';
 import 'package:derm_pro/ui_elements/dashed_line.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class AlertScreen extends StatelessWidget {
   String firstText = "Skin cancer often is first detected as a skin change keep an eye on changes to your skin.";
@@ -38,7 +40,10 @@ class AlertScreen extends StatelessWidget {
             ],
           )),
           SizedBox(height: 50,),
-          Container(
+    ScopedModelDescendant<MainModel>(
+    builder: (BuildContext context, Widget child, MainModel model) {
+    return
+    Container(
             child: new RaisedButton(
               color: Theme.of(context).accentColor,
               shape: new RoundedRectangleBorder(
@@ -51,10 +56,11 @@ class AlertScreen extends StatelessWidget {
                     color: Colors.white),
               ),
               onPressed: () {
+                model.alertFlagFalse();
                Navigator.pop(context);
               },
             ),
-          ),
+          );}),
         ],
       ),
     );

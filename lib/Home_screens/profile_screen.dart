@@ -28,13 +28,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool modelFlag = true;
   @override
   void initState() {
-    widget.model.fetchQuestions();
     super.initState();
     _showModel();
   }
   void _showModel() async {
-    var Result = await widget.model.alertFlagTrue();
+  //  var Result = await widget.model.alertFlagTrue();
+    var Result = await widget.model.fetchQuestions();
     if (widget.model.alertFlag) {
+      print(widget.model.alertFlag);
       _showAlert(context);
     }
   }

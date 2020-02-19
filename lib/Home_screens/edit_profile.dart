@@ -187,10 +187,12 @@ class _RegisterFormState extends State<RegisterForm> {
   String lastName;
   String dob;
   int userId;
-  DateTime selectedDate = DateTime.now();
   bool loading = false;
   String gender;
   String userEmail;
+  String dateHint;
+  DateTime lastDatePicking;
+  DateTime selectedDate = DateTime.parse("1970-01-01T11:00:00.000Z");
 
   @override
   void initState() {
@@ -206,6 +208,16 @@ class _RegisterFormState extends State<RegisterForm> {
       } else {
         gender = 'Female';
       }
+    });
+    DateTime date2 = DateTime.now();
+    DateTime lastDate = date2.subtract(Duration(days: 5840,));
+    String formattedDate = DateFormat('dd-MMM-yyyy').format(lastDate);
+    setState(() {
+      dateHint = formattedDate;
+      selectedDate = lastDate;
+      lastDatePicking = lastDate;
+      print(lastDatePicking);
+      print(lastDatePicking);
     });
     super.initState();
   }
@@ -486,7 +498,23 @@ class _RegisterFormState extends State<RegisterForm> {
     }
   }
 
+
   Future<Null> _selectDate(BuildContext context) async {
+    DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(1950, 8),
+        lastDate: lastDatePicking);
+    setState(() {
+      selectedDate = picked;
+      String formattedDate = DateFormat('dd-MMM-yyyy').format(picked);
+      print(picked);
+      dateHint = formattedDate;
+      dob = formattedDate;
+    });
+  }
+
+/*  Future<Null> _selectDate(BuildContext context) async {
     DateTime picked = await showDatePicker(
         context: context,
         initialDate: selectedDate,
@@ -499,5 +527,5 @@ class _RegisterFormState extends State<RegisterForm> {
       dob = formattedDate;
       print(dob);
     });
-  }
+  }*/
 }

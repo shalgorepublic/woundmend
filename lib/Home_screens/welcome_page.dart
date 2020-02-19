@@ -1,5 +1,7 @@
+import 'package:derm_pro/scoped_models/main.dart';
 import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
@@ -308,7 +310,10 @@ class WelcomePage extends StatelessWidget {
                   ],
                 )),
           )),
-          SizedBox(
+                  ScopedModelDescendant<MainModel>(
+    builder: (BuildContext context, Widget child, MainModel model) {
+    return
+    SizedBox(
               width: MediaQuery.of(context).size.width / 1.30,
               child: RaisedButton(
                 color: Theme.of(context).backgroundColor,
@@ -317,9 +322,10 @@ class WelcomePage extends StatelessWidget {
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () {
+                  model.alertFlagTrue();
                   Navigator.pushNamed(context, '/profilePage');
                 },
-              )),
+              ));}),
           SizedBox(
             height: 10,
           )
