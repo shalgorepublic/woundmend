@@ -77,7 +77,7 @@ class _EditProfileState extends State<EditProfile> {
                     onChanged: _handleRadioValueChange1,
                   ),
                   new Text(
-                    'Femail',
+                    'Female',
                     style: new TextStyle(
                         fontSize: 16.0,
                         color: _radioValue1 == 1
