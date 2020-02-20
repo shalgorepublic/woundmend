@@ -513,19 +513,4 @@ class _RegisterFormState extends State<RegisterForm> {
       dob = formattedDate;
     });
   }
-
-/*  Future<Null> _selectDate(BuildContext context) async {
-    DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
-    setState(() {
-      selectedDate = picked;
-      String formattedDate = DateFormat('dd-MMM-yyyy').format(picked);
-      print(picked);
-      dob = formattedDate;
-      print(dob);
-    });
-  }*/
 }

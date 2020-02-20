@@ -269,7 +269,7 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
     setState(() {
       currentPositionLocation = currentLocation;
     });
-    if(enabled && currentPositionLocation != null){
+    if(enabled == true && currentPositionLocation != null){
       Navigator.push<dynamic>(
         context,
         MaterialPageRoute<dynamic>(
@@ -377,8 +377,14 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                           }
                                         });
                                         getLocation();
-                                        Timer(Duration(seconds: 4), () {
-                                          getLocation();
+                                        Timer(Duration(milliseconds: 1500), () async{
+                                          var location = new Location();
+                                          bool enabled = await location.serviceEnabled();
+                                          print("helo check location on");
+                                          print(enabled);
+                                          if(enabled == true && currentPositionLocation == null) {
+                                            getLocation();
+                                          }
                                         });
 
                                       },
