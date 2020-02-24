@@ -88,7 +88,8 @@ class _EmailPageState extends State<EmailPage> {
                     )),
               ],
             )),
-          )),
+          )
+      ),
           Container(
             padding: EdgeInsets.only(top: 20),
             child: Row(

@@ -1,5 +1,6 @@
 import 'package:derm_pro/Home_screens/Library.dart';
 import 'package:derm_pro/Home_screens/edit_profile.dart';
+import 'package:derm_pro/Home_screens/promo_code.dart';
 import 'package:derm_pro/Home_screens/setting/notification_screen.dart';
 import 'package:derm_pro/Home_screens/ui_elements_home/drawer.dart';
 import 'package:derm_pro/scoped_models/main.dart';
@@ -124,11 +125,16 @@ class _SettingScreenState extends State<SettingScreen> {
                   padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
                   child: Container(child: Text("Instructions for use")),
                 ),
-                Container(
+                GestureDetector(child:Container(
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
                   child: Container(child: Text("Add Promo Code")),
-                ),
+                ),onTap: (){
+                  Navigator.of(context).push(
+                      MaterialPageRoute<dynamic>(
+                          builder: (BuildContext context) =>
+                              PromoCodeScreen()));
+                },),
                 Container(
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
