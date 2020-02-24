@@ -20,7 +20,7 @@ class _PhoneScreen extends State<PhoneScreen> {
   _PhoneScreen(this._formData);
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String _phoneNumber;
+  String _phoneNumber = '+61';
 
   void _submitForm(Function authenticate) async {
     if (!_formKey.currentState.validate()) {
@@ -190,7 +190,8 @@ class _PhoneScreen extends State<PhoneScreen> {
                               }
                             },
                             onSaved: (String value) {
-                              _phoneNumber = value;
+                              _phoneNumber = _phoneNumber+value;
+                              print(_phoneNumber);
                             },
                           ),
                         ],
