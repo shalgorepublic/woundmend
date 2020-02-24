@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UvIndex {
-  final double uvIndex;
+  final dynamic uvIndex;
   final String time;
 
 

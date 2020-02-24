@@ -112,8 +112,8 @@ class WelcomePage extends StatelessWidget {
                                               'assets/checked.png',
                                               color:
                                                   Theme.of(context).accentColor,
-                                              width: 100,
-                                              height: 100,
+                                              width: 50,
+                                              height: 50,
                                             ),
                                           ),
                                           Container(
@@ -168,8 +168,8 @@ class WelcomePage extends StatelessWidget {
                                               'assets/checked.png',
                                               color:
                                               Theme.of(context).accentColor,
-                                              width: 100,
-                                              height: 100,
+                                              width: 50,
+                                              height: 50,
                                             ),
                                           ),
                                           Container(
@@ -224,8 +224,8 @@ class WelcomePage extends StatelessWidget {
                                               'assets/checked.png',
                                               color:
                                               Theme.of(context).accentColor,
-                                              width: 100,
-                                              height: 100,
+                                              width: 50,
+                                              height: 50,
                                             ),
                                           ),
                                           Container(
@@ -280,8 +280,8 @@ class WelcomePage extends StatelessWidget {
                                               'assets/checked.png',
                                               color:
                                               Theme.of(context).accentColor,
-                                              width: 100,
-                                              height: 100,
+                                              width: 50,
+                                              height:50,
                                             ),
                                           ),
                                           Container(

@@ -22,6 +22,7 @@ class _DrawerBuilderState extends State<DrawerBuilder> {
     print("helo index checking");
     print(_currentSelected);
   }
+
   List<MenuItem> createMenuItems() {
     final menuItems = [
       new MenuItem(
@@ -59,32 +60,40 @@ class _DrawerBuilderState extends State<DrawerBuilder> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Padding(padding: EdgeInsets.only(left:20.0,top: 25),child:
-                      Container(
-                          width: 70,
-                          height: 70,
-                          decoration:
-                          ShapeDecoration(shape: CircleBorder(), color: Colors.white),
+                      Padding(
+                          padding: EdgeInsets.only(left: 20.0, top: 25),
+                          child: Container(
+                            width: 70,
+                            height: 70,
+                            decoration: ShapeDecoration(
+                                shape: CircleBorder(), color: Colors.white),
                             child: ClipRRect(
-                              borderRadius: BorderRadius.all(Radius.circular(70)),
-                              child: FadeInImage(fit: BoxFit.cover,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(70)),
+                              child: FadeInImage(
+                                fit: BoxFit.cover,
                                 //   image: NetworkImage(product.image),
                                 image: AssetImage('assets/bill_gate.jpg'),
-                                placeholder: AssetImage('assets/profile.png',),
+                                placeholder: AssetImage(
+                                  'assets/profile.png',
+                                ),
                               ),
-
                             ),
-                        )),
+                          )),
                       ScopedModelDescendant<MainModel>(
                           builder: (context, child, model) => Container(
                                 padding: EdgeInsets.only(left: 20, top: 20),
-                                child: Text(model.user.email,
-                                  style: TextStyle(color: Colors.white,fontSize: 18),
+                                child: Text(
+                                  model.user.email,
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 18),
                                 ),
                               ))
                     ],
                   )),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               Expanded(
                 child: ListView.builder(
                   padding: EdgeInsets.all(0.0),
@@ -95,8 +104,12 @@ class _DrawerBuilderState extends State<DrawerBuilder> {
                           ? Theme.of(context).disabledColor
                           : Colors.white,
                       child: ListTile(
-                        leading:
-                            new Image.asset('${_menuItems[index].iconName}'),
+                        leading: Container(
+                            width: 30,
+                            height: 30,
+                            child: new Image.asset(
+                              '${_menuItems[index].iconName}',
+                            )),
                         title: Text(
                           _menuItems[index].title,
                           style: TextStyle(
@@ -113,7 +126,7 @@ class _DrawerBuilderState extends State<DrawerBuilder> {
                               Navigator.pushReplacementNamed(
                                   context, '/profilePage');
                             }
-                            if (_currentSelected == 1){
+                            if (_currentSelected == 1) {
                               Navigator.pop(context);
                               Navigator.of(context).push(
                                   MaterialPageRoute<dynamic>(

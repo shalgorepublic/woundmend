@@ -40,7 +40,7 @@ class _UvIndexPageState extends State<UvIndexPage> {
       _isLoading = true;
     });
     http.Response response;
-    String token = '5003162936e80a59a8ccb26c974cfe53';
+    String token = '78d6f127d96a75f5a213c4a53e791903';
     try {
       final Map<String , dynamic> uvData = {'lat': lat , 'lng': long};
       print("check uv data");
@@ -49,12 +49,11 @@ class _UvIndexPageState extends State<UvIndexPage> {
           'https://api.openuv.io/api/v1/uv?lat=$lat&lng=$long' ,
           headers: {'x-access-token': token});
       final Map<String , dynamic> responseData = json.decode(response.body);
-      print(responseData);
       if (responseData != null) {
         if (responseData['result'] != null) {
           setState(() {
             final Map<String , dynamic> finalData = responseData['result'];
-            print(responseData['result']['uv']);
+            print(finalData['uv']);
             _isLoading = false;
             finalUvIndexData =
                 UvIndex(uvIndex: finalData['uv'] , time: finalData['uv_time']);
@@ -64,35 +63,25 @@ class _UvIndexPageState extends State<UvIndexPage> {
                 finalUvIndexData.uvIndex <= 2) {
               risk = 'Low';
               precaution = first;
-              print(risk);
-              print(precaution);
             }
             if (finalUvIndexData.uvIndex > 2 &&
                 finalUvIndexData.uvIndex <= 5) {
               risk = 'Moderate';
               precaution = second;
-              print(risk);
-              print(precaution);
             }
             if (finalUvIndexData.uvIndex > 5 &&
                 finalUvIndexData.uvIndex <= 7) {
               risk = 'High';
               precaution = third;
-              print(risk);
-              print(precaution);
             }
-            if (finalUvIndexData.uvIndex > 8 &&
+            if (finalUvIndexData.uvIndex > 7 &&
                 finalUvIndexData.uvIndex <= 10) {
               risk = 'Very High';
               precaution = fourth;
-              print(risk);
-              print(precaution);
             }
-            if (finalUvIndexData.uvIndex >= 11) {
+            if (finalUvIndexData.uvIndex > 10) {
               risk = 'Extreme';
               precaution = fifth;
-              print(risk);
-              print(precaution);
             }
           });
         } else {
@@ -132,7 +121,7 @@ class _UvIndexPageState extends State<UvIndexPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("UV Index") ,
+        title: Text("UV Index"),
         actions: [
           Container(padding: EdgeInsets.only(right: 15) , child:
           GestureDetector(child: Container(

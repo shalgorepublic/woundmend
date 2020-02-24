@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:derm_pro/Home_screens/alert_screen.dart';
 import 'package:derm_pro/Home_screens/contact_us_screen.dart';
 import 'package:derm_pro/Home_screens/edit_profile.dart';
+import 'package:derm_pro/Home_screens/skin_result.dart';
 import 'package:derm_pro/Home_screens/ui_elements_home/drawer.dart';
 import 'package:derm_pro/Home_screens/weather/uv_index_page.dart';
 import 'package:derm_pro/scoped_models/main.dart';
@@ -197,23 +198,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(left: 50, top: 10),
-                    child: Column(
-                      children: <Widget>[
-                        Icon(
-                          Icons.mail,
-                          color: Colors.white,
-                        ),
-                        Container(
-                          child: Text(
-                            "Inbox",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        )
-                      ],
-                    ),
+                  GestureDetector(child: Container(
+                  padding: EdgeInsets.only(left: 50, top: 10),
+              child: Column(
+                children: <Widget>[
+                  Icon(
+                    Icons.mail,
+                    color: Colors.white,
                   ),
+                  Container(
+                    child: Text(
+                      "Inbox",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  )
+                ],
+              ),
+            ),onTap: (){
+                    Navigator.pop(context);
+                    Navigator.pushReplacementNamed(
+                        context, '/inboxScreen');
+                  },),
                   GestureDetector(child: Container(
                       padding: EdgeInsets.only(right: 50,top: 10),
                       child: Column(
@@ -399,8 +404,8 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                         padding:
                                             EdgeInsets.only(left: 5, right: 5),
                                         elevation: 0,
-                                        child: Text(
-                                          "Find Skin Type",
+                                        child: Text(!model.skinTypeSurveyFlag ?
+                                          "Find Skin Type": model.finalSkinResult.type,
                                           style: TextStyle(
                                               fontSize: 12,
                                               color: !flagtwo
@@ -429,19 +434,33 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                               flagthree = false;
                                             }
                                           });
-                                          Navigator.pushNamed(
-                                              context, '/skinPage');
+                                          if(!model.skinTypeSurveyFlag) {
+                                            Navigator.pushNamed(
+                                                context , '/skinPage');
+                                          }
+                                          else
+                                          Navigator.push<dynamic>(
+                                            context,
+                                            MaterialPageRoute<
+                                                dynamic>(
+                                              builder: (BuildContext
+                                              context) =>
+                                                  ResultScreen(model),
+                                            ),
+                                          );
                                         },
                                       ))),
                             ),
+                        ScopedModelDescendant<MainModel>(
+                          builder: (context, child, model) =>
                             Container(
                                 height: 25,
                                 padding: EdgeInsets.only(right: 10),
                                 child: RaisedButton(
                                   padding: EdgeInsets.only(left: 4, right: 4),
                                   elevation: 0,
-                                  child: Text(
-                                    "Find Risk Profile",
+                                  child: Text(!model.skinTypeSurveyFlag?
+                                    "Find Risk Profile":model.finalSkinResult.type,
                                     style: TextStyle(
                                         fontSize: 12,
                                         color: !flagthree
@@ -469,10 +488,22 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                         flagtwo = false;
                                       }
                                     });
-                                    Navigator.of(context)
-                                        .pushNamed('/skinPage');
+                                    if(!model.skinTypeSurveyFlag) {
+                                      Navigator.pushNamed(
+                                          context , '/skinPage');
+                                    }
+                                    else
+                                      Navigator.push<dynamic>(
+                                        context,
+                                        MaterialPageRoute<
+                                            dynamic>(
+                                          builder: (BuildContext
+                                          context) =>
+                                              ResultScreen(model),
+                                        ),
+                                      );
                                   },
-                                )),
+                                ))),
                           ],
                         ),
                       ),

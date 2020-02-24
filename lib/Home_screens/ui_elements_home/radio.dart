@@ -12,6 +12,7 @@ class RadioGroup extends StatefulWidget {
 
 class _RadioGroupState extends State<RadioGroup> {
   String radioItemHolder = 'One';
+  int sum = 0;
 
   int id;
 
@@ -26,9 +27,9 @@ class _RadioGroupState extends State<RadioGroup> {
                   builder: (context , child , model) =>
                       Container(
                         padding:
-                        EdgeInsets.only(top: 20 , left: 30 , right: 30) ,
+                        EdgeInsets.only(top: 20) ,
                         child: Text(
-                          '${model.currentQuestion.question}' ,
+                          '${model.currentQuestion.question}' ,textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Theme
                                   .of(context)
@@ -80,16 +81,17 @@ class _RadioGroupState extends State<RadioGroup> {
                                   setState(() {
                                     radioItemHolder = data.option;
                                     id = data.id;
-                                   /* model.submitQuestion(
-                                        id , model.currentQuestion.id);
-                                    print(id);*/
+                                    var index = model.currentQuestion.options.indexOf(data);
+                                    sum = sum + index;
+                                    print(index);
                                   });
                                   model.selectedOptionIdChange(id);
                                   Timer(Duration(milliseconds: 500), () {
                                     if(id != null)
                                     {
+                                     // model.countScore(sum);
                                       model.nextQuestion();
-
+                                      model.countScore(sum);
                                     }
                                   });
 

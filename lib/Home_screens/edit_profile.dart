@@ -18,7 +18,7 @@ class _EditProfileState extends State<EditProfile> {
   void _handleRadioValueChange1(int value) {
     setState(() {
       _radioValue1 = value;
-      print(_radioValue1);
+    //  print(_radioValue1);
     });
   }
 

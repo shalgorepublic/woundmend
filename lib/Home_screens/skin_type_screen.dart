@@ -6,7 +6,6 @@ import 'package:scoped_model/scoped_model.dart';
 import '../scoped_models/main.dart';
 
 class SkinType extends StatefulWidget {
-
   final MainModel model;
 
   SkinType(this.model);
@@ -49,21 +48,22 @@ class _SkinTypeState extends State<SkinType> {
                           ],
                         ))
                     : model.netWorkErrorFlag
-                        ? Container(padding: EdgeInsets.only(top: 150),
+                        ? Container(
+                            padding: EdgeInsets.only(top: 150),
                             child: AlertDialog(
-                            title: Text('En Error Occured'),
-                            content: Text("No internet connection"),
-                            actions: <Widget>[
-                              FlatButton(
-                                child: Text('Okey'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              )
-                            ],
-                          ))
+                              title: Text('En Error Occured'),
+                              content: Text("No internet connection"),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text('Okey'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                )
+                              ],
+                            ))
                         : Container(
-                            child: model.allQuestions.length > 0 && model.allQuestions != null
+                            child: model.allQuestions.length > 0
                                 ? Center(
                                     child: Column(
                                     children: <Widget>[
@@ -107,11 +107,6 @@ class _SkinTypeState extends State<SkinType> {
                                                   (context, child, model) =>
                                                       GestureDetector(
                                                 onTap: () {
-                                                  print(model
-                                                      .currentQuestionIndex);
-                                                  print(model
-                                                          .allQuestions.length -
-                                                      1);
                                                   if (model.currentQuestionIndex ==
                                                           0 ||
                                                       model.currentQuestionIndex <=
@@ -142,7 +137,7 @@ class _SkinTypeState extends State<SkinType> {
                                                             dynamic>(
                                                           builder: (BuildContext
                                                                   context) =>
-                                                              ResultScreen(),
+                                                              ResultScreen(model),
                                                         ),
                                                       );
                                                     } else {
@@ -196,9 +191,12 @@ class _SkinTypeState extends State<SkinType> {
                                       )
                                     ],
                                   ))
-                                : Container(
-                                    child: Text("Not Found"),
-                                  ),
+                                : Center(
+                                    child: Column(
+                                    children: <Widget>[
+                                      Text("Not Found"),
+                                    ],
+                                  )),
                           )),
           ],
         ));

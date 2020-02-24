@@ -111,3 +111,8 @@ class Answer{
   Answer({this.optionId,this.questionId});
  
 }
+class FinalSkinResult{
+  String type;
+  String description;
+  FinalSkinResult({this.type,this.description});
+}

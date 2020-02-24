@@ -73,7 +73,7 @@ class UserModel extends ConnectedModel {
           hasError = false;
           message = 'Authentication Succeeded';
           _authenticatedUser = User(
-            id: finalData['user']['id'] ,
+            id: finalData['user']['id'],
             email: email ,
             firstName: finalData['user']['first_name'] ,
             lastName: finalData['user']['last_name'] ,
@@ -83,6 +83,15 @@ class UserModel extends ConnectedModel {
             token: finalData['auth_token'] ,
             password: password ,
           );
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString('token' , _authenticatedUser.token);
+          prefs.setString('userEmail' , email);
+          prefs.setString('password' , password);
+          prefs.setInt('userId' , _authenticatedUser.id);
+          prefs.setString('first_name' , _authenticatedUser.firstName);
+          prefs.setString('last_name' , _authenticatedUser.lastName);
+          prefs.setString('dob' , _authenticatedUser.dob);
+          prefs.setString('contact_no' , _authenticatedUser.phoneNumber);
           _userSubject.add(true);
           _isLoading = false;
           notifyListeners();
@@ -130,14 +139,14 @@ class UserModel extends ConnectedModel {
           _isLoading = false;
           notifyListeners();
           final SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setString('token' , finalData['auth_token']);
+          prefs.setString('token' , _authenticatedUser.token);
           prefs.setString('userEmail' , email);
           prefs.setString('password' , password);
-          prefs.setInt('userId' , finalData['user']['id']);
-          prefs.setString('first_name' , finalData['user']['first_name']);
-          prefs.setString('last_name' , finalData['user']['last_name']);
-          prefs.setString('dob' , finalData['user']['dob']);
-          prefs.setString('contact_no' , finalData['user']['contact_no']);
+          prefs.setInt('userId' , _authenticatedUser.id);
+          prefs.setString('first_name' , _authenticatedUser.firstName);
+          prefs.setString('last_name' , _authenticatedUser.lastName);
+          prefs.setString('dob' , _authenticatedUser.dob);
+          prefs.setString('contact_no' , _authenticatedUser.phoneNumber);
         } else if (finalData['message'] ==
             'Account already exists for this email') {
           message = 'This Email is already exists.';
@@ -159,6 +168,8 @@ class UserModel extends ConnectedModel {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.get('token');
     final int UserId = prefs.get('userId');
+    print('helo shahidh');
+    print(UserId);
     final String userEmail = prefs.get('userEmail');
     final String first_name = prefs.get('first_name');
     final String last_name = prefs.get('last_name');

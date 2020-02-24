@@ -9,17 +9,24 @@ import 'dart:io';
 class SkinModel extends ConnectedModel {
   Data _finalResponse;
   bool _skinFlag = false;
-  List<Questions> _finalQuestions;
+  List<Questions> _finalQuestions = [];
   int _currentQuestionIndex = 0;
   Questions _currentQuestion;
   Answer _correctAnswer;
   List<Map<String, dynamic>> _answersList = [];
+  int _totalScore = 0;
+  bool _skinTypeSurveyFlag = false;
+  FinalSkinResult _finalSkinResult;
 
   bool _skinSelectedFlag = false;
   int _selectedOptionId = null;
   bool _requestSuccessFlag = true;
   bool _netWorkErrorFlag = false;
 
+  FinalSkinResult get finalSkinResult{
+
+    return _finalSkinResult;
+}
   List<Questions> get allQuestions {
     return List.from(_finalQuestions);
   }
@@ -27,7 +34,9 @@ class SkinModel extends ConnectedModel {
   List<Answer> get allAnswers {
     return List.from(_answersList);
   }
-
+  bool get skinTypeSurveyFlag{
+    return _skinTypeSurveyFlag;
+  }
   bool get skinFlag {
     return _skinFlag;
   }
@@ -42,6 +51,10 @@ class SkinModel extends ConnectedModel {
 
   bool get skinSelectedFlag {
     return _skinSelectedFlag;
+  }
+
+  int get totalScore{
+    return _totalScore;
   }
 
   int get selectedOptionId {
@@ -76,7 +89,8 @@ class SkinModel extends ConnectedModel {
       );
       var finalData = json.decode(response.body);
       var questionList = finalData['data'];
-      if (finalData['data']['success'] == true) {
+      if (finalData['data']['success'] == true && finalData['data']['questions'].length > 0) {
+
         Data _finalResponse = Data.fromJson(questionList);
         _finalQuestions = _finalResponse.questions;
         _requestSuccessFlag = true;
@@ -89,6 +103,8 @@ class SkinModel extends ConnectedModel {
       } else {
         //  _requestSuccessFlag = true;
         _skinFlag = false;
+        print(_finalQuestions.length);
+        print("else part");
         notifyListeners();
       }
       return null;
@@ -97,6 +113,7 @@ class SkinModel extends ConnectedModel {
       Timer(Duration(seconds: 2), () {
         _skinFlag = false;
         _netWorkErrorFlag = true;
+        print("in catch block");
         notifyListeners();
       });
       notifyListeners();
@@ -111,6 +128,40 @@ class SkinModel extends ConnectedModel {
     _skinSelectedFlag = false;
     notifyListeners();
   }
+  void countScore(int score){
+    _totalScore = score;
+    _skinTypeSurveyFlag = true;
+    print(_totalScore);
+    notifyListeners();
+  }
+  void finalResult(String skinDetail, String descriptions,int userId) async{
+    _finalSkinResult = FinalSkinResult(type:skinDetail,description:descriptions);
+    notifyListeners();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String token = prefs.get('token');
+    http.Response response;
+    try {
+      Map<String, dynamic> finalData ={'skin_type':skinDetail,'user_id':userId,'quiz_id':2};
+      print('print result data');
+      print(finalData);
+      response = await http.post(
+        'http://dermpro.herokuapp.com//api/v1/users/attempt_quiz?user_id=${userId}&skin_type=${skinDetail}&quiz_id=2',
+        headers: {HttpHeaders.authorizationHeader: token},
+      );
+      if (response.statusCode == 200) {
+        // If the server did return a 200 OK response, then parse the JSON.
+         var finalResponce = json.decode(response.body);
+         print(finalResponce);
+      } else {
+        print("error");
+        // If the server did not return a 200 OK response, then throw an exception.
+        throw Exception('Failed to load album');
+      }
+
+    }catch(e){
+      print("catch bloc skin api");
+    }
+  }
 
   void previousQuestion() {
     _currentQuestionIndex = _currentQuestionIndex - 1;
@@ -120,7 +171,7 @@ class SkinModel extends ConnectedModel {
     notifyListeners();
   }
 
-  void submitQuestion(int optionId, int questionId) {
+  void submitQuestion(int optionId, int questionId){
     Map<String, dynamic> myObject = {
       'optionId': optionId,
       'questionId': questionId
@@ -138,5 +189,16 @@ class SkinModel extends ConnectedModel {
 
   void selectedOptionIdChange(id) {
     _selectedOptionId = id;
+  }
+  Future<Map<String , dynamic>> fetchUserData(int userId) async {
+    final response = await http.get('http://dermpro.herokuapp.com//api/v1/users/{id}?id=${userId}');
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response, then parse the JSON.
+      return null;
+    } else {
+      // If the server did not return a 200 OK response, then throw an exception.
+      throw Exception('Failed to load album');
+    }
   }
 }
