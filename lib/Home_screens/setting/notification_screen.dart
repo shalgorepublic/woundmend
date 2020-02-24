@@ -10,6 +10,15 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen> {
   bool acceptTerms = false;
+
+  final List<String> _dropdownValues = [
+    "Every two weeks",
+    "Every month",
+    "Every three months",
+    "Every half year",
+    "Every year"
+  ];
+  String frequency = 'Every month';
   Widget _buildAcceptSwitch() {
     return Transform.scale( scale: 0.7,
     child: CupertinoSwitch(
@@ -52,10 +61,28 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     children: <Widget>[
                       Text('Frequency'),
                       Container(padding:EdgeInsets.only(right: 30),child:
-                      GestureDetector(
+                      DropdownButtonHideUnderline(
+                        child:
+                      DropdownButton(
+                        items: _dropdownValues
+                            .map((value) => DropdownMenuItem(
+                          child: Text(value),
+                          value: value,
+                        ))
+                            .toList(),
+                        onChanged: (String value) {
+                          setState(() {
+                            frequency = value;
+                          });
+                        },
+                        isExpanded: false,
+                        hint: Text(frequency),
+                      )),
+                      /*GestureDetector(
                         child: Text("Every Month",style: TextStyle(color: Theme.of(context).accentColor),),
                         onTap: () {},
-                      ))
+                      )*/
+                      )
                     ],
                   )),
                 ),
