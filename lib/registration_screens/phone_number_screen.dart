@@ -54,8 +54,9 @@ class _PhoneScreen extends State<PhoneScreen> {
             'password': _formData['password'],
             "dob": _formData['date'],
             'phoneNumber': _phoneNumber,
-            'otp': successInformation['data']['data']['user']['confirmation_code'],
-            'token':successInformation['data']['data']['auth_token']
+            'otp': successInformation['data']['data']['user']
+                ['confirmation_code'],
+            'token': successInformation['data']['data']['auth_token']
           };
           print("check in phone number screen");
           print(_formData);
@@ -159,7 +160,7 @@ class _PhoneScreen extends State<PhoneScreen> {
                             decoration: InputDecoration(
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(4)),
+                                      BorderRadius.all(Radius.circular(4)),
                                   borderSide: BorderSide(
                                       width: 1,
                                       color: Theme.of(context).backgroundColor),
@@ -167,7 +168,17 @@ class _PhoneScreen extends State<PhoneScreen> {
                                 border: OutlineInputBorder(
                                     borderSide: BorderSide()),
                                 labelText: 'Phone Number',
-                                hintText: '+61 4 ----',
+                                hintText: '234 ----',
+                                prefix: Container(
+                                    margin: const EdgeInsets.only(right: 8.0),
+                                    decoration: const BoxDecoration(
+                                      border: Border(
+                                        right: BorderSide(
+                                            width: 1.0,
+                                            color: Color(0xAAAA000000)),
+                                      ),
+                                    ),
+                                    child: Text("+61",style: TextStyle(color: Theme.of(context).textSelectionColor),)),
                                 labelStyle: TextStyle(fontSize: 18),
                                 filled: true,
                                 fillColor: Colors.white),
@@ -237,7 +248,7 @@ class _PhoneScreen extends State<PhoneScreen> {
           SizedBox(
             height: 80,
           ),
-         /* Container(
+          /* Container(
             width: 250,
             height: 40,
             child: RaisedButton(
