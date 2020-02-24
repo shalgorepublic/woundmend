@@ -22,6 +22,8 @@ class SkinModel extends ConnectedModel {
   int _selectedOptionId = null;
   bool _requestSuccessFlag = true;
   bool _netWorkErrorFlag = false;
+  String _skinType = 'skin Type';
+  String _descriptions = '';
 
   FinalSkinResult get finalSkinResult{
 
@@ -30,7 +32,12 @@ class SkinModel extends ConnectedModel {
   List<Questions> get allQuestions {
     return List.from(_finalQuestions);
   }
-
+  String get skinType{
+    return _skinType;
+  }
+  String get descriptions{
+    return _descriptions;
+  }
   List<Answer> get allAnswers {
     return List.from(_answersList);
   }
@@ -191,13 +198,92 @@ class SkinModel extends ConnectedModel {
     _selectedOptionId = id;
   }
   Future<Map<String , dynamic>> fetchUserData(int userId) async {
-    final response = await http.get('http://dermpro.herokuapp.com//api/v1/users/{id}?id=${userId}');
+    Map<String, dynamic> firstType = {
+      'type': 'Pale white skin',
+      'description': 'Extremely sensitive skin, always burns, never tans'
+    };
+    Map<String, dynamic> secondType = {
+      'type': 'White skin',
+      'description': 'Very sensitive skin, burns easily, tans minimally'
+    };
+    Map<String, dynamic> thirdType = {
+      'type': 'Light brown skin',
+      'description': 'Sensitive skin, sometimes burns, slowly tans to light brown'
+    };
+    Map<String, dynamic> fourthType = {
+      'type': 'Moderate brown skin',
+      'description':
+      'Mildly sensitive, burns minimally, always tans to moderate brown'
+    };
+    Map<String, dynamic> fifthType = {
+      'type': 'Dark brown skin',
+      'description': 'Resistant skin, rarely burns, tans well'
+    };
+    Map<String, dynamic> sixthType = {
+      'type': 'Deeply pigmented dark brown to black skin',
+      'description': 'Very resistant skin, never burns, deeply pigmented'
+    };
 
+     print('user id');
+     print(userId);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String token = prefs.get('token');
+    final response = await http.get('http://dermpro.herokuapp.com//api/v1/users/$userId',
+      headers: {HttpHeaders.authorizationHeader: token},);
     if (response.statusCode == 200) {
-      // If the server did return a 200 OK response, then parse the JSON.
-      return null;
+      var finalResult =  jsonDecode(response.body);
+      print('check result in skin model');
+      print(finalResult);
+      print(finalResult['data']['user']['user_quizes'].length);
+      if(finalResult['data']['user']['user_quizes'].length != 0) {
+        int index = finalResult['data']['user']['user_quizes'].length;
+        Map<String ,
+            dynamic> skinResult = finalResult['data']['user']['user_quizes'][index -
+            1];
+        print(skinResult);
+        if (skinResult['completed'] == true) {
+          if(skinResult['skin_type'] == 'Pale white skin'){
+            _skinType = 'Pale white skin';
+            _descriptions = firstType['description'];
+            notifyListeners();
+          }
+          if(skinResult['skin_type'] == 'White skin'){
+            _skinType = 'White skin';
+            _descriptions = secondType['description'];
+            notifyListeners();
+          }
+          if(skinResult['skin_type'] == 'Light brown skin'){
+            _skinType = 'Light brown skin';
+            _descriptions = thirdType['description'];
+            notifyListeners();
+          }
+          if(skinResult['skin_type'] == 'Moderate brown skin'){
+            _skinType = 'Moderate brown skin';
+            _descriptions = fourthType['description'];
+            notifyListeners();
+          }
+          if(skinResult['skin_type'] == 'Dark brown skin'){
+            _skinType = 'Dark brown skin';
+            _descriptions = fifthType['description'];
+            notifyListeners();
+          }
+          if(skinResult['skin_type'] == 'Deeply pigmented dark brown to black skin'){
+            _skinType = 'Deeply pigmented dark';
+            _descriptions = sixthType['description'];
+            notifyListeners();
+          }
+
+          _finalSkinResult = FinalSkinResult(type:skinType,description:descriptions);
+          _skinTypeSurveyFlag = true;
+          print("pakistan zindabad");
+          notifyListeners();
+          return {'completed':true};
+        }
+        print("some thing else");
+
+        return {'completed':true};
+      }
     } else {
-      // If the server did not return a 200 OK response, then throw an exception.
       throw Exception('Failed to load album');
     }
   }

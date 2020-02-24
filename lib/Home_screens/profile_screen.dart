@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   final model;
@@ -34,7 +35,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
   void _showModel() async {
   //  var Result = await widget.model.alertFlagTrue();
-    var Result = await widget.model.fetchQuestions();
+    print('checking use r id');
+    print(widget.model.user.id);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String token = prefs.get('token');
+    final int UserId = prefs.get('userId');
+    print('helo shahidh');
+    print(UserId);
+    var Result = await widget.model.fetchUserData(widget.model.user.id);
+    print(Result);
+    print(Result);
     if (widget.model.alertFlag) {
       print(widget.model.alertFlag);
       _showAlert(context);
@@ -339,7 +349,7 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                       // color: Colors.white,
                       height: 80.0,
                       child: Container(
-                        padding: EdgeInsets.only(top: 15, left: 20, right: 20),
+                        padding: EdgeInsets.only(top: 15, left: 15, right: 15),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
@@ -404,8 +414,7 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                         padding:
                                             EdgeInsets.only(left: 5, right: 5),
                                         elevation: 0,
-                                        child: Text(!model.skinTypeSurveyFlag ?
-                                          "Find Skin Type": model.finalSkinResult.type,
+                                        child: Text(model.skinType,
                                           style: TextStyle(
                                               fontSize: 12,
                                               color: !flagtwo
@@ -459,8 +468,7 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                 child: RaisedButton(
                                   padding: EdgeInsets.only(left: 4, right: 4),
                                   elevation: 0,
-                                  child: Text(!model.skinTypeSurveyFlag?
-                                    "Find Risk Profile":model.finalSkinResult.type,
+                                  child: Text(model.skinType,
                                     style: TextStyle(
                                         fontSize: 12,
                                         color: !flagthree

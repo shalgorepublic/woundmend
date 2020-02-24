@@ -123,7 +123,7 @@ class _SkinTypeState extends State<SkinType> {
                                                     }
                                                   }
 
-                                                  if (model.currentQuestionIndex -
+                                                  if (model.currentQuestionIndex-
                                                           1 ==
                                                       model.allQuestions
                                                               .length -

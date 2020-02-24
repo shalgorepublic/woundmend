@@ -88,6 +88,10 @@ class UserModel extends ConnectedModel {
           prefs.setString('userEmail' , email);
           prefs.setString('password' , password);
           prefs.setInt('userId' , _authenticatedUser.id);
+          int userId = prefs.get('userId');
+          print(userId);
+          print(userId);
+          print(userId);
           prefs.setString('first_name' , _authenticatedUser.firstName);
           prefs.setString('last_name' , _authenticatedUser.lastName);
           prefs.setString('dob' , _authenticatedUser.dob);
@@ -182,7 +186,6 @@ class UserModel extends ConnectedModel {
     print(token);
     print(dob);
     if (token != null) {
-      _userSubject.add(true);
       _authenticatedUser = User(
         id: UserId ,
         email: userEmail ,
@@ -195,6 +198,7 @@ class UserModel extends ConnectedModel {
         password: password,
       );
       _alertFlag = true;
+      _userSubject.add(true);
       notifyListeners();
     }
     else {
