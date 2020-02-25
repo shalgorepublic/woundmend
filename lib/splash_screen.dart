@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:derm_pro/constants.dart';
 
-
 class SplashScreen extends StatefulWidget {
   @override
   SplashScreenState createState() => new SplashScreenState();
@@ -27,43 +26,39 @@ class SplashScreenState extends State<SplashScreen>
 
   @override
   dispose() {
-    animationController.dispose();
+//    animationController.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
     super.initState();
-    animationController = new AnimationController(
-      vsync: this,
-      duration: new Duration(seconds: 2),
-    );
-    animation =
-    new CurvedAnimation(parent: animationController, curve: Curves.easeOut);
-
-    animation.addListener(() => this.setState(() {}));
-    animationController.forward();
-
-    setState(() {
-      _visible = !_visible;
-    });
+//    animationController = new AnimationController(
+//      vsync: this,
+//      duration: new Duration(seconds: 2),
+//    );
+//    animation =
+//    new CurvedAnimation(parent: animationController, curve: Curves.easeOut);
+//
+//    animation.addListener(() => this.setState(() {}));
+//    animationController.forward();
+//
+//    setState(() {
+//      _visible = !_visible;
+//    });
     startTime();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child:Center(child:
-       Container(
+      body: SafeArea(
+          child:Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/splash.png'),
-              fit: BoxFit.fill
-          ) ,
+              image: AssetImage('assets/splash.png'), fit: BoxFit.fill),
         ),
-      ))
-      ),
+      )),
     );
   }
 }
-
