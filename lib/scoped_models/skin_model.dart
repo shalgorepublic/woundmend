@@ -277,12 +277,9 @@ class SkinModel extends ConnectedModel {
               _finalSkinResult =
                   FinalSkinResult(type: skinType , description: descriptions);
               _skinTypeSurveyFlag = true;
-              print("pakistan zindabad");
               notifyListeners();
               return {'completed': true};
             }
-            print("some thing else");
-
             return {'completed': true};
           }
         }

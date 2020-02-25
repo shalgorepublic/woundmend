@@ -43,13 +43,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _showModel() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var Result = await widget.model.fetchUserData(widget.model.user.id);
-    print(Result);
       if (widget.model.alertFlag) {
         _showAlert(context);
       }
-
     if(!Result['completed']){
-      print("show snackbar");
       _scaffoldKey.currentState.showSnackBar(
           SnackBar(
             behavior: SnackBarBehavior.floating,
@@ -60,8 +57,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ));
     }
   }
-
-
   void _showAlert(BuildContext context) {
     showDialog<void>(
         context: context,
