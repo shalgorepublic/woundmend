@@ -28,39 +28,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
   File imageSource;
   bool imagePickerflag = false;
   bool modelFlag = true;
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+
   @override
   void initState() {
     super.initState();
     _showModel();
+    Timer(Duration(seconds: 7), () {
+      _scaffoldKey.currentState.hideCurrentSnackBar();
+    });
   }
+
   void _showModel() async {
-  //  var Result = await widget.model.alertFlagTrue();
-    print('checking use r id');
-    print(widget.model.user.id);
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String token = prefs.get('token');
-    final int UserId = prefs.get('userId');
-    print(widget.model.user.id);
-    print(widget.model.user.id);
     var Result = await widget.model.fetchUserData(widget.model.user.id);
     print(Result);
-    if (widget.model.alertFlag) {
-      _showAlert(context);
+      if (widget.model.alertFlag) {
+        _showAlert(context);
+      }
+
+    if(!Result['completed']){
+      print("show snackbar");
+      _scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Container(
+                child: Center(
+                    child: Text("Connection dropped.", style:
+                    TextStyle(color: Colors.white,fontWeight: FontWeight.bold),textAlign: TextAlign.center,)),height: 15.0),
+          ));
     }
   }
+
+
   void _showAlert(BuildContext context) {
     showDialog<void>(
         context: context,
-        builder: (context) =>  AlertDialog( shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10.0))),
-          content: AlertScreen()));
+        builder: (context) => AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0))),
+            content: AlertScreen()));
   }
+
   Future imagepicker() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
     setState(() {
       _image = image;
     });
   }
+
   Future<bool> _onBackPressed() {
     return showDialog(
         context: context,
@@ -92,6 +109,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return WillPopScope(
         onWillPop: _onBackPressed,
         child: Scaffold(
+          key: _scaffoldKey,
           body: Container(
             color: Colors.white,
             child: NestedScrollView(
@@ -117,12 +135,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         delegate: new SliverChildListDelegate([
                           PreferredSize(
                               child: Container(
-                                child: Theme(
-                                  data: Theme.of(context)
-                                      .copyWith(accentColor: Colors.blue),
-                                  child: ContainerWithCircle(),
-                                ),
-                              ))
+                            child: Theme(
+                              data: Theme.of(context)
+                                  .copyWith(accentColor: Colors.blue),
+                              child: ContainerWithCircle(),
+                            ),
+                          ))
                         ]),
                       ),
                     ),
@@ -206,50 +224,55 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  GestureDetector(child: Container(
-                  padding: EdgeInsets.only(left: 50, top: 10),
-              child: Column(
-                children: <Widget>[
-                  Icon(
-                    Icons.mail,
-                    color: Colors.white,
-                  ),
-                  Container(
-                    child: Text(
-                      "Inbox",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  )
-                ],
-              ),
-            ),onTap: (){
-                    Navigator.pop(context);
-                    Navigator.pushReplacementNamed(
-                        context, '/inboxScreen');
-                  },),
-                  GestureDetector(child: Container(
-                      padding: EdgeInsets.only(right: 50,top: 10),
+                  GestureDetector(
+                    child: Container(
+                      padding: EdgeInsets.only(left: 50, top: 10),
                       child: Column(
                         children: <Widget>[
                           Icon(
-                            Icons.feedback,
+                            Icons.mail,
                             color: Colors.white,
                           ),
                           Container(
                             child: Text(
-                              "Support",
+                              "Inbox",
                               style: TextStyle(color: Colors.white),
                             ),
                           )
                         ],
-                      )),onTap: (){
-                    Navigator.push<dynamic>(
-                      context ,
-                      MaterialPageRoute<dynamic>(
-                        builder: (context) => ContactUsScreen(),) ,
-                    );
-                  },)
-
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.pushReplacementNamed(context, '/inboxScreen');
+                    },
+                  ),
+                  GestureDetector(
+                    child: Container(
+                        padding: EdgeInsets.only(right: 50, top: 10),
+                        child: Column(
+                          children: <Widget>[
+                            Icon(
+                              Icons.feedback,
+                              color: Colors.white,
+                            ),
+                            Container(
+                              child: Text(
+                                "Support",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            )
+                          ],
+                        )),
+                    onTap: () {
+                      Navigator.push<dynamic>(
+                        context,
+                        MaterialPageRoute<dynamic>(
+                          builder: (context) => ContactUsScreen(),
+                        ),
+                      );
+                    },
+                  )
                 ],
               ),
             ),
@@ -273,7 +296,6 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
   String riskPage;
   LocationData currentPositionLocation;
 
-
   void getLocation() async {
     LocationData currentLocation;
     var location = new Location();
@@ -282,15 +304,19 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
     setState(() {
       currentPositionLocation = currentLocation;
     });
-    if(enabled == true && currentPositionLocation != null){
+    if (enabled == true && currentPositionLocation != null) {
       Navigator.push<dynamic>(
         context,
         MaterialPageRoute<dynamic>(
-          builder: (BuildContext context) =>
-              UvIndexPage({'lat':currentPositionLocation.latitude,'lng':currentPositionLocation.longitude}),
+          builder: (BuildContext context) => UvIndexPage({
+            'lat': currentPositionLocation.latitude,
+            'lng': currentPositionLocation.longitude
+          }),
         ),
-      );}
+      );
+    }
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -390,16 +416,18 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                           }
                                         });
                                         getLocation();
-                                        Timer(Duration(milliseconds: 1500), () async{
+                                        Timer(Duration(milliseconds: 1500),
+                                            () async {
                                           var location = new Location();
-                                          bool enabled = await location.serviceEnabled();
+                                          bool enabled =
+                                              await location.serviceEnabled();
                                           print("helo check location on");
                                           print(enabled);
-                                          if(enabled == true && currentPositionLocation == null) {
+                                          if (enabled == true &&
+                                              currentPositionLocation == null) {
                                             getLocation();
                                           }
                                         });
-
                                       },
                                     ))),
                             ScopedModelDescendant<MainModel>(
@@ -412,7 +440,8 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                         padding:
                                             EdgeInsets.only(left: 5, right: 5),
                                         elevation: 0,
-                                        child: Text(model.skinType,
+                                        child: Text(
+                                          model.skinType,
                                           style: TextStyle(
                                               fontSize: 12,
                                               color: !flagtwo
@@ -441,75 +470,72 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                               flagthree = false;
                                             }
                                           });
-                                          if(!model.skinTypeSurveyFlag) {
+                                          if (!model.skinTypeSurveyFlag) {
                                             Navigator.pushNamed(
-                                                context , '/skinPage');
-                                          }
-                                          else
-                                          Navigator.push<dynamic>(
-                                            context,
-                                            MaterialPageRoute<
-                                                dynamic>(
-                                              builder: (BuildContext
-                                              context) =>
-                                                  SkinResultScreen(model),
-                                            ),
-                                          );
+                                                context, '/skinPage');
+                                          } else
+                                            Navigator.push<dynamic>(
+                                              context,
+                                              MaterialPageRoute<dynamic>(
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        SkinResultScreen(model),
+                                              ),
+                                            );
                                         },
                                       ))),
                             ),
-                        ScopedModelDescendant<MainModel>(
-                          builder: (context, child, model) =>
-                            Container(
-                                height: 25,
-                                padding: EdgeInsets.only(right: 10),
-                                child: RaisedButton(
-                                  padding: EdgeInsets.only(left: 4, right: 4),
-                                  elevation: 0,
-                                  child: Text(model.skinType,
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: !flagthree
-                                            ? Colors.green
-                                            : Colors.white),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  color:
-                                      flagthree ? Colors.green : Colors.white,
-                                  shape: RoundedRectangleBorder(
-                                    side: BorderSide(
-                                      color: Colors.white,
-                                      width: 0.0,
-                                    ),
-                                    borderRadius:
-                                        new BorderRadius.circular(3.0),
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      flagthree = true;
-                                      if (flagone == true) {
-                                        flagone = false;
-                                      }
-                                      if (flagtwo == true) {
-                                        flagtwo = false;
-                                      }
-                                    });
-                                    if(!model.skinTypeSurveyFlag) {
-                                      Navigator.pushNamed(
-                                          context , '/skinPage');
-                                    }
-                                    else
-                                      Navigator.push<dynamic>(
-                                        context,
-                                        MaterialPageRoute<
-                                            dynamic>(
-                                          builder: (BuildContext
-                                          context) =>
-                                              SkinResultScreen(model),
+                            ScopedModelDescendant<MainModel>(
+                                builder: (context, child, model) => Container(
+                                    height: 25,
+                                    padding: EdgeInsets.only(right: 10),
+                                    child: RaisedButton(
+                                      padding:
+                                          EdgeInsets.only(left: 4, right: 4),
+                                      elevation: 0,
+                                      child: Text(
+                                        model.skinType,
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: !flagthree
+                                                ? Colors.green
+                                                : Colors.white),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      color: flagthree
+                                          ? Colors.green
+                                          : Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        side: BorderSide(
+                                          color: Colors.white,
+                                          width: 0.0,
                                         ),
-                                      );
-                                  },
-                                ))),
+                                        borderRadius:
+                                            new BorderRadius.circular(3.0),
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          flagthree = true;
+                                          if (flagone == true) {
+                                            flagone = false;
+                                          }
+                                          if (flagtwo == true) {
+                                            flagtwo = false;
+                                          }
+                                        });
+                                        if (!model.skinTypeSurveyFlag) {
+                                          Navigator.pushNamed(
+                                              context, '/skinPage');
+                                        } else
+                                          Navigator.push<dynamic>(
+                                            context,
+                                            MaterialPageRoute<dynamic>(
+                                              builder: (BuildContext context) =>
+                                                  SkinResultScreen(model),
+                                            ),
+                                          );
+                                      },
+                                    ))),
                           ],
                         ),
                       ),
@@ -530,12 +556,14 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                   padding: EdgeInsets.all(circleBorderWidth),
                   child: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(80)),
-                    child: FadeInImage(fit: BoxFit.cover,
+                    child: FadeInImage(
+                      fit: BoxFit.cover,
                       //   image: NetworkImage(product.image),
                       image: AssetImage('assets/bill_gate.jpg'),
-                      placeholder: AssetImage('assets/profile.png',),
+                      placeholder: AssetImage(
+                        'assets/profile.png',
+                      ),
                     ),
-
                   ),
                 ),
               ),
