@@ -87,12 +87,11 @@ class UserModel extends ConnectedModel {
           prefs.setString('token' , _authenticatedUser.token);
           prefs.setString('userEmail' , email);
           prefs.setString('password' , password);
-          prefs.setInt('userId' , _authenticatedUser.id);
+          prefs.setInt('userId' , finalData['user']['id']);
           int userId = prefs.get('userId');
           print(userId);
-          print(userId);
-          print(userId);
           prefs.setString('first_name' , _authenticatedUser.firstName);
+          print(_authenticatedUser.id);
           prefs.setString('last_name' , _authenticatedUser.lastName);
           prefs.setString('dob' , _authenticatedUser.dob);
           prefs.setString('contact_no' , _authenticatedUser.phoneNumber);
@@ -146,8 +145,10 @@ class UserModel extends ConnectedModel {
           prefs.setString('token' , _authenticatedUser.token);
           prefs.setString('userEmail' , email);
           prefs.setString('password' , password);
-          prefs.setInt('userId' , _authenticatedUser.id);
+          prefs.setInt('userId' , finalData['user']['id']);
+          print(_authenticatedUser.id);
           prefs.setString('first_name' , _authenticatedUser.firstName);
+          print(_authenticatedUser.firstName);
           prefs.setString('last_name' , _authenticatedUser.lastName);
           prefs.setString('dob' , _authenticatedUser.dob);
           prefs.setString('contact_no' , _authenticatedUser.phoneNumber);
@@ -171,9 +172,7 @@ class UserModel extends ConnectedModel {
   void autoAuthenticate() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.get('token');
-    final int UserId = prefs.get('userId');
-    print('helo shahidh');
-    print(UserId);
+    final int userId = prefs.get('userId');
     final String userEmail = prefs.get('userEmail');
     final String first_name = prefs.get('first_name');
     final String last_name = prefs.get('last_name');
@@ -185,9 +184,10 @@ class UserModel extends ConnectedModel {
     print(last_name);
     print(token);
     print(dob);
+    print(userId);
     if (token != null) {
       _authenticatedUser = User(
-        id: UserId ,
+        id: userId ,
         email: userEmail ,
         firstName: first_name ,
         lastName: last_name ,

@@ -261,43 +261,6 @@ class _PasswordScreen extends State<PasswordScreen> {
             ),
           ),
           SizedBox(height: 130,),
-         /* Container(
-            width: 250,
-            height: 40,
-            child: RaisedButton(
-              elevation: 4,
-              padding: EdgeInsets.zero,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4),
-              ),
-              color: Theme.of(context).accentColor,
-              child: FittedBox(
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      '- - - - - - -',
-                      style: TextStyle(fontSize: 12),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 60),
-                      child: Text('SIGNUP',style: TextStyle( fontWeight: FontWeight.bold ,
-                          fontSize: 18 ),),
-                    ),
-                    Text(
-                      '- - - - - - -',
-                      style: TextStyle(fontSize: 12),
-                    ),
-                  ],
-                ),
-              ),
-              textColor: Colors.white,
-              onPressed: () {
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil('/signup',
-                    ModalRoute.withName("/signup"));
-              },
-            ),
-          ),*/
         ]),
       ],
     ));

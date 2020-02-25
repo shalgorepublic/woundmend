@@ -137,7 +137,7 @@ class _SkinTypeState extends State<SkinType> {
                                                             dynamic>(
                                                           builder: (BuildContext
                                                                   context) =>
-                                                              ResultScreen(model),
+                                                              SkinResultScreen(model),
                                                         ),
                                                       );
                                                     } else {

@@ -2,16 +2,16 @@ import 'package:derm_pro/scoped_models/main.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-class ResultScreen extends StatefulWidget {
+class SkinResultScreen extends StatefulWidget {
   final MainModel model;
 
-  ResultScreen(this.model);
+  SkinResultScreen(this.model);
 
   @override
-  _ResultScreenState createState() => _ResultScreenState();
+  _SkinResultScreenState createState() => _SkinResultScreenState();
 }
 
-class _ResultScreenState extends State<ResultScreen> {
+class _SkinResultScreenState extends State<SkinResultScreen> {
   Map<String, dynamic> firstType = {
     'type': 'Pale white skin',
     'description': 'Extremely sensitive skin, always burns, never tans'

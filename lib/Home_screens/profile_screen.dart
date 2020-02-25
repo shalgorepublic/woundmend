@@ -40,13 +40,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.get('token');
     final int UserId = prefs.get('userId');
-    print('helo shahidh');
-    print(UserId);
+    print(widget.model.user.id);
+    print(widget.model.user.id);
     var Result = await widget.model.fetchUserData(widget.model.user.id);
     print(Result);
-    print(Result);
     if (widget.model.alertFlag) {
-      print(widget.model.alertFlag);
       _showAlert(context);
     }
   }
@@ -454,7 +452,7 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                                 dynamic>(
                                               builder: (BuildContext
                                               context) =>
-                                                  ResultScreen(model),
+                                                  SkinResultScreen(model),
                                             ),
                                           );
                                         },
@@ -507,7 +505,7 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                             dynamic>(
                                           builder: (BuildContext
                                           context) =>
-                                              ResultScreen(model),
+                                              SkinResultScreen(model),
                                         ),
                                       );
                                   },

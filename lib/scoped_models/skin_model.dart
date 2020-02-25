@@ -22,7 +22,7 @@ class SkinModel extends ConnectedModel {
   int _selectedOptionId = null;
   bool _requestSuccessFlag = true;
   bool _netWorkErrorFlag = false;
-  String _skinType = 'skin Type';
+  String _skinType = 'Skin Type';
   String _descriptions = '';
 
   FinalSkinResult get finalSkinResult{
@@ -81,7 +81,6 @@ class SkinModel extends ConnectedModel {
     _requestSuccessFlag = true;
     _currentQuestionIndex = 0;
     _answersList.clear();
-    print(_netWorkErrorFlag);
     notifyListeners();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     _skinFlag = true;
@@ -184,7 +183,6 @@ class SkinModel extends ConnectedModel {
       'questionId': questionId
     };
     _answersList.add(myObject);
-    print(_answersList);
     notifyListeners();
   }
 
@@ -234,6 +232,7 @@ class SkinModel extends ConnectedModel {
       var finalResult =  jsonDecode(response.body);
       print('check result in skin model');
       print(finalResult);
+      if(finalResult['data']['user'] != null){
       print(finalResult['data']['user']['user_quizes'].length);
       if(finalResult['data']['user']['user_quizes'].length != 0) {
         int index = finalResult['data']['user']['user_quizes'].length;
@@ -242,47 +241,52 @@ class SkinModel extends ConnectedModel {
             1];
         print(skinResult);
         if (skinResult['completed'] == true) {
-          if(skinResult['skin_type'] == 'Pale white skin'){
+          if (skinResult['skin_type'] == 'Pale white skin') {
             _skinType = 'Pale white skin';
             _descriptions = firstType['description'];
             notifyListeners();
           }
-          if(skinResult['skin_type'] == 'White skin'){
+          if (skinResult['skin_type'] == 'White skin') {
             _skinType = 'White skin';
             _descriptions = secondType['description'];
             notifyListeners();
           }
-          if(skinResult['skin_type'] == 'Light brown skin'){
+          if (skinResult['skin_type'] == 'Light brown skin') {
             _skinType = 'Light brown skin';
             _descriptions = thirdType['description'];
             notifyListeners();
           }
-          if(skinResult['skin_type'] == 'Moderate brown skin'){
+          if (skinResult['skin_type'] == 'Moderate brown skin') {
             _skinType = 'Moderate brown skin';
             _descriptions = fourthType['description'];
             notifyListeners();
           }
-          if(skinResult['skin_type'] == 'Dark brown skin'){
+          if (skinResult['skin_type'] == 'Dark brown skin') {
             _skinType = 'Dark brown skin';
             _descriptions = fifthType['description'];
             notifyListeners();
           }
-          if(skinResult['skin_type'] == 'Deeply pigmented dark brown to black skin'){
+          if (skinResult['skin_type'] ==
+              'Deeply pigmented dark brown to black skin') {
             _skinType = 'Deeply pigmented dark';
             _descriptions = sixthType['description'];
             notifyListeners();
           }
 
-          _finalSkinResult = FinalSkinResult(type:skinType,description:descriptions);
+          _finalSkinResult =
+              FinalSkinResult(type: skinType , description: descriptions);
           _skinTypeSurveyFlag = true;
           print("pakistan zindabad");
           notifyListeners();
-          return {'completed':true};
+          return {'completed': true};
         }
         print("some thing else");
 
-        return {'completed':true};
+        return {'completed': true};
       }
+      }
+      else
+        print("user not exist");
     } else {
       throw Exception('Failed to load album');
     }
