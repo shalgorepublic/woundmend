@@ -30,7 +30,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool modelFlag = true;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-
   @override
   void initState() {
     super.initState();
@@ -43,20 +42,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _showModel() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var Result = await widget.model.fetchUserData(widget.model.user.id);
-      if (widget.model.alertFlag) {
-        _showAlert(context);
-      }
-    if(!Result['completed']){
-      _scaffoldKey.currentState.showSnackBar(
-          SnackBar(
-            behavior: SnackBarBehavior.floating,
-            content: Container(
-                child: Center(
-                    child: Text("Connection dropped.", style:
-                    TextStyle(color: Colors.white,fontWeight: FontWeight.bold),textAlign: TextAlign.center,)),height: 15.0),
-          ));
+    if (widget.model.alertFlag) {
+      _showAlert(context);
+    }
+    if (!Result['completed']) {
+      _scaffoldKey.currentState.showSnackBar(SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: Container(
+            child: Center(
+                child: Text(
+              "Connection dropped.",
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            )),
+            height: 15.0),
+      ));
     }
   }
+
   void _showAlert(BuildContext context) {
     showDialog<void>(
         context: context,
@@ -132,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               child: Container(
                             child: Theme(
                               data: Theme.of(context)
-                                  .copyWith(accentColor: Colors.blue),
+                                  .copyWith(accentColor: Theme.of(context).accentColor),
                               child: ContainerWithCircle(),
                             ),
                           ))
@@ -141,7 +145,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ];
                 },
-                body: ListView(
+                body: Column(
                   children: <Widget>[
                     Container(
                       color: Colors.white,
