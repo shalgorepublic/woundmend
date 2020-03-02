@@ -128,10 +128,7 @@ class _DrawerBuilderState extends State<DrawerBuilder> {
                             }
                             if (_currentSelected == 1) {
                               Navigator.pop(context);
-                              Navigator.of(context).push(
-                                  MaterialPageRoute<dynamic>(
-                                      builder: (BuildContext context) =>
-                                          LibraryScreen()));
+                              Navigator.pushNamed(context, '/library');
                             }
                             if (_currentSelected == 2) {
                               Navigator.pop(context);

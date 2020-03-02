@@ -61,7 +61,8 @@ class _SkinTypeState extends State<SkinType> {
                                   },
                                 )
                               ],
-                            ))
+                            )
+                )
                         : Container(
                             child: model.allQuestions.length > 0
                                 ? Center(

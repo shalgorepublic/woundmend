@@ -115,10 +115,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
                   child: Container(child: Text("FAQ")),
                 ),onTap: (){
-                  Navigator.of(context).push(
-                      MaterialPageRoute<dynamic>(
-                          builder: (BuildContext context) =>
-                              LibraryScreen()));
+                  Navigator.pushNamed(context, '/library');
                 },),
                 Container(
                   alignment: Alignment.centerLeft,

@@ -2,6 +2,7 @@ import 'package:derm_pro/Home_screens/Library.dart';
 import 'package:derm_pro/Home_screens/inbox_page.dart';
 import 'package:derm_pro/Home_screens/profile_screen.dart';
 import 'package:derm_pro/Home_screens/skin_type_screen.dart';
+import 'package:derm_pro/Home_screens/support.dart';
 import 'package:derm_pro/Home_screens/welcome_page.dart';
 import 'package:derm_pro/models/auth.dart';
 import 'package:derm_pro/registration_screens/signup.dart';
@@ -71,10 +72,11 @@ class _MyAppState extends State<MyApp> {
           '/emailPage': (BuildContext context) => EmailPage(),
           '/profilePage': (BuildContext context) => ProfileScreen(_model),
           '/signup': (BuildContext context) => SignupScreen(),
-          '/library': (BuildContext context) => LibraryScreen(),
+          '/library': (BuildContext context) => LibraryScreen(_model),
           '/inboxScreen': (BuildContext context) => InboxScreen(),
           '/myHomePage': (BuildContext context) => MyHomePage(),
           '/skinPage': (BuildContext context) => SkinType(_model),
+          '/SupportPage': (BuildContext context) => SupportScreen(_model),
           '/welcomePage': (BuildContext context) => WelcomePage(),
         },
       ),

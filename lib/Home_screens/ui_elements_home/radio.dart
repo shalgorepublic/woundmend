@@ -104,7 +104,8 @@ class _RadioGroupState extends State<RadioGroup> {
                             ] ,) ,)
                         )
                             .toList() ,
-                      ) ,) ,
+                      ) ,
+                    ) ,
               ) ,
               SizedBox(height: 10 ,) ,
             ] ,

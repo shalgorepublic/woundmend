@@ -1,6 +1,10 @@
+import 'package:derm_pro/Home_screens/Library.dart';
+import 'package:derm_pro/Home_screens/support.dart';
+import 'package:derm_pro/scoped_models/main.dart';
 import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:derm_pro/ui_elements/dashed_line.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class ContactUsScreen extends StatelessWidget {
   String firstText =
@@ -58,6 +62,8 @@ class ContactUsScreen extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
+        ScopedModelDescendant<MainModel>(
+          builder: (context , child , model) =>
                 Container(
                   width: 220.0,
                   height: 40.0,
@@ -73,14 +79,13 @@ class ContactUsScreen extends StatelessWidget {
                           color: Colors.white),
                     ),
                     onPressed: () {
-                      /* Navigator.push<dynamic>(
-              context,
-              MaterialPageRoute<dynamic>(
-                  builder: (context) => NameScreen()),
-            );*/
+                      Navigator.of(context).push(
+                          MaterialPageRoute<dynamic>(
+                              builder: (BuildContext context) =>
+                                  SupportScreen(model)));
                     },
                   ),
-                ),
+                )),
                 SizedBox(
                   height: 40,
                 ),
@@ -104,6 +109,7 @@ class ContactUsScreen extends StatelessWidget {
                         color: Theme.of(context).highlightColor),
                   ),
                 ),
+                GestureDetector(child:
                 Container(
                   margin: EdgeInsets.only(bottom: 30),
                   width: 220,
@@ -139,11 +145,12 @@ class ContactUsScreen extends StatelessWidget {
                     ),
                     textColor: Colors.white,
                     onPressed: () {
-                     /* Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/emailPage', ModalRoute.withName("/signup"));*/
+                      Navigator.pushNamed(context, '/library');
                     },
                   ),
-                )
+                ),onTap: (){
+
+                },)
               ],
             )
           ],

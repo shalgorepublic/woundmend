@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "1070296388075",
-    "firebase_url": "https://derm-a3fda.firebaseio.com",
-    "project_id": "derm-a3fda",
-    "storage_bucket": "derm-a3fda.appspot.com"
+    "project_number": "375065625646",
+    "firebase_url": "https://dermpro-6f7c4.firebaseio.com",
+    "project_id": "dermpro-6f7c4",
+    "storage_bucket": "dermpro-6f7c4.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1070296388075:android:852bdf76825fbd8fb3c9ae",
+        "mobilesdk_app_id": "1:375065625646:android:efbc30547a644051c98bbf",
         "android_client_info": {
           "package_name": "com.algorepublic.com"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1070296388075-tf30a9ffmj4l209skgtamsaudbq8664p.apps.googleusercontent.com",
+          "client_id": "375065625646-j4hp81ja3degtrp499echffk40squjhh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.algorepublic.com",
@@ -23,20 +23,86 @@
           }
         },
         {
-          "client_id": "1070296388075-6rj0ib8j8s3hdmcf3hjr6i284q0m8rqr.apps.googleusercontent.com",
+          "client_id": "375065625646-9omhthuvfpj2cfigvvlcbffpccpj5j3t.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDB7dNqr-GfUgvqx2f8lO_7bGxVEIxFH-k"
+          "current_key": "AIzaSyDPitcmu0848A8-HgoQh1xj2t9l1od97s4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1070296388075-6rj0ib8j8s3hdmcf3hjr6i284q0m8rqr.apps.googleusercontent.com",
+              "client_id": "375065625646-9omhthuvfpj2cfigvvlcbffpccpj5j3t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:375065625646:android:4d3d4756c99d0fe6c98bbf",
+        "android_client_info": {
+          "package_name": "com.algorepublic.derm_pro"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "375065625646-d1g3cohgh8ukvs596baeqnu50pf00418.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.algorepublic.derm_pro",
+            "certificate_hash": "fcbc0657af852718a6b4178c3c097391890eecc9"
+          }
+        },
+        {
+          "client_id": "375065625646-9omhthuvfpj2cfigvvlcbffpccpj5j3t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPitcmu0848A8-HgoQh1xj2t9l1od97s4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "375065625646-9omhthuvfpj2cfigvvlcbffpccpj5j3t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:375065625646:android:0abf0f299cebdbd6c98bbf",
+        "android_client_info": {
+          "package_name": "com.example.classifier"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "375065625646-9omhthuvfpj2cfigvvlcbffpccpj5j3t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPitcmu0848A8-HgoQh1xj2t9l1od97s4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "375065625646-9omhthuvfpj2cfigvvlcbffpccpj5j3t.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

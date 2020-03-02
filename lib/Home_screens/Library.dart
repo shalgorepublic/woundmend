@@ -1,8 +1,23 @@
+import 'package:derm_pro/Home_screens/article_detail.dart';
+import 'package:derm_pro/Home_screens/my_tickets.dart';
+import 'package:derm_pro/Home_screens/support.dart';
 import 'package:derm_pro/Home_screens/ui_elements_home/drawer.dart';
+import 'package:derm_pro/scoped_models/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
+
+class Data {
+  int firstIndex;
+  int secondIndex;
+  Data({this.firstIndex, this.secondIndex,});
+}
 class LibraryScreen extends StatefulWidget {
+  final MainModel _model;
+
+  LibraryScreen(this._model);
+
   static const String routeName = '/LibraryScreen';
 
   @override
@@ -10,207 +25,333 @@ class LibraryScreen extends StatefulWidget {
 }
 
 class _LibraryScreenState extends State<LibraryScreen> {
-  List<String> items = [
-    'Why should i only take photo of my own skin?',
-    'Complaint Procedure',
-    'Why should i only take photo of my own skin?',
-    'Complaint Procedure',
-    'Why should i only take photo of my own skin?',
-    'Complaint Procedure',
-  ];
-  List<String> secondItems = [
-    'Why should i only take photo of my own skin?',
-    'Complaint Procedure',
-    'Why should i only take photo of my own skin?',
-    'Complaint Procedure',
-    'Why should i only take photo of my own skin?',
-    'Complaint Procedure',
-  ];
   bool flag = true;
-  bool secondFlag = true;
+  int indexValue;
+
+  @override
+  void initState() {
+    getData();
+  }
+
+  void getData() async {
+    print("helo shahid");
+    Map<String , dynamic> Result = await widget._model.fetchArticles();
+
+    if (Result['success'] == false) {
+      _showDialogue(context , Result['message']);
+    }
+    print(Result);
+  }
+
+  Future<void> _showDialogue(BuildContext context , String message) {
+    return showDialog(
+        context: context ,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('En Error Occured') ,
+            content: Text(message) ,
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Okey') ,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                } ,
+              )
+            ] ,
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerBuilder(),
-      appBar: AppBar(title: Text("Support"),centerTitle: true,leading: new IconButton(
-        icon: new Icon(Icons.arrow_back),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      ),
+      drawer: DrawerBuilder() ,
+      appBar: AppBar(
+        title: Text("Support") ,
+        centerTitle: true ,
+        leading: new IconButton(
+          icon: new Icon(Icons.arrow_back) ,
+          onPressed: () {
+            Navigator.pop(context);
+          } ,
+        ) ,
         actions: [
-          Container(padding:EdgeInsets.only(right: 15),child: Row(children: <Widget>[
-            Container(padding:EdgeInsets.only(right: 5),child:Icon(Icons.search),),
-            Icon(Icons.dehaze),
-          ],))
-
-        ],),
-      body: Container(
-        color: Colors.white,
-        child: ListView(
-          children: <Widget>[
-            Container(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
-              color: Theme.of(context).hoverColor,
-              child: Container(
-                  child: Text(
-                "FAQ & SKIN VISION",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              )),
-            ),
-            Container(
-                height: flag ? 100 : 220,
-                child: new ListView.builder(
-                    itemCount: flag ? 2 : 4,
-                    itemBuilder: (BuildContext ctxt, int index) {
-                      return Container(
-                          padding: EdgeInsets.only(left: 5),
-                          child: ListTile(
-                              title: Text(
-                            items[index],
-                            style: TextStyle(fontSize: 14),
-                          )));
-                    })),
-            flag ?
-            Container(
-                alignment: Alignment.center,
-                child: InkWell(
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.only(top: 10,bottom: 10),
-                    child: Text(
-                      "MORE",
-                      style: TextStyle(
-                          color: Theme.of(context).accentColor, fontSize: 14),
-                    ),
-                  ),
-                  onTap: () {
-                    setState(() {
-                      flag = !flag;
-                    });
-                  },
-                )):Container(),
-            Container(
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
-              color: Theme.of(context).hoverColor,
-              child: Container(
-                  child: Text(
-                "THE ASSESSMENT",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              )),
-            ),
-            Container(
-                height: secondFlag ? 100 : 220,
-                child: new ListView.builder(
-                    itemCount: secondFlag ? 2 : 4,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                          padding: EdgeInsets.only(left: 5),
-                          child: ListTile(
-                              title: Text(
-                                secondItems[index],
-                                style: TextStyle(fontSize: 14),
-                              )));
-                    })),
-            secondFlag ?
-            Container(
-                alignment: Alignment.center,
-                child: InkWell(
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.only(top: 10,bottom: 10),
-                    child: Text(
-                      "MORE",
-                      style: TextStyle(
-                          color: Theme.of(context).accentColor, fontSize: 14),
-                    ),
-                  ),
-                  onTap: () {
-                    setState(() {
-                      secondFlag = !secondFlag;
-                    });
-                  },
-                )):Container(),
-          ],
-        ),
-      ),
+          Container(
+              padding: EdgeInsets.only(right: 15) ,
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(right: 5) ,
+                    child: Icon(Icons.search) ,
+                  ) ,
+                  ScopedModelDescendant<MainModel>(builder:
+                      (BuildContext context , Widget child , MainModel model) {
+                    return GestureDetector(
+                      child: Icon(Icons.dehaze) ,
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute<dynamic>(
+                            builder: (BuildContext context) =>
+                                MyTicketsScreen(model)));
+                      } ,
+                    );
+                  })
+                ] ,
+              ))
+        ] ,
+      ) ,
+      body: Container(color: Colors.white , child: _buildPageContant(context)) ,
       floatingActionButton: Padding(
-        padding: EdgeInsets.only(top: 10),
+        padding: EdgeInsets.only(top: 10) ,
         child: SizedBox(
-          height: 60,
-          width: 60,
+          height: 60 ,
+          width: 60 ,
           child: FloatingActionButton(
-            backgroundColor: Colors.blue,
-            elevation: 0,
+            backgroundColor: Colors.blue ,
+            elevation: 0 ,
             onPressed: () {
-              //  imagepicker();
-            },
+              Navigator.pushNamed(context , '/SupportPage');
+            } ,
             child: Container(
-              height: 70,
-              width: 70,
+              height: 70 ,
+              width: 70 ,
               decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white, width: 4),
-                  shape: BoxShape.circle,
-                  color: Theme.of(context).backgroundColor),
+                  border: Border.all(color: Colors.white , width: 4) ,
+                  shape: BoxShape.circle ,
+                  color: Theme
+                      .of(context)
+                      .backgroundColor) ,
               child: Icon(
-                Icons.add,
-                size: 30,
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          height: 60,
-          color: Theme.of(context).backgroundColor,
-          child: Column(children: <Widget>[
-            Row(
-              children: <Widget>[
-                Container(margin: EdgeInsets.only(top: 20),
-                  height: 10,
-                  color:Theme.of(context).backgroundColor,
-                  width: MediaQuery.of(context).size.width / 1.35,
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        height: 1,
-                        color: Colors.white,
-                        width: MediaQuery.of(context).size.width / 1.25,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Row(
+                Icons.add ,
+                size: 30 ,
+                color: Colors.white ,
+              ) ,
+            ) ,
+          ) ,
+        ) ,
+      ) ,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked ,
+      bottomNavigationBar: _buildBottomBar(BuildContext) ,
+    );
+  }
+
+  Widget _buildPageContant(context) {
+    return ScopedModelDescendant<MainModel>(
+        builder: (context , child , model) =>
+        model.articleLoading == false
+            ? model.allTopics != null
+            ? Container(
+            child: ListView(
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.only(top: 5),
-                  height: 10,
-                  color: Theme.of(context).backgroundColor,
-                  width: MediaQuery.of(context).size.width / 1.9,
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        height: 1,
-                        color: Colors.white,
-                        width: MediaQuery.of(context).size.width / 1.25,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],)
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height ,
+                    child: new ListView.builder(
+                        shrinkWrap: true ,
+                        itemCount: model.allTopics.length ,
+                        itemBuilder: (BuildContext ctxt , int indexs) {
+                          return Column(children: <Widget>[
+                            Container(
+                              alignment: Alignment.centerLeft ,
+                              padding: EdgeInsets.only(
+                                  top: 20 , left: 20 , bottom: 20) ,
+                              color: Theme
+                                  .of(context)
+                                  .hoverColor ,
+                              child: Container(
+                                  child: Text(
+                                    model.allTopics[indexs].title ,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold) ,
+                                  )) ,
+                            ) ,
+                            flag
+                                ? Container(
+                                child: Column(
+                                  children: <Widget>[
+                                    Container(
+                                      height: 56 * 2.0 ,
+                                      child: Column(
+                                        children:
+                                        model.allTopics[indexs]
+                                            .articles
+                                            .map(
+                                                (data) =>
+                                                Container(
+                                                  child: model.allTopics[indexs]
+                                                      .articles
+                                                      .indexOf(data) >
+                                                      1
+                                                      ? Container()
+                                                      : InkWell(
+                                                    child:
+                                                    ListTile(
+                                                      title:
+                                                      Text(data.title) ,
+                                                    ) ,
+                                                    onTap:
+                                                        () {
+                                                      print(model
+                                                          .allTopics[indexs]
+                                                          .articles.indexOf(
+                                                          data));
+                                                      print(indexs);
+                                                     final indexData = Data(firstIndex: indexs,secondIndex:  model.allTopics[indexs].articles.indexOf(data));
+                                                      Navigator.push(
+                                                        context ,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              ArticleDetailScreen(indexData),
+                                                        ) ,
+                                                      );
+                                                    } ,
+                                                  ) ,
+                                                ))
+                                            .toList() ,
+                                      ) ,
+                                    )
+                                  ] ,
+                                ))
+                                : Container(
+                                child: Column(
+                                  children: <Widget>[
+                                    Container(
+                                      height: 56 *
+                                          model.allTopics[indexs]
+                                              .articles.length
+                                              .toDouble() ,
+                                      child: Column(
+                                        children: model
+                                            .allTopics[indexs].articles
+                                            .map((data) =>
+                                            Container(
+                                              child: InkWell(
+                                                child: ListTile(
+                                                  title: Text(
+                                                      data.title) ,
+                                                ) ,
+                                                onTap: () {
+                                                  print("preess");
+                                                  final indexData = Data(firstIndex: indexs,secondIndex:  model.allTopics[indexs].articles.indexOf(data));
+                                                  Navigator.push(
+                                                    context ,
+                                                    MaterialPageRoute(
+                                                      builder:
+                                                          (context) =>
+                                                          ArticleDetailScreen(indexData) ,
+                                                    ) ,
+                                                  );
+                                                } ,
+                                              ) ,
+                                            ))
+                                            .toList() ,
+                                      ) ,
+                                    )
+                                  ] ,
+                                )) ,
+                            flag
+                                ? Container(
+                                alignment: Alignment.center ,
+                                child: InkWell(
+                                  child: Container(
+                                    alignment: Alignment.center ,
+                                    padding:
+                                    EdgeInsets.only(bottom: 10) ,
+                                    child: Text(
+                                      "MORE" ,
+                                      style: TextStyle(
+                                          color: Theme
+                                              .of(context)
+                                              .accentColor ,
+                                          fontSize: 14) ,
+                                    ) ,
+                                  ) ,
+                                  onTap: () {
+                                    setState(() {
+                                      flag = !flag;
+                                      indexValue = model.allTopics
+                                          .indexOf(model
+                                          .allTopics[indexs]);
+                                      model.changeBoolValue(
+                                          indexValue);
+                                    });
+                                  } ,
+                                ))
+                                : Container() ,
+                          ]);
+                        }))
+              ] ,
+            ))
+            : Container()
+            : Center(child: CircularProgressIndicator()));
+  }
 
-        ),
-      ),
+  Widget _buildBottomBar(BuildContext) {
+    return BottomAppBar(
+      child: Container(
+          height: 60 ,
+          color: Theme
+              .of(context)
+              .backgroundColor ,
+          child: Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(top: 20) ,
+                    height: 10 ,
+                    color: Theme
+                        .of(context)
+                        .backgroundColor ,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width / 1.35 ,
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          height: 1 ,
+                          color: Colors.white ,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width / 1.25 ,
+                        ) ,
+                      ] ,
+                    ) ,
+                  ) ,
+                ] ,
+              ) ,
+              Row(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(top: 5) ,
+                    height: 10 ,
+                    color: Theme
+                        .of(context)
+                        .backgroundColor ,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width / 1.9 ,
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          height: 1 ,
+                          color: Colors.white ,
+                          width: MediaQuery
+                              .of(context)
+                              .size
+                              .width / 1.25 ,
+                        ) ,
+                      ] ,
+                    ) ,
+                  ) ,
+                ] ,
+              ) ,
+            ] ,
+          )) ,
     );
   }
 }

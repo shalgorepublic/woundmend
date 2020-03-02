@@ -133,7 +133,6 @@ class _PasswordScreen extends State<PasswordScreen> {
                         TextFormField(
                           obscureText: passwordVisible,
                           textAlignVertical: TextAlignVertical.center,
-                          textAlign: TextAlign.center,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
                                   borderSide: BorderSide(color: Theme.of(context).backgroundColor)),
