@@ -34,7 +34,7 @@ class _MyTicketsScreenState extends State<MyTicketsScreen> {
                   child: Icon(Icons.add),
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, '/LibraryPage');
+                  Navigator.pushNamed(context, '/SupportPage');
                 },
               ))
         ],
