@@ -107,6 +107,7 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+<<<<<<< HEAD
   flutter_webview_plugin:
     dependency: "direct main"
     description:
@@ -114,6 +115,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.10+1"
+=======
+>>>>>>> 7ba4d27e4098d46eaf19f3bc2507ac52ace8cebc
   http:
     dependency: "direct main"
     description:
