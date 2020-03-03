@@ -1,12 +1,7 @@
-import 'package:derm_pro/Home_screens/Library.dart';
 import 'package:derm_pro/Home_screens/edit_profile.dart';
 import 'package:derm_pro/Home_screens/promo_code.dart';
 import 'package:derm_pro/Home_screens/setting/notification_screen.dart';
-<<<<<<< HEAD
 import 'package:derm_pro/Home_screens/setting/privacy_policy_web.dart';
-=======
->>>>>>> 7ba4d27e4098d46eaf19f3bc2507ac52ace8cebc
-import 'package:derm_pro/Home_screens/ui_elements_home/drawer.dart';
 import 'package:derm_pro/scoped_models/main.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';

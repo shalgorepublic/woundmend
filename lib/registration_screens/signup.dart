@@ -1,16 +1,10 @@
-<<<<<<< HEAD
 import 'package:derm_pro/Home_screens/setting/privacy_policy_web.dart';
-=======
->>>>>>> 7ba4d27e4098d46eaf19f3bc2507ac52ace8cebc
 import 'package:derm_pro/registration_screens/name_screen.dart';
 import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
 import '../ui_elements/dashed_line.dart';
-<<<<<<< HEAD
 import 'package:flutter/gestures.dart';
 
-=======
->>>>>>> 7ba4d27e4098d46eaf19f3bc2507ac52ace8cebc
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -21,16 +15,7 @@ class _SignupScreenState extends State<SignupScreen> {
   double screenWidth;
   bool checkBoxValue = false;
 
-<<<<<<< HEAD
 
-  _launchWebView(){
-    Navigator.of(context).push(
-        MaterialPageRoute<dynamic>(
-            builder: (BuildContext context) =>
-                PrivacyPloicyWebView('https://www.skinvision.com/terms/')));
-  }
-=======
->>>>>>> 7ba4d27e4098d46eaf19f3bc2507ac52ace8cebc
   @override
   Widget build(BuildContext context) {
     return Scaffold(
