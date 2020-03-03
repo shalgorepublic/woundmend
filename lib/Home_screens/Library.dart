@@ -149,7 +149,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                         .height ,
                     child: new ListView.builder(
                         shrinkWrap: true ,
-                        itemCount: model.allTopics.length ,
+                        itemCount: model.allTopics.length,
                         itemBuilder: (BuildContext ctxt , int indexs) {
                           return Column(children: <Widget>[
                             Container(

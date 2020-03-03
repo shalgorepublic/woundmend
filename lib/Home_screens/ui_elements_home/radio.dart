@@ -55,7 +55,7 @@ class _RadioGroupState extends State<RadioGroup> {
                   child: Container(
                     color: Theme
                         .of(context)
-                        .backgroundColor ,
+                        .backgroundColor,
                     height: 2 ,
                   )) ,
               ScopedModelDescendant<MainModel>(

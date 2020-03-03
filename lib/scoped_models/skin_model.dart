@@ -96,7 +96,6 @@ class SkinModel extends ConnectedModel {
       var finalData = json.decode(response.body);
       var questionList = finalData['data'];
       if (finalData['data']['success'] == true && finalData['data']['questions'].length > 0) {
-
         Data _finalResponse = Data.fromJson(questionList);
         _finalQuestions = _finalResponse.questions;
         _requestSuccessFlag = true;

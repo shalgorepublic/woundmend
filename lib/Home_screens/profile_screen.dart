@@ -13,7 +13,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 class ProfileScreen extends StatefulWidget {
   final model;
@@ -30,7 +29,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool imagePickerflag = false;
   bool modelFlag = true;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
 
   @override
   void initState() {
@@ -580,43 +578,5 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
         ),
       ],
     );
-  }
-}
-class FirebaseNotifications {
-  FirebaseMessaging _firebaseMessaging;
-
-  void setUpFirebase() {
-    _firebaseMessaging = FirebaseMessaging();
-    firebaseCloudMessaging_Listeners();
-
-  }
-
-  void firebaseCloudMessaging_Listeners() {
-    if (Platform.isIOS) iOS_Permission();
-
-    _firebaseMessaging.getToken().then((token) {
-      print(token);
-    });
-
-    _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print('on message $message');
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print('on resume $message');
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        print('on launch $message');
-      },
-    );
-  }
-
-  void iOS_Permission() {
-    _firebaseMessaging.requestNotificationPermissions(
-        IosNotificationSettings(sound: true, badge: true, alert: true));
-    _firebaseMessaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings) {
-      print("Settings registered: $settings");
-    });
   }
 }
