@@ -68,8 +68,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     showDialog<void>(
         context: context,
         builder: (context) => AlertDialog(
+
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0))),
+//            contentPadding: EdgeInsets.symmetric(vertical: 60.0),
             content: AlertScreen()));
   }
 
