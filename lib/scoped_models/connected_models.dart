@@ -313,11 +313,13 @@ class UserModel extends ConnectedModel {
 }
  alertFlagTrue(){
     _alertFlag = true;
+    notifyListeners();
  //   return true;
  }
 
   alertFlagFalse(){
     _alertFlag = false;
+    notifyListeners();
     //   return true;
   }
 

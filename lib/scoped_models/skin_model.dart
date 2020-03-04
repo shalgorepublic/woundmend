@@ -241,34 +241,34 @@ class SkinModel extends ConnectedModel {
                 1];
             print(skinResult);
             if (skinResult['completed'] == true) {
-              if (skinResult['skin_type'] == 'Pale white skin') {
+              if (skinResult['skin_type'] == 'Pale White Skin') {
                 _skinType = 'Pale White Skin';
                 _descriptions = firstType['description'];
                 notifyListeners();
               }
-              if (skinResult['skin_type'] == 'White skin') {
+              if (skinResult['skin_type'] == 'White Skin') {
                 _skinType = 'White Skin';
                 _descriptions = secondType['description'];
                 notifyListeners();
               }
-              if (skinResult['skin_type'] == 'Light brown skin') {
-                _skinType = 'Light brown Skin';
+              if (skinResult['skin_type'] == 'Light Brown Skin') {
+                _skinType = 'Light Brown Skin';
                 _descriptions = thirdType['description'];
                 notifyListeners();
               }
-              if (skinResult['skin_type'] == 'Moderate brown skin') {
+              if (skinResult['skin_type'] == 'Moderate brown Skin') {
                 _skinType = 'Moderate Brown Skin';
                 _descriptions = fourthType['description'];
                 notifyListeners();
               }
-              if (skinResult['skin_type'] == 'Dark brown skin') {
+              if (skinResult['skin_type'] == 'Dark Brown Skin') {
                 _skinType = 'Dark Brown Skin';
                 _descriptions = fifthType['description'];
                 notifyListeners();
               }
               if (skinResult['skin_type'] ==
-                  'Deeply pigmented dark brown to black skin') {
-                _skinType = 'Deeply Pigmented dark';
+                  'Pigmented dark Brown') {
+                _skinType = 'Deeply Pigmented Dark';
                 _descriptions = sixthType['description'];
                 notifyListeners();
               }

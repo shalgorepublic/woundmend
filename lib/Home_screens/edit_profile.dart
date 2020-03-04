@@ -30,7 +30,7 @@ class _EditProfileState extends State<EditProfile> {
           centerTitle: true,
           title: ScopedModelDescendant<MainModel>(
               builder: (BuildContext context, Widget child, MainModel model) {
-            return Text(model.user.firstName);
+            return Text(model.user.firstName+" "+model.user.lastName);
           }),
           bottom: PreferredSize(
               preferredSize: const Size.fromHeight(160.0),
@@ -318,8 +318,8 @@ class _RegisterFormState extends State<RegisterForm> {
                                   width: 20,
                                 ),
                                 Text(
-                                  "Please Wait....",
-                                  style: TextStyle(color: Colors.blueAccent),
+                                  "Please Wait...",
+                                  style: TextStyle(color: Theme.of(context).backgroundColor),
                                 )
                               ]),
                         )

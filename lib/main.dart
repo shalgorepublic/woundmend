@@ -90,9 +90,13 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: <Widget>[
+      body:Center (
+        child:
+          SingleChildScrollView(child:
           Column(
+//            mainAxisAlignment: MainAxisAlignment.center,
+//            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Container(
                 padding:
@@ -207,11 +211,10 @@ class MyHomePage extends StatelessWidget {
                         ),
                       )),
               SizedBox(
-                height: 20,
+                height: 60,
               )
             ],
-          ),
-        ],
+          ),)
       ),
     );
   }

@@ -45,7 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _showModel() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var Result = await widget.model.fetchUserData(widget.model.user.id);
-    if (widget.model.alertFlag) {
+    if(widget.model.alertFlag) {
       _showAlert(context);
     }
     if (!Result['completed']) {
