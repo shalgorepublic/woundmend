@@ -13,28 +13,28 @@ class SkinResultScreen extends StatefulWidget {
 
 class _SkinResultScreenState extends State<SkinResultScreen> {
   Map<String, dynamic> firstType = {
-    'type': 'Pale white skin',
+    'type': 'Pale White Skin',
     'description': 'Extremely sensitive skin, always burns, never tans'
   };
   Map<String, dynamic> secondType = {
-    'type': 'White skin',
+    'type': 'White Skin',
     'description': 'Very sensitive skin, burns easily, tans minimally'
   };
   Map<String, dynamic> thirdType = {
-    'type': 'Light brown skin',
+    'type': 'Light Brown Skin',
     'description': 'Sensitive skin, sometimes burns, slowly tans to light brown'
   };
   Map<String, dynamic> fourthType = {
-    'type': 'Moderate brown skin',
+    'type': 'Moderate Brown Skin',
     'description':
         'Mildly sensitive, burns minimally, always tans to moderate brown'
   };
   Map<String, dynamic> fifthType = {
-    'type': 'Dark brown skin',
+    'type': 'Dark Brown Skin',
     'description': 'Resistant skin, rarely burns, tans well'
   };
   Map<String, dynamic> sixthType = {
-    'type': 'Deeply pigmented dark brown to black skin',
+    'type': 'Pigmented dark Brown',
     'description': 'Very resistant skin, never burns, deeply pigmented'
   };
   Map<String, dynamic> finalResult;

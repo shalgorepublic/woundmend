@@ -200,7 +200,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                   child: Row(mainAxisAlignment:MainAxisAlignment.center,children: [
                     CircularProgressIndicator(),
                     SizedBox(width: 20,),
-                    Text("Please Wait....",style: TextStyle(color: Colors.blueAccent),)
+                    Text("Please Wait...",style: TextStyle(color: Theme.of(context).backgroundColor),)
                   ]),
                 ) : Container();
               }),

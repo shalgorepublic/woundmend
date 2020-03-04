@@ -242,33 +242,33 @@ class SkinModel extends ConnectedModel {
             print(skinResult);
             if (skinResult['completed'] == true) {
               if (skinResult['skin_type'] == 'Pale white skin') {
-                _skinType = 'Pale white skin';
+                _skinType = 'Pale White Skin';
                 _descriptions = firstType['description'];
                 notifyListeners();
               }
               if (skinResult['skin_type'] == 'White skin') {
-                _skinType = 'White skin';
+                _skinType = 'White Skin';
                 _descriptions = secondType['description'];
                 notifyListeners();
               }
               if (skinResult['skin_type'] == 'Light brown skin') {
-                _skinType = 'Light brown skin';
+                _skinType = 'Light brown Skin';
                 _descriptions = thirdType['description'];
                 notifyListeners();
               }
               if (skinResult['skin_type'] == 'Moderate brown skin') {
-                _skinType = 'Moderate brown skin';
+                _skinType = 'Moderate Brown Skin';
                 _descriptions = fourthType['description'];
                 notifyListeners();
               }
               if (skinResult['skin_type'] == 'Dark brown skin') {
-                _skinType = 'Dark brown skin';
+                _skinType = 'Dark Brown Skin';
                 _descriptions = fifthType['description'];
                 notifyListeners();
               }
               if (skinResult['skin_type'] ==
                   'Deeply pigmented dark brown to black skin') {
-                _skinType = 'Deeply pigmented dark';
+                _skinType = 'Deeply Pigmented dark';
                 _descriptions = sixthType['description'];
                 notifyListeners();
               }

@@ -40,7 +40,7 @@ class _UvIndexPageState extends State<UvIndexPage> {
       _isLoading = true;
     });
     http.Response response;
-    String token = '78d6f127d96a75f5a213c4a53e791903';
+    String token = '7aa592dd8c3050670ba34fb9de4b47ed';
     try {
       final Map<String , dynamic> uvData = {'lat': lat , 'lng': long};
       print("check uv data");

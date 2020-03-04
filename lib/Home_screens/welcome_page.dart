@@ -60,19 +60,19 @@ class WelcomePage extends StatelessWidget {
                                       Container(
                                         padding: EdgeInsets.only(top: 10),
                                         alignment: Alignment.topLeft,
-                                        child: Text("Rs1200.00 single check"),
+                                        child: Text("AUD 1200.00 single check"),
                                       ),
                                       Container(
                                         padding: EdgeInsets.only(top: 10),
                                         alignment: Alignment.topLeft,
                                         child: Text(
-                                            "3 months of unlimited checks for Rs4200.00"),
+                                            "3 months of unlimited checks for AUD 4200.00"),
                                       ),
                                       Container(
                                         padding: EdgeInsets.only(top: 10),
                                         alignment: Alignment.topLeft,
                                         child: Text(
-                                            "1 year of unlimited checks for Rs8500.00"),
+                                            "1 year of unlimited checks for AUD 8500.00"),
                                       )
                                     ],
                                   ),
