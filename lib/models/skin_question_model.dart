@@ -116,3 +116,8 @@ class FinalSkinResult{
   String description;
   FinalSkinResult({this.type,this.description});
 }
+class FinalRiskResult{
+  String type;
+  String description;
+  FinalRiskResult({this.type,this.description});
+}

@@ -1,6 +1,7 @@
 import 'package:derm_pro/Home_screens/Library.dart';
 import 'package:derm_pro/Home_screens/inbox_page.dart';
 import 'package:derm_pro/Home_screens/profile_screen.dart';
+import 'package:derm_pro/Home_screens/risk_type_screen.dart';
 import 'package:derm_pro/Home_screens/skin_type_screen.dart';
 import 'package:derm_pro/Home_screens/support.dart';
 import 'package:derm_pro/Home_screens/welcome_page.dart';
@@ -76,6 +77,7 @@ class _MyAppState extends State<MyApp> {
           '/inboxScreen': (BuildContext context) => InboxScreen(),
           '/myHomePage': (BuildContext context) => MyHomePage(),
           '/skinPage': (BuildContext context) => SkinType(_model),
+          '/riskPage': (BuildContext context) => RiskType(_model),
           '/SupportPage': (BuildContext context) => SupportScreen(_model),
           '/welcomePage': (BuildContext context) => WelcomePage(),
         },

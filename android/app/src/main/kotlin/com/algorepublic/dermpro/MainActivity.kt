@@ -1,4 +1,4 @@
-package com.algorepublic.derm_pro
+package com.algorepublic.dermpro
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

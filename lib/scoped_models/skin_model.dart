@@ -24,26 +24,45 @@ class SkinModel extends ConnectedModel {
   bool _netWorkErrorFlag = false;
   String _skinType = 'Skin Type';
   String _descriptions = '';
+  String _riskType = 'Risk Type';
+  String _riskDescriptions = '';
+  bool _secondRiskTypeFlag = false;
 
-  FinalSkinResult get finalSkinResult{
-
+  FinalSkinResult get finalSkinResult {
     return _finalSkinResult;
-}
+  }
+
   List<Questions> get allQuestions {
     return List.from(_finalQuestions);
   }
-  String get skinType{
+
+  String get skinType {
     return _skinType;
   }
-  String get descriptions{
+
+  String get descriptions {
     return _descriptions;
   }
+
+  String get riskType {
+    return _riskType;
+  }
+
+  String get riskDescriptions {
+    return _riskDescriptions;
+  }
+
   List<Answer> get allAnswers {
     return List.from(_answersList);
   }
-  bool get skinTypeSurveyFlag{
+
+  bool get skinTypeSurveyFlag {
     return _skinTypeSurveyFlag;
   }
+  bool get secondRiskTypeFlag{
+    return _secondRiskTypeFlag;
+  }
+
   bool get skinFlag {
     return _skinFlag;
   }
@@ -60,7 +79,7 @@ class SkinModel extends ConnectedModel {
     return _skinSelectedFlag;
   }
 
-  int get totalScore{
+  int get totalScore {
     return _totalScore;
   }
 
@@ -95,7 +114,8 @@ class SkinModel extends ConnectedModel {
       );
       var finalData = json.decode(response.body);
       var questionList = finalData['data'];
-      if (finalData['data']['success'] == true && finalData['data']['questions'].length > 0) {
+      if (finalData['data']['success'] == true &&
+          finalData['data']['questions'].length > 0) {
         Data _finalResponse = Data.fromJson(questionList);
         _finalQuestions = _finalResponse.questions;
         _requestSuccessFlag = true;
@@ -133,37 +153,44 @@ class SkinModel extends ConnectedModel {
     _skinSelectedFlag = false;
     notifyListeners();
   }
-  void countScore(int score){
+
+  void countScore(int score) {
     _totalScore = score;
     _skinTypeSurveyFlag = true;
     print(_totalScore);
     notifyListeners();
   }
-  void finalResult(String skinDetail, String descriptions,int userId) async{
-    _finalSkinResult = FinalSkinResult(type:skinDetail,description:descriptions);
+
+  void finalResult(String skinDetail, String descriptions, int userId,
+      String riskDetal) async {
+    _finalSkinResult =
+        FinalSkinResult(type: skinDetail, description: descriptions);
     notifyListeners();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.get('token');
     http.Response response;
     try {
-      Map<String, dynamic> finalData ={'skin_type':skinDetail,'user_id':userId,'quiz_id':2};
+      Map<String, dynamic> finalData = {
+        'skin_type': skinDetail,
+        'user_id': userId,
+        'quiz_id': 2
+      };
       print('print result data');
       print(finalData);
       response = await http.post(
-        'http://dermpro.herokuapp.com//api/v1/users/attempt_quiz?user_id=${userId}&skin_type=${skinDetail}&quiz_id=2',
+        'http://dermpro.herokuapp.com//api/v1/users/attempt_quiz?user_id=${userId}&skin_type=${skinDetail}&risk=${riskDetal}&quiz_id=2',
         headers: {HttpHeaders.authorizationHeader: token},
       );
       if (response.statusCode == 200) {
         // If the server did return a 200 OK response, then parse the JSON.
-         var finalResponce = json.decode(response.body);
-         print(finalResponce);
+        var finalResponce = json.decode(response.body);
+        print(finalResponce);
       } else {
         print("error");
         // If the server did not return a 200 OK response, then throw an exception.
         throw Exception('Failed to load album');
       }
-
-    }catch(e){
+    } catch (e) {
       print("catch bloc skin api");
     }
   }
@@ -176,7 +203,7 @@ class SkinModel extends ConnectedModel {
     notifyListeners();
   }
 
-  void submitQuestion(int optionId, int questionId){
+  void submitQuestion(int optionId, int questionId) {
     Map<String, dynamic> myObject = {
       'optionId': optionId,
       'questionId': questionId
@@ -194,7 +221,8 @@ class SkinModel extends ConnectedModel {
   void selectedOptionIdChange(id) {
     _selectedOptionId = id;
   }
-  Future<Map<String , dynamic>> fetchUserData(int userId) async {
+
+  Future<Map<String, dynamic>> fetchUserData(int userId) async {
     Map<String, dynamic> firstType = {
       'type': 'Pale white skin',
       'description': 'Extremely sensitive skin, always burns, never tans'
@@ -205,12 +233,13 @@ class SkinModel extends ConnectedModel {
     };
     Map<String, dynamic> thirdType = {
       'type': 'Light brown skin',
-      'description': 'Sensitive skin, sometimes burns, slowly tans to light brown'
+      'description':
+          'Sensitive skin, sometimes burns, slowly tans to light brown'
     };
     Map<String, dynamic> fourthType = {
       'type': 'Moderate brown skin',
       'description':
-      'Mildly sensitive, burns minimally, always tans to moderate brown'
+          'Mildly sensitive, burns minimally, always tans to moderate brown'
     };
     Map<String, dynamic> fifthType = {
       'type': 'Dark brown skin',
@@ -223,9 +252,11 @@ class SkinModel extends ConnectedModel {
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.get('token');
-    try{
-    final response = await http.get('http://dermpro.herokuapp.com//api/v1/users/$userId',
-      headers: {HttpHeaders.authorizationHeader: token},);
+    try {
+      final response = await http.get(
+        'http://dermpro.herokuapp.com//api/v1/users/$userId',
+        headers: {HttpHeaders.authorizationHeader: token},
+      );
 
       print(response.statusCode);
       if (response.statusCode == 200) {
@@ -236,9 +267,8 @@ class SkinModel extends ConnectedModel {
           print(finalResult['data']['user']['user_quizes'].length);
           if (finalResult['data']['user']['user_quizes'].length != 0) {
             int index = finalResult['data']['user']['user_quizes'].length;
-            Map<String ,
-                dynamic> skinResult = finalResult['data']['user']['user_quizes'][index -
-                1];
+            Map<String, dynamic> skinResult =
+                finalResult['data']['user']['user_quizes'][index - 1];
             print(skinResult);
             if (skinResult['completed'] == true) {
               if (skinResult['skin_type'] == 'Pale White Skin') {
@@ -266,30 +296,42 @@ class SkinModel extends ConnectedModel {
                 _descriptions = fifthType['description'];
                 notifyListeners();
               }
-              if (skinResult['skin_type'] ==
-                  'Pigmented dark Brown') {
-                _skinType = 'Deeply Pigmented Dark';
+              if (skinResult['skin_type'] == 'Pigmented dark Brown') {
+                _skinType = 'Deeply Dark';
                 _descriptions = sixthType['description'];
+                notifyListeners();
+              }
+              if (skinResult['risk'] == 'Low Risk') {
+                _riskType = 'Low Risk';
+                _riskDescriptions =
+                    'You have not answered any questions with yes.This means you do not have the characteristics of someone with a risk profile to develope melanoma, however you can never be sure you will not develope melanoma.';
+                _secondRiskTypeFlag = true;
+                notifyListeners();
+              }
+              if (skinResult['risk'] == 'High Risk') {
+                _riskType = 'High Risk';
+                _riskDescriptions =
+                    'The questions are aimed to find out whether you have a risk profile to develope melanoma.You have answered one or multiple questions with yes.This means you are one of many who are at risk of developing a melanoma.';
+                _secondRiskTypeFlag = true;
                 notifyListeners();
               }
 
               _finalSkinResult =
-                  FinalSkinResult(type: skinType , description: descriptions);
+                  FinalSkinResult(type: skinType, description: descriptions);
               _skinTypeSurveyFlag = true;
               notifyListeners();
               return {'completed': true};
             }
             return {'completed': true};
           }
-        }
-        else
+        } else
           print("user not exist");
       } else {
         print("error");
         throw Exception('Failed to load album');
       }
-    }catch(e){
-      return {'completed':false};
+    } catch (e) {
+      return {'completed': false};
     }
   }
 }

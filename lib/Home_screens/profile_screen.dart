@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:derm_pro/Home_screens/alert_screen.dart';
 import 'package:derm_pro/Home_screens/contact_us_screen.dart';
 import 'package:derm_pro/Home_screens/edit_profile.dart';
+import 'package:derm_pro/Home_screens/risk_result_screen.dart';
 import 'package:derm_pro/Home_screens/skin_result.dart';
 import 'package:derm_pro/Home_screens/ui_elements_home/drawer.dart';
 import 'package:derm_pro/Home_screens/weather/uv_index_page.dart';
@@ -13,6 +14,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 
 class ProfileScreen extends StatefulWidget {
   final model;
@@ -128,7 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           builder: (context, child, model) => FlexibleSpaceBar(
                                 centerTitle: true,
                                 title: Text(
-                                  '${model.user.firstName} ${model.user.lastName}',
+                                  '${model.user.firstName[0].toUpperCase()}${model.user.firstName.substring(1)}',
                                   style: TextStyle(fontSize: 22),
                                 ),
                               )),
@@ -445,7 +447,7 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                             EdgeInsets.only(left: 5, right: 5),
                                         elevation: 0,
                                         child: Text(
-                                          model.skinType,
+                                          model.riskType,
                                           style: TextStyle(
                                               fontSize: 12,
                                               color: !flagtwo
@@ -474,16 +476,16 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                               flagthree = false;
                                             }
                                           });
-                                          if (!model.skinTypeSurveyFlag) {
+                                          if (!model.riskTypeSurveyFlag && !model.secondRiskTypeFlag ) {
                                             Navigator.pushNamed(
-                                                context, '/skinPage');
+                                                context, '/riskPage');
                                           } else
                                             Navigator.push<dynamic>(
                                               context,
                                               MaterialPageRoute<dynamic>(
                                                 builder:
                                                     (BuildContext context) =>
-                                                        SkinResultScreen(model),
+                                                        RiskResultScreen(model),
                                               ),
                                             );
                                         },

@@ -72,7 +72,7 @@ class _SkinResultScreenState extends State<SkinResultScreen> {
         finalResult = sixthType;
       });
     }
-    widget.model.finalResult(finalResult['type'],finalResult['description'],widget.model.user.id);
+    widget.model.finalResult(finalResult['type'],finalResult['description'],widget.model.user.id,widget.model.riskType);
     super.initState();
   }
   @override

@@ -47,7 +47,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:375065625646:android:4d3d4756c99d0fe6c98bbf",
         "android_client_info": {
-          "package_name": "com.algorepublic.derm_pro"
+          "package_name": "com.algorepublic.dermpro"
         }
       },
       "oauth_client": [
@@ -55,7 +55,7 @@
           "client_id": "375065625646-d1g3cohgh8ukvs596baeqnu50pf00418.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.algorepublic.derm_pro",
+            "package_name": "com.algorepublic.dermpro",
             "certificate_hash": "fcbc0657af852718a6b4178c3c097391890eecc9"
           }
         },

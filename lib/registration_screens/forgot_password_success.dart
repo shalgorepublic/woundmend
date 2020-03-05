@@ -1,6 +1,8 @@
 import 'package:derm_pro/registration_screens/email_page.dart';
+import 'package:derm_pro/scoped_models/main.dart';
 import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class ForgotPasswordSuccessScreen extends StatelessWidget {
   final email;
@@ -40,7 +42,10 @@ class ForgotPasswordSuccessScreen extends StatelessWidget {
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
             ),
-            Container(
+    ScopedModelDescendant<MainModel>(
+    builder: (BuildContext context, Widget child, MainModel model) {
+    return
+    Container(
               padding: EdgeInsets.only(left: 50, right: 50, top: 30),
               child: SizedBox(
                   child: RaisedButton(
@@ -55,12 +60,14 @@ class ForgotPasswordSuccessScreen extends StatelessWidget {
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                     onPressed: () {
+                      model.logout();
                       Navigator.of(context)
-                          .pushNamedAndRemoveUntil('/emailPage',
+                          .pushNamedAndRemoveUntil('/myHomePage',
                           ModalRoute.withName("/emailPage"));
+                   //  Navigator.popUntil(context, ModalRoute.withName('/emailPage'));
                     },
                   )),
-            ),
+            );}),
             GestureDetector(child:
             Container(padding:EdgeInsets.only(top: 20),
               alignment: Alignment.center,

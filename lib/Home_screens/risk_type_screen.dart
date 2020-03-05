@@ -1,28 +1,30 @@
+import 'package:derm_pro/Home_screens/risk_result_screen.dart';
 import 'package:derm_pro/Home_screens/setting/ui_elements/no_internet_container.dart';
 import 'package:derm_pro/Home_screens/skin_result.dart';
-import 'package:derm_pro/Home_screens/ui_elements_home/radio.dart';
+import 'package:derm_pro/Home_screens/ui_elements_home/second_radio.dart';
 import 'package:derm_pro/scoped_models/main.dart';
+import 'package:derm_pro/scoped_models/risk_type_model.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 import '../scoped_models/main.dart';
 
-class SkinType extends StatefulWidget {
+class RiskType extends StatefulWidget {
   final MainModel model;
 
-  SkinType(this.model);
+  RiskType(this.model);
 
   @override
-  _SkinTypeState createState() => _SkinTypeState(model);
+  _RiskTypeState createState() => _RiskTypeState(model);
 }
 
-class _SkinTypeState extends State<SkinType> {
+class _RiskTypeState extends State<RiskType> {
   final model;
 
-  _SkinTypeState(this.model);
+  _RiskTypeState(this.model);
 
   @override
   void initState() {
-    model.fetchQuestions();
+    model.fetchRiskQuestions();
     super.initState();
   }
 
@@ -30,30 +32,30 @@ class _SkinTypeState extends State<SkinType> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Skin Type"),
+          title: Text("Risk Type"),
           centerTitle: true,
           backgroundColor: Theme.of(context).backgroundColor,
         ),
         body: ListView(
           children: <Widget>[
             ScopedModelDescendant<MainModel>(
-                builder: (context, child, model) => model.skinFlag
+                builder: (context, child, model) => model.riskFlag
                     ?
                 Column(children: <Widget>[
                   Container( padding: EdgeInsets.only(top: 250),child:
                   CircularProgressIndicator())
                 ],)
 
-                    : model.netWorkErrorFlag
+                    : model.riskNetWorkErrorFlag
                     ? NoInterNet()
                     : Container(
-                  child: model.allQuestions.length > 0
+                  child: model.allRiskQuestions.length > 0
                       ? Center(
                       child: Column(
                         children: <Widget>[
                           ScopedModelDescendant<MainModel>(
                               builder: (context, child, model) =>
-                                  RadioGroup()),
+                                  SecondRadioGroup()),
                           Container(
                             padding: EdgeInsets.only(top: 30),
                             child: Row(
@@ -73,15 +75,15 @@ class _SkinTypeState extends State<SkinType> {
                                         ),
                                         onPressed: () {
                                           if (model
-                                              .currentQuestionIndex ==
+                                              .currentRiskQuestionIndex ==
                                               0) {
                                             Navigator.pop(context);
                                           }
                                           if (model
-                                              .currentQuestionIndex <=
-                                              model.allQuestions
+                                              .currentRiskQuestionIndex <=
+                                              model.allRiskQuestions
                                                   .length) {
-                                            model.previousQuestion();
+                                            model.previousRiskQuestion();
                                           }
                                         },
                                       ),
@@ -91,29 +93,29 @@ class _SkinTypeState extends State<SkinType> {
                                       (context, child, model) =>
                                       GestureDetector(
                                         onTap: () {
-                                          if (model.currentQuestionIndex ==
+                                          if (model.currentRiskQuestionIndex ==
                                               0 ||
-                                              model.currentQuestionIndex <=
-                                                  model.allQuestions
+                                              model.currentRiskQuestionIndex <=
+                                                  model.allRiskQuestions
                                                       .length -
-                                                      2) {
+                                                      1) {
                                             if (model
-                                                .selectedOptionId !=
+                                                .riskSelectedOptionId !=
                                                 null) {
-                                              model.nextQuestion();
+                                              model.nextRiskQuestion();
                                             } else {
                                               model
-                                                  .skinSelectedFlagTrue();
+                                                  .riskSelectedFlagTrue();
                                             }
                                           }
 
-                                          if (model.currentQuestionIndex-
+                                          if (model.currentRiskQuestionIndex-
                                               1 ==
-                                              model.allQuestions
+                                              model.allRiskQuestions
                                                   .length -
                                                   1) {
                                             if (model
-                                                .selectedOptionId !=
+                                                .riskSelectedOptionId !=
                                                 null) {
                                               Navigator.push<dynamic>(
                                                 context,
@@ -121,12 +123,12 @@ class _SkinTypeState extends State<SkinType> {
                                                     dynamic>(
                                                   builder: (BuildContext
                                                   context) =>
-                                                      SkinResultScreen(model),
+                                                      RiskResultScreen(model),
                                                 ),
                                               );
                                             } else {
                                               model
-                                                  .skinSelectedFlagTrue();
+                                                  .riskSelectedFlagTrue();
                                             }
                                           }
                                         },
@@ -136,8 +138,8 @@ class _SkinTypeState extends State<SkinType> {
                                                 .backgroundColor,
                                             child: Row(
                                               children: <Widget>[
-                                                model.currentQuestionIndex ==
-                                                    model.allQuestions
+                                                model.currentRiskQuestionIndex ==
+                                                    model.allRiskQuestions
                                                         .length -
                                                         1
                                                     ? Container(
