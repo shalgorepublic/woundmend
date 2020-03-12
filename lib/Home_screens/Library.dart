@@ -65,9 +65,9 @@ class _LibraryScreenState extends State<LibraryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerBuilder() ,
+    //  drawer: DrawerBuilder() ,
       appBar: AppBar(
-        title: Text("Support") ,
+        title: Text("FAQ") ,
         centerTitle: true ,
         leading: new IconButton(
           icon: new Icon(Icons.arrow_back) ,
@@ -75,7 +75,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
             Navigator.pop(context);
           } ,
         ) ,
-        actions: [
+       /* actions: [
           Container(
               padding: EdgeInsets.only(right: 15) ,
               child: Row(
@@ -97,7 +97,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   })
                 ] ,
               ))
-        ] ,
+        ] ,*/
       ) ,
       body: Container(color: Colors.white , child: _buildPageContant(context)) ,
       floatingActionButton: Padding(

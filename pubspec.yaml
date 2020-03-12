@@ -32,6 +32,15 @@ dependencies:
   dio: ^3.0.9
   flutter_webview_plugin: ^0.3.10+1
   braintree_payment: ^1.2.3
+  firebase_messaging: ^6.0.12
+  toast: ^0.1.5
+  draggable_scrollbar: ^0.0.4
+  cached_network_image: ^2.0.0
+  bubble: ^1.1.9+1
+  fancy_shimmer_image: ^1.0.0+1
+
+
+
 
 
 
@@ -84,7 +93,19 @@ flutter:
     - assets/art.png
     - assets/cancer.jpg
     - assets/cancer2.jpg
-
+    - assets/firstimage.png
+    - assets/secondimage.png
+    - assets/thirdimage.png
+    - assets/fourthimage.png
+    - assets/fifthimage.png
+    - assets/sixthimage.png
+    - assets/seventhimage.png
+    - assets/eightimage.png
+    - assets/ninthimage.png
+    - assets/tenthimage.png
+    - assets/tenthimage.png
+    - assets/eleventhimage.png
+    - assets/twelthimage.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
@@ -114,4 +135,4 @@ flutter:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/app_icon.jpg"
+  image_path: "assets/app_icon.png"

@@ -44,7 +44,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
               children: <Widget>[
                 Container(
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
+                  padding: EdgeInsets.only(top: 15, left: 20, bottom: 15),
                   color: Theme.of(context).hoverColor,
                   child: Container(
                       child: Text(
@@ -54,7 +54,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
+                  padding: EdgeInsets.only(left: 20, bottom: 10),
                   child: Container(
                       child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,7 +88,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.only( left: 20, bottom: 20),
+                  padding: EdgeInsets.only( left: 20, bottom: 10),
                   child: Container(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -104,7 +104,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
+                  padding: EdgeInsets.only(top: 15, left: 20, bottom: 15),
                   color: Theme.of(context).hoverColor,
                   child: Container(
                       child: Text(
@@ -115,7 +115,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 SwitchButton(),
                 Container(
                   alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
+                  padding: EdgeInsets.only( left: 20, bottom: 20),
                   child: Container(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -136,7 +136,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 Container(
                   alignment: Alignment.centerLeft,
                   color: Theme.of(context).hoverColor,
-                  padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
+                  padding: EdgeInsets.only(top: 15, left: 20, bottom: 15),
                   child: Container(
                       child: Text(
                     "Add and verify your number to receive SMS notification",

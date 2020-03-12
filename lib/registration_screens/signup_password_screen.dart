@@ -15,6 +15,7 @@ class _PasswordScreen extends State<PasswordScreen> {
   _PasswordScreen(this._formData);
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _password = null;
+  bool passwordVisible =true;
   void _submitForm() async {
     if (!_formKey.currentState.validate()) {
       return;
@@ -82,6 +83,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                            // margin: const EdgeInsets.only(right: 30, left: 30),
                             padding: EdgeInsets.only(bottom: 20 , top: 20,left: 30,right: 30) ,
                             child: TextFormField(
+                              obscureText: passwordVisible,
                               decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius:
@@ -95,7 +97,23 @@ class _PasswordScreen extends State<PasswordScreen> {
                                   labelText: 'Password' ,
                                   labelStyle: TextStyle(fontSize: 18),
                                   filled: true ,
-                                  fillColor: Colors.white) ,
+                                  fillColor: Colors.white,
+                                suffixIcon:IconButton(
+                                  icon: Icon(
+                                    // Based on passwordVisible state choose the icon
+                                    passwordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: Theme.of(context).backgroundColor,
+                                  ),
+                                  onPressed: () {
+                                    // Update the state i.e. toogle the state of passwordVisible variable
+                                    setState(() {
+                                      passwordVisible = !passwordVisible;
+                                    });
+                                  },
+                                ),) ,
+
                               validator: (String value) {
                                 if (value.isEmpty || value.length < 6) {
                                   // ignore: missing_return, missing_return

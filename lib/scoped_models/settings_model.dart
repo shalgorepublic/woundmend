@@ -37,8 +37,9 @@ class SettingsModel extends ConnectedModel {
       print("helo image");
       FormData formData = FormData.fromMap({
         "title": message,
-        "images": await MultipartFile.fromFile(fileImage.path,
+        "images": [ await MultipartFile.fromFile(fileImage.path,
             filename: fileImage.toString()),
+      ]
       });
       Response response;
 
@@ -70,7 +71,9 @@ class SettingsModel extends ConnectedModel {
         print('helo error');
         return {'success': false, 'message': 'No internet connection'};
       }
-    } else {
+    }
+    else
+      {
       print("helo null image");
       FormData formData = FormData.fromMap({
         "title": message,

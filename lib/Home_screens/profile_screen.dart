@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:derm_pro/Home_screens/alert_screen.dart';
 import 'package:derm_pro/Home_screens/contact_us_screen.dart';
 import 'package:derm_pro/Home_screens/edit_profile.dart';
-import 'package:derm_pro/Home_screens/risk_result_screen.dart';
+import 'package:derm_pro/Home_screens/image_review_screen.dart';
+import 'package:derm_pro/Home_screens/setting/ui_elements/colors.dart';
 import 'package:derm_pro/Home_screens/skin_result.dart';
 import 'package:derm_pro/Home_screens/ui_elements_home/drawer.dart';
 import 'package:derm_pro/Home_screens/weather/uv_index_page.dart';
@@ -14,7 +17,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 
 class ProfileScreen extends StatefulWidget {
   final model;
@@ -31,26 +35,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool imagePickerflag = false;
   bool modelFlag = true;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final List<String> _dropdownValues = [
+    "HEAD",
+    "FOREHEAD",
+    "FACE",
+    "LEFT ARM",
+    "Right ARM",
+    "RIGHT THIGH",
+    "RIGHT THIGH",
+    "Left THIGH",
+    "RIGHT FEET",
+    "Left FEET",
+  ];
+  String placeOfMole = 'HEAD';
 
   @override
   void initState() {
+    print("place of mole");
+    print(placeOfMole);
     super.initState();
     _showModel();
     Timer(Duration(seconds: 7), () {
       _scaffoldKey.currentState.hideCurrentSnackBar();
     });
- //   new FirebaseNotifications().setUpFirebase();
+    new FirebaseNotifications(widget.model).setUpFirebase();
   }
-
-
 
   void _showModel() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var Result = await widget.model.fetchUserData(widget.model.user.id);
-    if(widget.model.alertFlag) {
+    if (widget.model.alertFlag) {
       _showAlert(context);
     }
-    if (!Result['completed']) {
+    if (Result['completed'] == false) {
       _scaffoldKey.currentState.showSnackBar(SnackBar(
         behavior: SnackBarBehavior.floating,
         content: Container(
@@ -70,7 +87,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     showDialog<void>(
         context: context,
         builder: (context) => AlertDialog(
-
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(10.0))),
 //            contentPadding: EdgeInsets.symmetric(vertical: 60.0),
@@ -78,10 +94,71 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future imagepicker() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
       _image = image;
     });
+    if (_image != null) {
+      Navigator.push<dynamic>(
+        context,
+        MaterialPageRoute<dynamic>(
+          builder: (context) =>
+              ImageReviewScreen({'image': _image, 'location': placeOfMole}),
+        ),
+      );
+    }
+  }
+
+  Future<void> _showDialogue(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              //  actionsPadding: EdgeInsets.all(50),
+              //  contentPadding: EdgeInsets.only(left: 23),
+              title: Text("Please select the location of mole"),
+              content: Container(
+                  alignment: Alignment.center,
+                  height: MediaQuery.of(context).size.height / 5,
+                  child: Column(
+                    children: <Widget>[
+                      DropdownButton(
+                        items: _dropdownValues
+                            .map((value) => DropdownMenuItem(
+                                  child: Text(value),
+                                  value: value,
+                                ))
+                            .toList(),
+                        onChanged: (String value) {
+                          setState(() {
+                            placeOfMole = value;
+                          });
+                          Timer(Duration(milliseconds: 500), () {
+                            if (placeOfMole != null) {
+                              Navigator.of(context).pop(true);
+                              imagepicker();
+                            }
+                          });
+                        },
+                        isExpanded: false,
+                        hint: Text(placeOfMole),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      RaisedButton(
+                        color: Theme.of(context).accentColor,
+                        child: Text("Submit"),
+                        onPressed: () {
+                          if (placeOfMole != null) {
+                            Navigator.of(context).pop(true);
+                            imagepicker();
+                          }
+                        },
+                      )
+                    ],
+                  )));
+        });
   }
 
   Future<bool> _onBackPressed() {
@@ -123,6 +200,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     (BuildContext context, bool innerBoxIsScrolled) {
                   return <Widget>[
                     SliverAppBar(
+                      automaticallyImplyLeading: true,
                       backgroundColor: Theme.of(context).backgroundColor,
                       floating: false,
                       pinned: true,
@@ -142,8 +220,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           PreferredSize(
                               child: Container(
                             child: Theme(
-                              data: Theme.of(context)
-                                  .copyWith(accentColor: Theme.of(context).accentColor),
+                              data: Theme.of(context).copyWith(
+                                  accentColor: Theme.of(context).accentColor),
                               child: ContainerWithCircle(),
                             ),
                           ))
@@ -199,7 +277,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 backgroundColor: Colors.blue,
                 elevation: 0,
                 onPressed: () {
-                  imagepicker();
+                  _showDialogue(context);
+                  //imagepicker();
                 },
                 child: Container(
                   height: 70,
@@ -249,8 +328,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                     ),
                     onTap: () {
-                      Navigator.pop(context);
-                      Navigator.pushReplacementNamed(context, '/inboxScreen');
+                      //   Navigator.pop(context);
+                      Navigator.pushNamed(context, '/yourScansPage');
                     },
                   ),
                   GestureDetector(
@@ -379,7 +458,7 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                       // color: Colors.white,
                       height: 80.0,
                       child: Container(
-                        padding: EdgeInsets.only(top: 15, left: 15, right: 15),
+                        padding: EdgeInsets.only(left: 35, right: 35),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
@@ -397,12 +476,13 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                         style: TextStyle(
                                             fontSize: 12,
                                             color: !flagone
-                                                ? Colors.green
+                                                ? Theme.of(context).accentColor
                                                 : Colors.white),
                                         textAlign: TextAlign.center,
                                       ),
-                                      color:
-                                          flagone ? Colors.green : Colors.white,
+                                      color: flagone
+                                          ? Theme.of(context).accentColor
+                                          : Colors.white,
                                       shape: RoundedRectangleBorder(
                                         side: BorderSide(
                                           color: Colors.white,
@@ -436,7 +516,7 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                         });
                                       },
                                     ))),
-                            ScopedModelDescendant<MainModel>(
+                            /* ScopedModelDescendant<MainModel>(
                               builder: (context, child, model) => Flexible(
                                   flex: 1,
                                   child: Container(
@@ -490,7 +570,7 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                             );
                                         },
                                       ))),
-                            ),
+                            ),*/
                             ScopedModelDescendant<MainModel>(
                                 builder: (context, child, model) => Container(
                                     height: 25,
@@ -504,12 +584,12 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                         style: TextStyle(
                                             fontSize: 12,
                                             color: !flagthree
-                                                ? Colors.green
+                                                ? Theme.of(context).accentColor
                                                 : Colors.white),
                                         textAlign: TextAlign.center,
                                       ),
                                       color: flagthree
-                                          ? Colors.green
+                                          ? Theme.of(context).accentColor
                                           : Colors.white,
                                       shape: RoundedRectangleBorder(
                                         side: BorderSide(
@@ -547,40 +627,89 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                       ),
                     ),
                     Container(
-                      color: Colors.green,
-                      height: 1.5,
+                      color: Theme.of(context).accentColor,
+                      height: 2,
                     )
                   ],
                 )),
-            GestureDetector(
-              child: Container(
-                width: circleRadius,
-                height: circleRadius,
-                decoration:
-                    ShapeDecoration(shape: CircleBorder(), color: Colors.white),
-                child: Padding(
-                  padding: EdgeInsets.all(circleBorderWidth),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(80)),
-                    child: FadeInImage(
-                      fit: BoxFit.cover,
-                      //   image: NetworkImage(product.image),
-                      image: AssetImage('assets/bill_gate.jpg'),
-                      placeholder: AssetImage(
-                        'assets/profile.png',
+            ScopedModelDescendant<MainModel>(
+                builder: (context, child, model) => GestureDetector(
+                      child: Container(
+                        width: circleRadius,
+                        height: circleRadius,
+                        decoration: ShapeDecoration(
+                            shape: CircleBorder(), color: Colors.white),
+                        child: Padding(
+                          padding: EdgeInsets.all(circleBorderWidth),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(80)),
+                            child: model.user.image != null
+                                ? FancyShimmerImage(
+                                    imageUrl: model.user.image,
+                                  )
+                                : Image.asset(
+                                    'assets/profile.png',
+                                  ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-              ),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute<dynamic>(
-                    builder: (BuildContext context) => EditProfile()));
-              },
-            ),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute<dynamic>(
+                            builder: (BuildContext context) => EditProfile()));
+                      },
+                    )),
           ],
         ),
       ],
     );
+  }
+}
+
+class FirebaseNotifications {
+  final model;
+
+  FirebaseNotifications(this.model);
+
+  FirebaseMessaging _firebaseMessaging;
+
+  void setUpFirebase() {
+    _firebaseMessaging = FirebaseMessaging();
+    firebaseCloudMessaging_Listeners();
+  }
+
+  void firebaseCloudMessaging_Listeners() {
+    if (Platform.isIOS) iOS_Permission();
+
+    _firebaseMessaging.getToken().then((token) {
+      print("fcm token");
+      print(token);
+      model.updateToken(token);
+    });
+
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print('on message $message');
+        print("Notification");
+        model.fetchQueriesSpots();
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print('on resume $message');
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print('on launch $message');
+      },
+      /* onBackgroundMessage: (Map<String, dynamic> message) async {
+        print('on background message $message');
+      },*/
+    );
+  }
+
+  void iOS_Permission() {
+    _firebaseMessaging.requestNotificationPermissions(
+        IosNotificationSettings(sound: true, badge: true, alert: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
   }
 }

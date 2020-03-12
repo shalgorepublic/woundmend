@@ -107,8 +107,7 @@ class _SkinTypeState extends State<SkinType> {
                                             }
                                           }
 
-                                          if (model.currentQuestionIndex-
-                                              1 ==
+                                          if (model.currentQuestionIndex ==
                                               model.allQuestions
                                                   .length -
                                                   1) {
@@ -124,10 +123,10 @@ class _SkinTypeState extends State<SkinType> {
                                                       SkinResultScreen(model),
                                                 ),
                                               );
-                                            } else {
+                                            }/* else {
                                               model
                                                   .skinSelectedFlagTrue();
-                                            }
+                                            }*/
                                           }
                                         },
                                         child: Container(

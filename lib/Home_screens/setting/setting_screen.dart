@@ -136,7 +136,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
                   child: Container(child: Text("Instructions for use")),
                 ),
-                GestureDetector(child:Container(
+               /* GestureDetector(child:Container(
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
                   child: Container(child: Text("Add Promo Code")),
@@ -145,7 +145,7 @@ class _SettingScreenState extends State<SettingScreen> {
                       MaterialPageRoute<dynamic>(
                           builder: (BuildContext context) =>
                               PromoCodeScreen()));
-                },),
+                },),*/
                 GestureDetector(child:
                 Container(
                   alignment: Alignment.centerLeft,

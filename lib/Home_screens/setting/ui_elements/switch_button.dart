@@ -25,7 +25,7 @@ class _SwitchButtonState extends State<SwitchButton> {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.centerLeft,
-      padding: EdgeInsets.only(right:20,top: 20, left: 20, bottom: 20),
+      padding: EdgeInsets.only(right:20, left: 20, bottom: 15),
       child: Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

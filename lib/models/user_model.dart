@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class User {
@@ -10,6 +12,7 @@ class User {
   final String phoneNumber;
   final String token;
   final String otp;
+  final String image;
 
 
   User({
@@ -22,6 +25,7 @@ class User {
     @required this.phoneNumber,
     @required this.token,
     @required this.otp,
+    @required this.image,
   });
 
 }

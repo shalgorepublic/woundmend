@@ -65,7 +65,7 @@ class ContactUsScreen extends StatelessWidget {
         ScopedModelDescendant<MainModel>(
           builder: (context , child , model) =>
                 Container(
-                  width: 220.0,
+                  width:MediaQuery.of(context).size.width/1.5,
                   height: 40.0,
                   child: new RaisedButton(
                     color: Theme.of(context).backgroundColor,
@@ -112,7 +112,7 @@ class ContactUsScreen extends StatelessWidget {
                 GestureDetector(child:
                 Container(
                   margin: EdgeInsets.only(bottom: 30),
-                  width: 220,
+                  width:MediaQuery.of(context).size.width/1.5,
                   height: 40,
                   child: RaisedButton(
                     elevation: 4,
@@ -129,11 +129,11 @@ class ContactUsScreen extends StatelessWidget {
                             style: TextStyle(fontSize: 18),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
                             child: Text(
-                              'SEE ARTICLES',
+                              'FAQ',
                               style: TextStyle(
-                                  fontFamily: 'Bold', fontSize: 32),
+                                  fontFamily: 'Bold', fontSize: 18),
                             ),
                           ),
                           Text(

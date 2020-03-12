@@ -12,64 +12,98 @@ class SkinResultScreen extends StatefulWidget {
 }
 
 class _SkinResultScreenState extends State<SkinResultScreen> {
+  Color hexToColor(String code) {
+    return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
+  }
+  String image1;
+  String image2;
+  int color;
+ /* Color color1 = hexToColor("#b74093");
+  Color color2 = HexColor("#b74093");
+  Color color3 = HexColor("#88b74093");
+  Color color1 = HexColor("b74093");
+  Color color2 = HexColor("#b74093");
+  Color color3 = HexColor("#88b74093");*/
   Map<String, dynamic> firstType = {
     'type': 'Pale White Skin',
-    'description': 'Extremely sensitive skin, always burns, never tans'
+    'description': 'Extremely sensitive skin, always burns, never tans',
   };
   Map<String, dynamic> secondType = {
     'type': 'White Skin',
-    'description': 'Very sensitive skin, burns easily, tans minimally'
+    'description': 'Very sensitive skin, burns easily, tans minimally',
   };
   Map<String, dynamic> thirdType = {
     'type': 'Light Brown Skin',
-    'description': 'Sensitive skin, sometimes burns, slowly tans to light brown'
+    'description': 'Sensitive skin, sometimes burns, slowly tans to light brown',
   };
   Map<String, dynamic> fourthType = {
     'type': 'Moderate Brown Skin',
     'description':
-        'Mildly sensitive, burns minimally, always tans to moderate brown'
+        'Mildly sensitive, burns minimally, always tans to moderate brown',
   };
   Map<String, dynamic> fifthType = {
     'type': 'Dark Brown Skin',
-    'description': 'Resistant skin, rarely burns, tans well'
+    'description': 'Resistant skin, rarely burns, tans well',
   };
   Map<String, dynamic> sixthType = {
     'type': 'Pigmented dark Brown',
-    'description': 'Very resistant skin, never burns, deeply pigmented'
+    'description': 'Very resistant skin, never burns, deeply pigmented',
   };
   Map<String, dynamic> finalResult;
-
   @override
   void initState() {
+    print("score");
     print(widget.model.totalScore);
     if (widget.model.totalScore >= 0 && widget.model.totalScore <= 6) {
       setState(() {
         finalResult = firstType;
+        image1 = 'assets/ninthimage.png';
+        image2 = 'assets/firstimage.png';
+        print(image2);
+        color = 0xFFEFDC62;
+        print(color);
+//print(10);
+
       });
     }
     if (widget.model.totalScore >= 7 && widget.model.totalScore <= 13) {
       setState(() {
         finalResult = secondType;
+        image1 ='assets/eleventhimage.png';
+        image2 = 'assets/twelthimage.png';
+        color = 0xFFE9B964;
       });
     }
     if (widget.model.totalScore >= 14 && widget.model.totalScore <= 20) {
       setState(() {
         finalResult = thirdType;
+        image1 = 'assets/tenthimage.png';
+        image2 = 'assets/secondimage.png';
+        color = 0xFFB06639;
       });
     }
     if (widget.model.totalScore >= 21 && widget.model.totalScore <= 27) {
       setState(() {
         finalResult = fourthType;
+        image1 = 'assets/thirdimage.png';
+        image2 = 'assets/fourthimage.png';
+        color = 0xFF8E5029;
       });
     }
     if (widget.model.totalScore >= 28 && widget.model.totalScore <= 34) {
       setState(() {
         finalResult = fifthType;
+        image1 = 'assets/fifthimage.png';
+        image2 = 'assets/sixthimage.png';
+        color = 0xFF793308;
       });
     }
     if (widget.model.totalScore >= 35) {
       setState(() {
         finalResult = sixthType;
+        image1 = 'assets/seventhimage.png';
+        image2 = 'assets/eightimage.png';
+        color = 0xFF351A1D;
       });
     }
     widget.model.finalResult(finalResult['type'],finalResult['description'],widget.model.user.id,widget.model.riskType);
@@ -93,7 +127,7 @@ class _SkinResultScreenState extends State<SkinResultScreen> {
                 children: <Widget>[
                   Container(
                       decoration: new BoxDecoration(
-                          color: Colors.brown,
+                          color: Color(color),
                           borderRadius:
                           new BorderRadius.all(Radius.circular(10))),
                       padding: EdgeInsets.only(top: 30, bottom: 30)),
@@ -120,8 +154,37 @@ class _SkinResultScreenState extends State<SkinResultScreen> {
                 style: TextStyle(color: Colors.black54, fontSize: 18),
               ),
             ),),
+    ScopedModelDescendant<MainModel>(
+    builder: (context, child, model) =>
+           Container(padding:EdgeInsets.only(top:30),alignment:Alignment.center,child: Row(mainAxisAlignment:MainAxisAlignment.center,children: <Widget>[
+             Container(
+               // padding: EdgeInsets.only(left: 40, right: 40, top: 30),
+               child: Center(
+                 //child: Text("helo"),
+                 child: Image.asset(
+                   image1,
+                   width: 150,
+                   height: 150,
+                 ),
+               ),
+             ),
+             Container(
+               // padding: EdgeInsets.only(left: 40, right: 40, top: 30),
+               child: Center(
+                 //child: Text("helo"),
+                 child: Image.asset(
+                   image2,
+                   width: 150,
+                   height: 150,
+                 ),
+               ),
+             ),
+           ],),))
+
+
           ],
         )),
+
               Align(
                   alignment: Alignment.bottomCenter,
                   child: Column(

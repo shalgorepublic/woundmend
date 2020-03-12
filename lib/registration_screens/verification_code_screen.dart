@@ -193,6 +193,8 @@ class _VarificationScreen extends State<VarificationScreen> {
                               await SharedPreferences.getInstance();
                           prefs.setString('token', _formData['token']);
                           prefs.setString('userEmail', _formData['email']);
+                          print("heloooooooooooooooooooooooo");
+                          print(_formData['userId']);
                           prefs.setInt('userId', _formData['userId']);
                           prefs.setString('first_name', _formData['firstName']);
                           prefs.setString('last_name', _formData['lastName']);

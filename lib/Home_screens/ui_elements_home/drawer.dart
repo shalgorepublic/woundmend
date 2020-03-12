@@ -34,10 +34,6 @@ class _DrawerBuilderState extends State<DrawerBuilder> {
         'assets/book.png',
       ),
       new MenuItem(
-        "Inbox",
-        'assets/mail.png',
-      ),
-      new MenuItem(
         "Settings",
         'assets/gear.png',
       ),
@@ -60,6 +56,8 @@ class _DrawerBuilderState extends State<DrawerBuilder> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+                  ScopedModelDescendant<MainModel>(
+                  builder: (context, child, model) =>
                       Padding(
                           padding: EdgeInsets.only(left: 20.0, top: 25),
                           child: Container(
@@ -73,13 +71,16 @@ class _DrawerBuilderState extends State<DrawerBuilder> {
                               child: FadeInImage(
                                 fit: BoxFit.cover,
                                 //   image: NetworkImage(product.image),
-                                image: AssetImage('assets/bill_gate.jpg'),
+                                image: model.user.image != null ? NetworkImage(
+                                    model.user.image): AssetImage(
+                                  'assets/profile.png',
+                                ),
                                 placeholder: AssetImage(
                                   'assets/profile.png',
                                 ),
                               ),
                             ),
-                          )),
+                          ))),
                       ScopedModelDescendant<MainModel>(
                           builder: (context, child, model) => Container(
                                 padding: EdgeInsets.only(left: 20, top: 20),
@@ -128,14 +129,14 @@ class _DrawerBuilderState extends State<DrawerBuilder> {
                             }
                             if (_currentSelected == 1) {
                               Navigator.pop(context);
-                              Navigator.pushNamed(context, '/library');
+                              Navigator.pushNamed(context, '/yourScansPage');
                             }
-                            if (_currentSelected == 2) {
-                              Navigator.pop(context);
+                          /*  if (_currentSelected == 2) {
+                             *//* Navigator.pop(context);
                               Navigator.pushReplacementNamed(
-                                  context, '/inboxScreen');
-                            }
-                            if (_currentSelected == 3) {
+                                  context, '/inboxScreen');*//*
+                            }*/
+                            if (_currentSelected == 2) {
                               Navigator.pop(context);
                               Navigator.of(context).push(
                                   MaterialPageRoute<dynamic>(

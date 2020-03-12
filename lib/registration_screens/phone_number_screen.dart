@@ -56,10 +56,10 @@ class _PhoneScreen extends State<PhoneScreen> {
             'phoneNumber': _phoneNumber,
             'otp': successInformation['data']['data']['user']
                 ['confirmation_code'],
-            'token': successInformation['data']['data']['auth_token']
+            'token': successInformation['data']['data']['auth_token'],
+            'userId':successInformation['data']['data']['user']['id']
+
           };
-          print("check in phone number screen");
-          print(_formData);
         });
         Navigator.push<dynamic>(
           context,

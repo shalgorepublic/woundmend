@@ -1,8 +1,14 @@
+import 'dart:io';
+
 import 'package:derm_pro/registration_screens/forgot_password_success.dart';
 import 'package:derm_pro/scoped_models/main.dart';
+import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:toast/toast.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -18,7 +24,7 @@ class _EditProfileState extends State<EditProfile> {
   void _handleRadioValueChange1(int value) {
     setState(() {
       _radioValue1 = value;
-    //  print(_radioValue1);
+      //  print(_radioValue1);
     });
   }
 
@@ -30,7 +36,10 @@ class _EditProfileState extends State<EditProfile> {
           centerTitle: true,
           title: ScopedModelDescendant<MainModel>(
               builder: (BuildContext context, Widget child, MainModel model) {
-            return Text(model.user.firstName+" "+model.user.lastName);
+            return Text(
+                '${model.user.firstName[0].toUpperCase()}${model.user.firstName.substring(1)}' +
+                    " " +
+                    model.user.lastName);
           }),
           bottom: PreferredSize(
               preferredSize: const Size.fromHeight(160.0),
@@ -43,7 +52,9 @@ class _EditProfileState extends State<EditProfile> {
                         color: Colors.white,
                         height: 1,
                       ),
-                      ContainerWithCircle()
+                      ScopedModelDescendant<MainModel>(
+                          builder: (context, child, model) =>
+                              ContainerWithCircle(model))
                     ],
                   ),
                 ),
@@ -99,9 +110,102 @@ class _EditProfileState extends State<EditProfile> {
   }
 }
 
-class ContainerWithCircle extends StatelessWidget {
+class ContainerWithCircle extends StatefulWidget {
+  final model;
+
+  ContainerWithCircle(this.model);
+
+  @override
+  _ContainerWithCircleState createState() => _ContainerWithCircleState();
+}
+
+class _ContainerWithCircleState extends State<ContainerWithCircle> {
   final double circleRadius = 80.0;
   final double circleBorderWidth = 3.0;
+  File _image;
+
+  _openGalery(BuildContext context) async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = image;
+    });
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('avatar');
+    print(_image);
+    widget.model.removeImage();
+    bool result = await widget.model.saveImage(_image);
+    Navigator.of(context).pop();
+  }
+  Future getImagefromCamera() async{
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      _image = image;
+    });
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove('avatar');
+    bool result =await widget.model.saveImage(_image);
+    Navigator.of(context).pop();
+  }
+
+  Future<void> _showDialogue(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Make a Choive"),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  GestureDetector(
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(left: 3),
+                          child: Image.asset(
+                            'assets/art.png',
+                            width: 22,
+                            height: 22,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Text("Galery"),
+                      ],
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      _openGalery(context);
+                    },
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8),
+                  ),
+                  GestureDetector(
+                    child: Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.camera,
+                          color: Theme.of(context).highlightColor,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text("Camera"),
+                      ],
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      getImagefromCamera();
+                    },
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,22 +226,32 @@ class ContainerWithCircle extends StatelessWidget {
             height: 170.0,
           ),
         ),
-        Container(
-          width: circleRadius,
-          height: circleRadius,
-          decoration:
-              ShapeDecoration(shape: CircleBorder(), color: Colors.white),
-          child: Padding(
-            padding: EdgeInsets.all(circleBorderWidth),
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                  shape: CircleBorder(),
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage('assets/bill_gate.jpg'))),
-            ),
-          ),
-        ),
+        ScopedModelDescendant<MainModel>(
+            builder: (context, child, model) => GestureDetector(
+                  child: Container(
+                    width: circleRadius,
+                    height: circleRadius,
+                    decoration: ShapeDecoration(
+                        shape: CircleBorder(), color: Colors.white),
+                    child: Padding(
+                      padding: EdgeInsets.all(circleBorderWidth),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(80)),
+                        child:model.user.image != null
+                              ? FancyShimmerImage(
+                            imageUrl: model.user.image,
+                          )
+                              :  _image != null ? Image.file(_image,fit: BoxFit.cover,):
+                          Image.asset(
+                                  'assets/profile.png',
+                        ),
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    _showDialogue(context);
+                  },
+                )),
         Container(
           padding: EdgeInsets.only(top: 50, left: 80),
           child: Container(
@@ -210,7 +324,9 @@ class _RegisterFormState extends State<RegisterForm> {
       }
     });
     DateTime date2 = DateTime.now();
-    DateTime lastDate = date2.subtract(Duration(days: 5840,));
+    DateTime lastDate = date2.subtract(Duration(
+      days: 5840,
+    ));
     String formattedDate = DateFormat('dd-MMM-yyyy').format(lastDate);
     setState(() {
       dateHint = formattedDate;
@@ -319,7 +435,8 @@ class _RegisterFormState extends State<RegisterForm> {
                                 ),
                                 Text(
                                   "Please Wait...",
-                                  style: TextStyle(color: Theme.of(context).backgroundColor),
+                                  style: TextStyle(
+                                      color: Theme.of(context).backgroundColor),
                                 )
                               ]),
                         )
@@ -453,7 +570,13 @@ class _RegisterFormState extends State<RegisterForm> {
     });
 
     Map<String, dynamic> successInformation;
-    successInformation = await update(firstName, lastName, dob, userId, gender);
+    successInformation = await update(
+      firstName,
+      lastName,
+      dob,
+      userId,
+      gender,
+    );
     if (successInformation['success']) {
       print("helo shhaid");
       print(successInformation);
@@ -497,7 +620,6 @@ class _RegisterFormState extends State<RegisterForm> {
       );
     }
   }
-
 
   Future<Null> _selectDate(BuildContext context) async {
     DateTime picked = await showDatePicker(

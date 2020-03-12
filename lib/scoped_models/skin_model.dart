@@ -220,6 +220,8 @@ class SkinModel extends ConnectedModel {
 
   void selectedOptionIdChange(id) {
     _selectedOptionId = id;
+    print(_selectedOptionId);
+    notifyListeners();
   }
 
   Future<Map<String, dynamic>> fetchUserData(int userId) async {
@@ -260,10 +262,15 @@ class SkinModel extends ConnectedModel {
 
       print(response.statusCode);
       if (response.statusCode == 200) {
+
         var finalResult = jsonDecode(response.body);
+        print(finalResult);
         print('check result in skin model');
         print(finalResult);
         if (finalResult['data']['user'] != null) {
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString('avatar',"http://dermpro.herokuapp.com${finalResult['data']['user']['avatar']}");
+          notifyListeners();
           print(finalResult['data']['user']['user_quizes'].length);
           if (finalResult['data']['user']['user_quizes'].length != 0) {
             int index = finalResult['data']['user']['user_quizes'].length;
@@ -326,12 +333,32 @@ class SkinModel extends ConnectedModel {
           }
         } else
           print("user not exist");
+        return {'completed':true};
       } else {
         print("error");
         throw Exception('Failed to load album');
       }
     } catch (e) {
       return {'completed': false};
+    }
+  }
+  updateToken(String fcmToken)async{
+    http.Response response;
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String token = prefs.get('token');
+    final int userId = prefs.get('userId');
+
+    final Map<String , dynamic> updatedData = {'fcm_token': fcmToken};
+    try {
+      response = await http.put(
+          'http://dermpro.herokuapp.com//api/v1/users/${userId}',
+          body: updatedData,headers:{'Authorization':'Bearer $token'}
+      );
+      final Map<String , dynamic> responseData = json.decode(response.body);
+      print("helooooooooooo responce");
+      print(responseData['data']['message']);
+    }catch(e){
+
     }
   }
 }
