@@ -37,7 +37,27 @@ class _PasswordScreen extends State<PasswordScreen> {
      successInformation = await authenticate(emailName, _password);
      if(successInformation['success']){
      if (successInformation['data']['data']['success'] == true) {
-       Navigator.pushNamed(context,'/welcomePage');
+       if (successInformation['data']['data']['user']['number_verified'] == true) {
+         Navigator.pushNamed(context , '/welcomePage');
+       }
+       else
+         showDialog<dynamic>(
+           context: context,
+           builder: (BuildContext context) {
+             return AlertDialog(
+               title: Text('An Error Occured',style: TextStyle(fontFamily: 'Bold'),),
+               content: Text("Number not verified",style: TextStyle(fontFamily: 'Reguler'),),
+               actions: <Widget>[
+                 FlatButton(
+                   child: Text('Okey'),
+                   onPressed: () {
+                     Navigator.of(context).pop();
+                   },
+                 )
+               ],
+             );
+           },
+         );
      } else {
        showDialog<dynamic>(
          context: context,

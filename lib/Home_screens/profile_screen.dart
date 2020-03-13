@@ -42,12 +42,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     "LEFT ARM",
     "Right ARM",
     "RIGHT THIGH",
-    "RIGHT THIGH",
     "Left THIGH",
     "RIGHT FEET",
     "Left FEET",
   ];
-  String placeOfMole = 'HEAD';
+  String placeOfMole;
 
   @override
   void initState() {
@@ -94,7 +93,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future imagepicker() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
     setState(() {
       _image = image;
     });
@@ -109,56 +108,65 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  void test() {
+    setState(() {});
+  }
+
   Future<void> _showDialogue(BuildContext context) {
     return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-              //  actionsPadding: EdgeInsets.all(50),
-              //  contentPadding: EdgeInsets.only(left: 23),
-              title: Text("Please select the location of mole"),
-              content: Container(
-                  alignment: Alignment.center,
-                  height: MediaQuery.of(context).size.height / 5,
-                  child: Column(
-                    children: <Widget>[
-                      DropdownButton(
-                        items: _dropdownValues
-                            .map((value) => DropdownMenuItem(
-                                  child: Text(value),
-                                  value: value,
-                                ))
-                            .toList(),
-                        onChanged: (String value) {
-                          setState(() {
-                            placeOfMole = value;
-                          });
-                          Timer(Duration(milliseconds: 500), () {
-                            if (placeOfMole != null) {
-                              Navigator.of(context).pop(true);
-                              imagepicker();
-                            }
-                          });
-                        },
-                        isExpanded: false,
-                        hint: Text(placeOfMole),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      RaisedButton(
-                        color: Theme.of(context).accentColor,
-                        child: Text("Submit"),
-                        onPressed: () {
-                          if (placeOfMole != null) {
-                            Navigator.of(context).pop(true);
-                            imagepicker();
-                          }
-                        },
-                      )
-                    ],
-                  )));
-        });
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(title: Text("Please Select the Location of mole"),
+          content: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return Container(
+                alignment: Alignment.center,
+                height: MediaQuery.of(context).size.height / 5,
+                child: Column(
+                  children: <Widget>[
+                    DropdownButton(
+                      items: _dropdownValues
+                          .map((value) => DropdownMenuItem(
+                                child: Text(value),
+                                value: value,
+                              ))
+                          .toList(),
+                      onChanged: (String value) {
+                        setState(() {
+                          placeOfMole = value;
+                        });
+                        /* Timer(Duration(milliseconds: 500), () {
+                if (placeOfMole != null) {
+                //  Navigator.of(context).pop(true);
+                 // imagepicker();
+                }
+              });*/
+                      },
+                      isExpanded: true,
+                      hint: Text('Select'),
+                      value: placeOfMole,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    RaisedButton(
+                      color: Theme.of(context).accentColor,
+                      child: Text("Submit"),
+                      onPressed: () {
+                        if (placeOfMole != null) {
+                          Navigator.of(context).pop(true);
+                          imagepicker();
+                        }
+                      },
+                    )
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 
   Future<bool> _onBackPressed() {
