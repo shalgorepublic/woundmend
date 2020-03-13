@@ -38,9 +38,9 @@ class _RadioGroupState extends State<RadioGroup> {
             ScopedModelDescendant<MainModel>(
               builder: (context, child, model) => Container(
                 padding:
-                    EdgeInsets.only(top: 25, left: 25, right: 25, bottom: 15),
+                    EdgeInsets.only(top: 25, left: 20, right: 20, bottom: 15),
                 child: Text(
-                  "Select One features that best matches you${model.skinSelectedFlag}",
+                  "Select One features that best matches you",
                   style: TextStyle(
                       fontSize: 13,
                       color: model.skinSelectedFlag ? Colors.red : Colors.blue),
