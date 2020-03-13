@@ -20,7 +20,7 @@ class _PhoneScreen extends State<PhoneScreen> {
   _PhoneScreen(this._formData);
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String _phoneNumber = '+61';
+  String _phoneNumber = '+92';
 
   void _submitForm(Function authenticate) async {
     if (!_formKey.currentState.validate()) {
@@ -178,13 +178,13 @@ class _PhoneScreen extends State<PhoneScreen> {
                                             color: Color(0xAAAA000000)),
                                       ),
                                     ),
-                                    child: Text("+61",style: TextStyle(color: Theme.of(context).textSelectionColor),)),
+                                    child: Text("+92",style: TextStyle(color: Theme.of(context).textSelectionColor),)),
                                 labelStyle: TextStyle(fontSize: 18),
                                 filled: true,
                                 fillColor: Colors.white),
                             keyboardType: TextInputType.number,
                             validator: (String value) {
-                              if (value.isEmpty) {
+                              if (value.isEmpty || value.length < 10 || value.length > 10) {
                                 // ignore: missing_return, missing_return
                                 return 'Please enter a valid number';
                               }

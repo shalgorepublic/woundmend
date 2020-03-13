@@ -1,5 +1,6 @@
 import 'package:derm_pro/Home_screens/edit_profile.dart';
 import 'package:derm_pro/Home_screens/promo_code.dart';
+import 'package:derm_pro/Home_screens/setting/feed_back_screen.dart';
 import 'package:derm_pro/Home_screens/setting/notification_screen.dart';
 import 'package:derm_pro/Home_screens/setting/privacy_policy_web.dart';
 import 'package:derm_pro/scoped_models/main.dart';
@@ -168,11 +169,17 @@ class _SettingScreenState extends State<SettingScreen> {
                           builder: (BuildContext context) =>
                               PrivacyPloicyWebView('https://www.skinvision.com/terms/')));
                 },),
+                GestureDetector(child:
                 Container(
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
                   child: Container(child: Text("Leave Feebback")),
-                ),
+                ),onTap: (){
+                  Navigator.of(context).push(
+                      MaterialPageRoute<dynamic>(
+                          builder: (BuildContext context) =>
+                              FeedBackScreen()));
+                },),
                 Container(
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.only(top: 10, left: 20, bottom: 20),

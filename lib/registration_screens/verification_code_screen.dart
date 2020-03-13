@@ -1,9 +1,11 @@
 import 'package:derm_pro/models/auth.dart';
 import 'package:derm_pro/registration_screens/email_page.dart';
+import 'package:derm_pro/scoped_models/main.dart';
 import 'package:derm_pro/ui_elements/app_bar_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pin_entry_text_field/pin_entry_text_field.dart';
+import 'package:scoped_model/scoped_model.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,6 +26,12 @@ class _VarificationScreen extends State<VarificationScreen> {
 
   bool _onEditing = true;
   String _code;
+  void _submit(Function sendOtp) async {
+    Map<String, dynamic> successInformation;
+    successInformation = await sendOtp(_code);
+    print("helo information");
+    print(successInformation);
+  }
 
   @override
   void initState() {
@@ -159,7 +167,9 @@ class _VarificationScreen extends State<VarificationScreen> {
                     },
                   ),
                 )),*/
-                    GestureDetector(
+                ScopedModelDescendant<MainModel>(
+                  builder: (context, child, model) =>
+                      GestureDetector(
                       child: Container(
                         height: 50,
                         width: 130,
@@ -186,21 +196,22 @@ class _VarificationScreen extends State<VarificationScreen> {
                         ),
                       ),
                       onTap: () async {
+                        print(_formData['otp']);
                         //   if(_formData['otp'] == _verifyCode) {
-                        if (_code == "1234") {
+                        if (_code == _formData['otp']) {
                           print("helo check data of shared");
                           final SharedPreferences prefs =
                               await SharedPreferences.getInstance();
                           prefs.setString('token', _formData['token']);
                           prefs.setString('userEmail', _formData['email']);
-                          print("heloooooooooooooooooooooooo");
-                          print(_formData['userId']);
                           prefs.setInt('userId', _formData['userId']);
                           prefs.setString('first_name', _formData['firstName']);
                           prefs.setString('last_name', _formData['lastName']);
                           prefs.setString('dob', _formData['dob']);
                           prefs.setString(
                               'contact_no', _formData['phoneNumber']);
+                          _submit(model.sendOtpCode);
+                      //    model.sendOtpCode(int.parse(_code));
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               '/welcomePage', (Route<dynamic> route) => false);
                         } else {
@@ -214,7 +225,7 @@ class _VarificationScreen extends State<VarificationScreen> {
                           });
                         }
                       },
-                    )
+                    ))
                   ],
                 ),
               ),

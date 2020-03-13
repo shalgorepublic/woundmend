@@ -9,13 +9,19 @@ import 'package:derm_pro/models/auth.dart';
 import 'package:derm_pro/registration_screens/signup.dart';
 import 'package:derm_pro/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import './registration_screens/email_page.dart';
 import './ui_elements/dashed_line.dart';
 import 'package:scoped_model/scoped_model.dart';
 import './scoped_models/main.dart';
 
-void main() => runApp(MyApp());
-
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(new MyApp());
+  });
+}
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
