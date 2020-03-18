@@ -13,6 +13,7 @@ class User {
   final String token;
   final String otp;
   final String image;
+  final String gender;
 
 
   User({
@@ -26,6 +27,7 @@ class User {
     @required this.token,
     @required this.otp,
     @required this.image,
+    @required this.gender,
   });
 
 }

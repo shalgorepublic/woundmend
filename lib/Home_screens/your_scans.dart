@@ -242,7 +242,7 @@ class _YourScansState extends State<YourScans> {
                                                             'Location of mole:${data.querySpotPlace}',
                                                             style: TextStyle(
                                                                 color:
-                                                                    primaryColor),
+                                                                    primaryColor,fontSize: 12),
                                                           ),
                                                           alignment: Alignment
                                                               .centerLeft,
@@ -277,8 +277,8 @@ class _YourScansState extends State<YourScans> {
                                                           ? /*Container(child: Text("n"),)*/
                                                       ClipOval(
                                                               child: Container(
-                                                                  height: 20,
-                                                                  width: 20,
+                                                                  height: 15,
+                                                                  width: 15,
                                                                   color: Colors
                                                                       .yellowAccent,
                                                                   child:

@@ -72,7 +72,7 @@ class _PhoneScreen extends State<PhoneScreen> {
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text('An Error Occurred'),
-              content: Text("User already created with this email. Please choose a different E-mail"),
+              content: Text("User already created with this E-mail. Please choose a different E-mail"),
               actions: <Widget>[
                 FlatButton(
                   child: Text('Okey'),

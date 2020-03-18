@@ -37,8 +37,8 @@ class ChatModel extends ConnectedModel {
     print(fileImage);
     print("helo image");
     print(message);
-    _imageLoading = true;
-    notifyListeners();
+  //  _imageLoading = true;
+  //  notifyListeners();
     if (fileImage != null) {
       print("helo image");
       FormData formData = FormData.fromMap({
@@ -67,6 +67,46 @@ class ChatModel extends ConnectedModel {
         notifyListeners();
         if (response.statusCode == 200) {
           print('request succedes');
+          return true;
+        } else
+          return true;
+        print("server Error");
+      } catch (e) {
+        print(e);
+        _imageLoading = false;
+        notifyListeners();
+        print('helo error');
+        return false;
+      }
+    }
+  }
+  Future<bool> postImageToGetDisease(File fileImage) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String token = prefs.get('token');
+    print(token);
+    print(fileImage);
+    _imageLoading = true;
+    notifyListeners();
+    if (fileImage != null) {
+      print("helo image");
+      FormData formData = FormData.fromMap({
+        "image":
+          await MultipartFile.fromFile(fileImage.path,
+              filename: fileImage.toString())
+      });
+      Response response;
+
+      try {
+        var dio = Dio();
+        response = (await dio.post(
+          "http://178.128.107.65",
+          data: formData,
+        ));
+        _imageLoading = false;
+        notifyListeners();
+        final Map<String, dynamic> responseData = json.decode(response.toString());
+        if (response.statusCode == 200) {
+          postImage(fileImage, responseData['prediction']);
           return true;
         } else
           return true;

@@ -29,6 +29,7 @@ class _VarificationScreen extends State<VarificationScreen> {
   bool _onEditing = true;
   String _code;
   String _finalCode;
+  FocusNode _focusNode = FocusNode();
   void _submit(Function sendOtp) async {
     Map<String, dynamic> successInformation;
     successInformation = await sendOtp(_code);
@@ -38,6 +39,11 @@ class _VarificationScreen extends State<VarificationScreen> {
 
   @override
   void initState() {
+    _focusNode.addListener(() {
+      if (!_focusNode.hasFocus) {
+        FocusScope.of(context).requestFocus(_focusNode);
+      }
+    });
     super.initState();
   }
 
@@ -140,6 +146,9 @@ class _VarificationScreen extends State<VarificationScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       //  onWillPop: _onBackedPress,
+      onWillPop: (){
+
+      },
         child: Scaffold(
             body: ListView(
           children: <Widget>[
@@ -194,6 +203,7 @@ class _VarificationScreen extends State<VarificationScreen> {
                           _code = pin;
                         });
                       }, // onSubmit
+
                     ),
                     ScopedModelDescendant<MainModel>(
                       builder: (context, child, model) =>

@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class RadioGroup extends StatefulWidget {
+  final MainModel model;
+  RadioGroup(this.model);
   @override
   _RadioGroupState createState() => _RadioGroupState();
 }
@@ -15,8 +17,14 @@ class _RadioGroupState extends State<RadioGroup> {
   String radioItemHolder = 'One';
   int sum = 0;
   int id;
+  @override
+  void initState() {
+//    model.fetchQuestions();
+    print("flaaaaaaaaaaaaaaaaaaaag");
+    print(widget.model.skinSelectedFlag);
+    super.initState();
+  }
   ScrollController _rrectController = ScrollController();
-
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.only(top: 30, left: 20, right: 20),

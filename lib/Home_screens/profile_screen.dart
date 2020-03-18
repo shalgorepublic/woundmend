@@ -43,7 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     "FOREHEAD",
     "FACE",
     "LEFT ARM",
-    "Right ARM",
+    "RIGHT ARM",
     "RIGHT THIGH",
     "LEFT THIGH",
     "RIGHT FEET",
@@ -686,7 +686,7 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                       ),
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute<dynamic>(
-                            builder: (BuildContext context) => EditProfile()));
+                            builder: (BuildContext context) => EditProfile(model)));
                       },
                     )),
           ],

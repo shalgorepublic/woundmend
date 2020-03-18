@@ -1,4 +1,5 @@
 import 'package:derm_pro/Home_screens/Library.dart';
+import 'package:derm_pro/Home_screens/edit_profile.dart';
 import 'package:derm_pro/Home_screens/inbox_page.dart';
 import 'package:derm_pro/Home_screens/profile_screen.dart';
 import 'package:derm_pro/Home_screens/skin_type_screen.dart';
@@ -86,6 +87,7 @@ class _MyAppState extends State<MyApp> {
           '/SupportPage': (BuildContext context) => SupportScreen(_model),
           '/welcomePage': (BuildContext context) => WelcomePage(),
           '/yourScansPage': (BuildContext context) => YourScans(_model),
+          '/EditProfilePage': (BuildContext context) => EditProfile(_model),
         },
       ),
     );

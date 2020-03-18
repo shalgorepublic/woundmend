@@ -87,6 +87,7 @@ class _LastNameScreenState extends State<LastNameScreen> {
                             margin: const EdgeInsets.only(right: 10, left: 10),
                             padding: EdgeInsets.only(bottom: 20, top: 20),
                             child: TextFormField(
+                              textCapitalization: TextCapitalization.sentences,
                               decoration: InputDecoration(
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius:

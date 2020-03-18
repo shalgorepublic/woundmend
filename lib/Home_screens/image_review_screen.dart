@@ -19,7 +19,7 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
   File _image;
 
   Future imagepicker() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
     setState(() {
       _image = image as File;
     });
@@ -148,7 +148,7 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
                       width: MediaQuery.of(context).size.width,
                       child: RaisedButton(
                         child: Text(
-                          'Submit Scan',
+                          'SUBMIT SCAN',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -156,8 +156,11 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
                         ),
                         onPressed: () async {
                           _showDialogue(context);
-                          bool value = await model.postImage(
-                              _image, widget.data['location']);
+
+                         /* bool value = await model.postImage(
+                              _image, widget.data['location']);*/
+                           bool value = await model.postImageToGetDisease(
+                              _image);
                           if (value) {
                             Navigator.of(context).pop(true);
                             Toast.show("Image Uploaded", context,

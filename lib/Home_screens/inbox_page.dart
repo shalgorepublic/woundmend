@@ -230,14 +230,9 @@ class _InboxScreenState extends State<InboxScreen> {
   @override
   Widget build(BuildContext context) {
     var feedlist = widget.model.allQueries;
-    return WillPopScope(
-        onWillPop: () {
-          Navigator.pop(context);
-          Navigator.pushReplacementNamed(context , '/yourScansPage');
-        } ,
-        child: Scaffold(
+    return  Scaffold(
           appBar: AppBar(title: Text("Inbox")) ,
-          drawer: DrawerBuilder() ,
+         // drawer: DrawerBuilder() ,
           body: ScopedModelDescendant<MainModel>(
               builder: (context , child , model) =>
                   Container(
@@ -515,7 +510,7 @@ class _InboxScreenState extends State<InboxScreen> {
               ) ,
             ) ,
           ) ,
-        ));
+        );
   }
 
 
