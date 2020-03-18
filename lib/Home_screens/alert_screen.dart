@@ -7,7 +7,7 @@ import 'package:scoped_model/scoped_model.dart';
 class AlertScreen extends StatelessWidget {
   String firstText = "Skin cancer often is first detected as a skin change keep an eye on changes to your skin.";
   String secondText = "DermPro helps you keep track of skin changes and visualise hard to see areas(such as your back) but does not diagnose skin cancer.";
-  String thirdText = "It should not replace any recomded preventive skin checks and medical consultation.";
+  String thirdText = "It should not replace any recommded preventive skin checks and medical consultation.";
   @override
   Widget build(BuildContext context) {
     return Container(

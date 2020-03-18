@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../ui_elements/dashed_line.dart';
 import 'package:flutter/gestures.dart';
 
-
 class SignupScreen extends StatefulWidget {
   @override
   _SignupScreenState createState() => _SignupScreenState();
@@ -14,7 +13,7 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   double screenWidth;
   bool checkBoxValue = false;
-
+  bool value = false;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +42,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: Image.asset(
                     'assets/logo.png',
                     width: 300,
-                    height: 150,
+                    height: 80,
                   ),
                 ),
               ),
@@ -74,11 +73,25 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
               ),
               const MySeparator(),
-              SizedBox(
-                height: 1,
-              ),
+              value ?
+              Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,children: <Widget>[
+                Container(margin: EdgeInsets.only(left: 45,top: 10),
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    "Check to continue",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  color: Theme.of(context).accentColor,
+                ),
+                Container(),
+              ],):Container(),
+
               Container(
-                padding: EdgeInsets.only(left: 30, right: 30, top: 8),
+                padding: EdgeInsets.only(
+                  left: 30,
+                  right: 30,
+                  top: 10
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -88,6 +101,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         onChanged: (bool newValue) {
                           setState(() {
                             checkBoxValue = newValue;
+                            value = !value;
                           });
                         }),
                     Expanded(
@@ -97,16 +111,20 @@ class _SignupScreenState extends State<SignupScreen> {
                           text: "I have read and agree with the ",
                           style: TextStyle(
                               fontSize: 14.0,
-                              color: Theme.of(context).highlightColor,fontFamily: 'Reguler'),
+                              color: Theme.of(context).highlightColor,
+                              fontFamily: 'Reguler'),
                           children: [
-
-                            TextSpan(recognizer:  new TapGestureRecognizer()..onTap = () =>  Navigator.of(context).push(
-                                MaterialPageRoute<dynamic>(
-                                    builder: (BuildContext context) =>
-                                        PrivacyPloicyWebView('https://www.skinvision.com/privacy/'))),
+                            TextSpan(
+                              recognizer: new TapGestureRecognizer()
+                                ..onTap = () => Navigator.of(context).push(
+                                    MaterialPageRoute<dynamic>(
+                                        builder: (BuildContext context) =>
+                                            PrivacyPloicyWebView(
+                                                'https://www.skinvision.com/privacy/'))),
                               text: "Terms & Conditions ",
                               style: TextStyle(
-                                fontSize: 14.0,fontFamily: 'Reguler',
+                                fontSize: 14.0,
+                                fontFamily: 'Reguler',
                                 color: Theme.of(context).backgroundColor,
                                 decoration: TextDecoration.underline,
                               ),
@@ -118,10 +136,13 @@ class _SignupScreenState extends State<SignupScreen> {
                                   fontFamily: 'Reguler',
                                   color: Theme.of(context).highlightColor),
                             ),
-                            TextSpan(recognizer:TapGestureRecognizer()..onTap = () =>  Navigator.of(context).push(
-                                MaterialPageRoute<dynamic>(
-                                    builder: (BuildContext context) =>
-                                        PrivacyPloicyWebView('https://www.skinvision.com/terms/'))),
+                            TextSpan(
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () => Navigator.of(context).push(
+                                    MaterialPageRoute<dynamic>(
+                                        builder: (BuildContext context) =>
+                                            PrivacyPloicyWebView(
+                                                'https://www.skinvision.com/terms/'))),
                               text: "Privicy Policy.",
                               style: TextStyle(
                                 fontSize: 14.0,
@@ -140,6 +161,7 @@ class _SignupScreenState extends State<SignupScreen> {
               Container(
                 child: Center(
                     child: IconButton(
+                  onPressed: () {},
                   icon: Icon(
                     Icons.lock_outline,
                     size: 35,
@@ -150,7 +172,8 @@ class _SignupScreenState extends State<SignupScreen> {
               Container(
                 padding: EdgeInsets.only(bottom: 30, left: 30, right: 30),
                 child: Text('Your privacy is out most responsibility',
-                    style: TextStyle(fontSize: 14.0,
+                    style: TextStyle(
+                        fontSize: 14.0,
                         color: Theme.of(context).highlightColor,
                         fontFamily: 'Reguler'),
                     textAlign: TextAlign.center),
@@ -170,11 +193,20 @@ class _SignupScreenState extends State<SignupScreen> {
                         color: Colors.white),
                   ),
                   onPressed: () {
-                    Navigator.push<dynamic>(
-                      context,
-                      MaterialPageRoute<dynamic>(
-                          builder: (context) => NameScreen()),
-                    );
+                    if(checkBoxValue == true) {
+                      setState(() {
+                        value = false;
+                      });
+                      Navigator.push<dynamic>(
+                        context ,
+                        MaterialPageRoute<dynamic>(
+                            builder: (context) => NameScreen()) ,
+                      );
+                    }
+                    else
+                      setState(() {
+                        value = true;
+                      });
                   },
                 ),
               ),
@@ -200,7 +232,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           style: TextStyle(fontSize: 12),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 60),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text(
                             'LOG IN',
                             style: TextStyle(

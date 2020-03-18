@@ -1,15 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:derm_pro/Home_screens/alert_screen.dart';
 import 'package:derm_pro/Home_screens/contact_us_screen.dart';
 import 'package:derm_pro/Home_screens/edit_profile.dart';
+import 'package:derm_pro/Home_screens/helper_notification.dart';
 import 'package:derm_pro/Home_screens/image_review_screen.dart';
-import 'package:derm_pro/Home_screens/setting/ui_elements/colors.dart';
+import 'package:derm_pro/Home_screens/inbox_page.dart';
 import 'package:derm_pro/Home_screens/skin_result.dart';
 import 'package:derm_pro/Home_screens/ui_elements_home/drawer.dart';
 import 'package:derm_pro/Home_screens/weather/uv_index_page.dart';
+import 'package:derm_pro/Home_screens/your_scans.dart';
+import 'package:derm_pro/models/read_chat_model.dart';
 import 'package:derm_pro/scoped_models/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +21,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class ProfileScreen extends StatefulWidget {
   final model;
@@ -42,23 +45,39 @@ class _ProfileScreenState extends State<ProfileScreen> {
     "LEFT ARM",
     "Right ARM",
     "RIGHT THIGH",
-    "Left THIGH",
+    "LEFT THIGH",
     "RIGHT FEET",
-    "Left FEET",
+    "LEFT FEET",
   ];
   String placeOfMole;
+  final notifications = FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
     print("place of mole");
     print(placeOfMole);
-    super.initState();
     _showModel();
     Timer(Duration(seconds: 7), () {
       _scaffoldKey.currentState.hideCurrentSnackBar();
     });
     new FirebaseNotifications(widget.model).setUpFirebase();
+    final settingsAndroid = AndroidInitializationSettings('app_icon');
+    final settingsIOS = IOSInitializationSettings(
+        onDidReceiveLocalNotification: (id, title, body, payload) =>
+            onSelectNotification(payload));
+
+    notifications.initialize(
+        InitializationSettings(settingsAndroid, settingsIOS),
+        onSelectNotification: onSelectNotification);
+    print("notification check 123");
+    print("notification check 123");
+    super.initState();
   }
+
+  Future onSelectNotification(String payload) async => await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => YourScans(widget.model)),
+      );
 
   void _showModel() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -116,7 +135,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(title: Text("Please Select the Location of mole"),
+        return AlertDialog(
+          title: Text("Please Select the Location of mole"),
           content: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
               return Container(
@@ -143,7 +163,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               });*/
                       },
                       isExpanded: true,
-                      hint: Text('Select'),
+                      hint: Text('Select an option'),
                       value: placeOfMole,
                     ),
                     SizedBox(
@@ -151,7 +171,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     RaisedButton(
                       color: Theme.of(context).accentColor,
-                      child: Text("Submit"),
+                      child: Text(
+                        "SUBMIT",
+                        style: TextStyle(color: Colors.white),
+                      ),
                       onPressed: () {
                         if (placeOfMole != null) {
                           Navigator.of(context).pop(true);
@@ -253,7 +276,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Container(
                             padding: EdgeInsets.only(top: 30),
                             child: Text(
-                              "At the top you will find personal information about at you skin type,risk profile and local UV index.",
+                              "At the top you will find personal information about at you skin type, risk profile and local UV index.",
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -267,7 +290,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Container(
                             padding: EdgeInsets.only(top: 20),
                             child: Text(
-                                "Your skin checks will be stored in the here."),
+                                "Your skin checks will be stored in folders here."),
                           )
                         ],
                       ),
@@ -675,6 +698,7 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
 
 class FirebaseNotifications {
   final model;
+  final notifications = FlutterLocalNotificationsPlugin();
 
   FirebaseNotifications(this.model);
 
@@ -696,12 +720,56 @@ class FirebaseNotifications {
 
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
-        print('on message $message');
-        print("Notification");
-        model.fetchQueriesSpots();
+//        print(message['notification']['title']);
+        showOngoingNotification(notifications,
+            title: message['notification']['title'],
+            body: message['notification']['body']);
+        //  model.fetchQueriesSpots();
+        print(message);
+        print('tessssttttt');
+
+        var id = int.parse(message['data']['obj_id']);
+        bool flag = false;
+//        print(model.readFlagObjects);
+//        print(model.readFlagObjects.length);
+        if (model.readFlagObjects.length == 0) {
+          print("i am herepoo 111");
+//          print(id);
+          ChatReadFlag temp = new ChatReadFlag(id: id, flag: true);
+//          print(temp.id);
+//          print(model.readFlagObjects.first.id);
+          model.readFlagObjects.add(temp);
+          print(model.readFlagObjects.first.id);
+          print("hehhadasdasdas");
+        } else {
+          for (int i = 0; i < model.readFlagObjects.length; i++) {
+            if (model.readFlagObjects[i].id == id) {
+              model.readFlagObjects[i].flag = true;
+              flag = true;
+              break;
+            }
+          }
+          if (flag == false) {
+            ChatReadFlag temp = new ChatReadFlag(id: id, flag: true);
+            model.readFlagObjects.add(temp);
+          }
+//          ChatReadFlag temp = model.readFlagObjects.singlewhere((i)=> i.id == int.parse(id));
+//          print(temp.id);
+          print("i am herepoo 22");
+        }
+        model.justtosetstate();
+        print('tessssttttt');
+        Map<String, dynamic> Result = await model.fetchQueriesSpots();
+        print("length of queries");
+        print(model.readFlagObjects);
+        print(model.allQueries.length);
+        print("helo lebgth");
       },
       onResume: (Map<String, dynamic> message) async {
         print('on resume $message');
+        model.fetchQueriesSpots();
+        showOngoingNotification(notifications,
+            title: 'helo on resume', body: 'helo body');
       },
       onLaunch: (Map<String, dynamic> message) async {
         print('on launch $message');

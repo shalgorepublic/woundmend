@@ -27,7 +27,8 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
       Navigator.push<dynamic>(
         context,
         MaterialPageRoute<dynamic>(
-          builder: (context) => ImageReviewScreen({'image':_image,'location':widget.data['location']}),
+          builder: (context) => ImageReviewScreen(
+              {'image': _image, 'location': widget.data['location']}),
         ),
       );
     }
@@ -44,9 +45,63 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
                 padding: EdgeInsets.only(right: 20),
                 child: CircularProgressIndicator(),
               ),
-              Text("Please wait...",style: TextStyle(fontSize: 18,fontFamily: 'Bold',color: Theme.of(context).highlightColor),)
+              Text(
+                "Please wait...",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'Bold',
+                    color: Theme.of(context).highlightColor),
+              )
             ],
           ));
+        });
+  }
+
+  Future<void> _showImageUploadedDialogue(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              content:Container(height:250,child:
+              Column(
+            children: <Widget>[
+              Container(height: 100,
+                child: Image.asset(
+                  'assets/logo.png',
+                ),
+              ),
+              Text(
+                "Thanks for using dermpro app, we will get back to you shourtly.",
+                style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: 'Bold',
+                    color: Theme.of(context).highlightColor),
+              ),
+              SizedBox(height: 50,),
+              SizedBox(
+                height: 40,
+                width: MediaQuery.of(context).size.width/2,
+                child: RaisedButton(
+                  child: Text(
+                    'Ok',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 18),
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  },
+                  color: Theme.of(context).accentColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(5.0),
+                  ),
+                ),
+              )
+            ],
+          ))
+          );
         });
   }
 
@@ -77,7 +132,7 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
           Container(
             padding: EdgeInsets.only(top: 20, right: 30, left: 30),
             child: Text(
-              "Make sure the photo is sharp,centered and free of hair or other obstructing objects",
+              "Make sure the photo is sharp, centered and free of hair or other obstructing objects.",
               style: TextStyle(fontSize: 16, fontFamily: "Reguler"),
             ),
           ),
@@ -101,16 +156,17 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
                         ),
                         onPressed: () async {
                           _showDialogue(context);
-                          bool value = await model.postImage(_image,widget.data['location']);
+                          bool value = await model.postImage(
+                              _image, widget.data['location']);
                           if (value) {
                             Navigator.of(context).pop(true);
                             Toast.show("Image Uploaded", context,
                                 duration: Toast.LENGTH_SHORT,
                                 gravity: Toast.BOTTOM);
-                            Timer(Duration(milliseconds: 2000),
-                                    () async {
-                                  Navigator.pop(context);
-                                });
+                            _showImageUploadedDialogue(context);
+                            Timer(Duration(milliseconds: 2000), () async {
+                              //  Navigator.pop(context);
+                            });
                           } else {
                             Navigator.of(context).pop(true);
                             Toast.show("Network Error", context,
@@ -136,7 +192,7 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
                       width: MediaQuery.of(context).size.width,
                       child: RaisedButton(
                         child: Text(
-                          'Retake',
+                          'RETAKE',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,

@@ -94,7 +94,7 @@ class _SecondEmailPageState extends State<SecondEmailPage> {
                               ),
                               border: OutlineInputBorder(
                                   borderSide: new BorderSide()),
-                              labelText: 'E-Mail',
+                              labelText: 'E-mail',
                               filled: true,
                               fillColor: Colors.white),
                           keyboardType: TextInputType.emailAddress,
@@ -104,7 +104,7 @@ class _SecondEmailPageState extends State<SecondEmailPage> {
                                 !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
                                     .hasMatch(value)) {
                               // ignore: missing_return, missing_return
-                              return 'Please enter a valid email';
+                              return 'Please enter a valid e-mail';
                             }
                           },
                           onSaved: (String value) {

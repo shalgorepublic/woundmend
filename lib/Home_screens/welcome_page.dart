@@ -318,7 +318,7 @@ class WelcomePage extends StatelessWidget {
               child: RaisedButton(
                 color: Theme.of(context).backgroundColor,
                 child: Text(
-                  "CONTINUUE",
+                  "CONTINUE",
                   style: TextStyle(color: Colors.white),
                 ),
                 onPressed: () {

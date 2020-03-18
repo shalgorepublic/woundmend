@@ -59,11 +59,8 @@ class _SkinResultScreenState extends State<SkinResultScreen> {
         finalResult = firstType;
         image1 = 'assets/ninthimage.png';
         image2 = 'assets/firstimage.png';
-        print(image2);
         color = 0xFFEFDC62;
         print(color);
-//print(10);
-
       });
     }
     if (widget.model.totalScore >= 7 && widget.model.totalScore <= 13) {

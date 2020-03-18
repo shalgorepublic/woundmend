@@ -37,9 +37,8 @@ class SettingsModel extends ConnectedModel {
       print("helo image");
       FormData formData = FormData.fromMap({
         "title": message,
-        "images": [ await MultipartFile.fromFile(fileImage.path,
-            filename: fileImage.toString()),
-      ]
+        "image":  await MultipartFile.fromFile(fileImage.path,
+            filename: fileImage.toString())
       });
       Response response;
 
