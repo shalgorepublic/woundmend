@@ -230,7 +230,7 @@ class _YourScansState extends State<YourScans> {
                                               _showImageDialogue(context, data);
                                             },
                                           ),
-                                          Flexible(
+                                          Flexible(fit: FlexFit.tight,
                                             child: GestureDetector(
                                               child: Container(
                                                 child: Column(
@@ -242,7 +242,7 @@ class _YourScansState extends State<YourScans> {
                                                             'Location of mole:${data.querySpotPlace}',
                                                             style: TextStyle(
                                                                 color:
-                                                                    primaryColor,fontSize: 12),
+                                                                    primaryColor,fontSize: 14),textAlign: TextAlign.center,
                                                           ),
                                                           alignment: Alignment
                                                               .centerLeft,

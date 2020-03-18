@@ -160,7 +160,7 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
                          /* bool value = await model.postImage(
                               _image, widget.data['location']);*/
                            bool value = await model.postImageToGetDisease(
-                              _image);
+                              _image,widget.data['location']);
                           if (value) {
                             Navigator.of(context).pop(true);
                             Toast.show("Image Uploaded", context,

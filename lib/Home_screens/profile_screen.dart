@@ -22,6 +22,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:toast/toast.dart';
 
 class ProfileScreen extends StatefulWidget {
   final model;
@@ -54,8 +55,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
-    print("place of mole");
-    print(placeOfMole);
     _showModel();
     Timer(Duration(seconds: 7), () {
       _scaffoldKey.currentState.hideCurrentSnackBar();
@@ -69,8 +68,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     notifications.initialize(
         InitializationSettings(settingsAndroid, settingsIOS),
         onSelectNotification: onSelectNotification);
-    print("notification check 123");
-    print("notification check 123");
     super.initState();
   }
 
@@ -111,11 +108,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             content: AlertScreen()));
   }
 
-  Future imagepicker() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+  void test() {
+    setState(() {});
+  }
+  _openGalery(BuildContext context) async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
       _image = image;
     });
+    Navigator.of(context).pop();
     if (_image != null) {
       Navigator.push<dynamic>(
         context,
@@ -127,8 +128,79 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  void test() {
-    setState(() {});
+  _openCamera(BuildContext context) async {
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _image = image;
+    });
+    Navigator.of(context).pop();
+    if (_image != null) {
+      Navigator.push<dynamic>(
+        context,
+        MaterialPageRoute<dynamic>(
+          builder: (context) =>
+              ImageReviewScreen({'image': _image, 'location': placeOfMole}),
+        ),
+      );
+
+  
+  }}
+
+  Future<void> _showImageDialogue(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Make a Choice"),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  GestureDetector(
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(left: 3),
+                          child: Image.asset(
+                            'assets/art.png',
+                            width: 22,
+                            height: 22,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Text("Gallery"),
+                      ],
+                    ),
+                    onTap: () {
+                      _openGalery(context);
+                    },
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8),
+                  ),
+                  GestureDetector(
+                    child: Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.camera,
+                          color: Theme.of(context).highlightColor,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text("Camera"),
+                      ],
+                    ),
+                    onTap: () {
+                      _openCamera(context);
+                    },
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   Future<void> _showDialogue(BuildContext context) {
@@ -136,7 +208,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Please Select the Location of mole"),
+          title:
+            Text("Please Select the Location of mole"),
           content: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
               return Container(
@@ -178,8 +251,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onPressed: () {
                         if (placeOfMole != null) {
                           Navigator.of(context).pop(true);
-                          imagepicker();
-                        }
+                          _showImageDialogue(context);
+                        } else
+                          Toast.show("Please select any option", context,
+                              duration: Toast.LENGTH_LONG,
+                              gravity: Toast.CENTER);
                       },
                     )
                   ],
@@ -538,8 +614,6 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                           var location = new Location();
                                           bool enabled =
                                               await location.serviceEnabled();
-                                          print("helo check location on");
-                                          print(enabled);
                                           if (enabled == true &&
                                               currentPositionLocation == null) {
                                             getLocation();
