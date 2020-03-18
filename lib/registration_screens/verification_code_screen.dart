@@ -1,7 +1,9 @@
+import 'package:derm_pro/Home_screens/setting/privacy_policy_web.dart';
 import 'package:derm_pro/models/auth.dart';
 import 'package:derm_pro/registration_screens/email_page.dart';
 import 'package:derm_pro/scoped_models/main.dart';
 import 'package:derm_pro/ui_elements/app_bar_line.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pin_entry_text_field/pin_entry_text_field.dart';
@@ -26,6 +28,7 @@ class _VarificationScreen extends State<VarificationScreen> {
 
   bool _onEditing = true;
   String _code;
+  String _finalCode;
   void _submit(Function sendOtp) async {
     Map<String, dynamic> successInformation;
     successInformation = await sendOtp(_code);
@@ -66,6 +69,71 @@ class _VarificationScreen extends State<VarificationScreen> {
             ],
           );
         });
+  }
+  void _submitForm(Function reSendOtp) async {
+  var  successInformation = await reSendOtp();
+  print("helo information");
+    print(successInformation);
+    if (successInformation['success'] == true) {
+      if (successInformation['message']['message'] == 'Updated') {
+        setState(() {
+          print("first code");
+          _finalCode = successInformation['message']['user']['confirmation_code'];
+          print(_finalCode);
+        });
+        print("helo success");
+       /* final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('token', _formData['token']);
+        prefs.setString('userEmail',successInformation['user']['email']);
+        prefs.setString('password', successInformation['user']['password']);
+        prefs.setInt('userId', successInformation['user']['id']);
+        prefs.setString('first_name', successInformation['user']['first_name']);
+        prefs.setString('last_name', successInformation['user']['last_name']);
+        prefs.setString('dob', successInformation['user']['dob']);
+        prefs.setString('contact_no', successInformation['user']['contact_no']);
+        prefs.setString('avatar', successInformation['user']['avatar']);*/
+       /* Navigator.push<dynamic>(
+          context,
+          MaterialPageRoute<dynamic>(
+              builder: (context) => VarificationScreen(_formData)),
+        );*/
+      } else {
+        showDialog<dynamic>(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('En Error Occured'),
+              content: Text(successInformation['data']['data']['message']),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('Okey'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          },
+        );
+      }
+    } else
+      showDialog<dynamic>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('En Error Occured'),
+            content: Text("Some thing went wrong"),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Okey'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        },
+      );
   }
 
   @override
@@ -120,9 +188,6 @@ class _VarificationScreen extends State<VarificationScreen> {
                       height: 2,
                       color: Theme.of(context).backgroundColor,
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
                     PinEntryTextField(
                       onSubmit: (String pin) {
                         setState(() {
@@ -130,8 +195,32 @@ class _VarificationScreen extends State<VarificationScreen> {
                         });
                       }, // onSubmit
                     ),
+                    ScopedModelDescendant<MainModel>(
+                      builder: (context, child, model) =>
+                    Container(padding: EdgeInsets.only(top: 25,left: 25,right: 25),
+                      child: RichText(
+                          text: TextSpan(
+                            text: "Please enter the code sent your adviser mobile number and a tab below that:",
+                            style: TextStyle(
+                                fontSize: 12.0,
+                                color: Theme.of(context).highlightColor,fontFamily: 'Reguler'),
+                            children: [
+
+                              TextSpan(recognizer:  new TapGestureRecognizer()..onTap = () =>
+                                _submitForm(model.reSendOtpCode),
+                                text: "Resend Code",
+                                style: TextStyle(
+                                  fontSize: 12.0,fontFamily: 'Reguler',
+                                  color: Theme.of(context).backgroundColor,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+
+                            ],
+                          )),
+                    )),
                     SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -196,10 +285,10 @@ class _VarificationScreen extends State<VarificationScreen> {
                         ),
                       ),
                       onTap: () async {
-                        print(_formData['otp']);
                         //   if(_formData['otp'] == _verifyCode) {
-                        if (_code == _formData['otp']) {
-                          print("helo check data of shared");
+                        if(_finalCode == null){
+                        if (_code == _formData['otp'])  {
+                          print("simple code");
                           final SharedPreferences prefs =
                               await SharedPreferences.getInstance();
                           prefs.setString('token', _formData['token']);
@@ -211,7 +300,6 @@ class _VarificationScreen extends State<VarificationScreen> {
                           prefs.setString(
                               'contact_no', _formData['phoneNumber']);
                           _submit(model.sendOtpCode);
-                      //    model.sendOtpCode(int.parse(_code));
                           Navigator.of(context).pushNamedAndRemoveUntil(
                               '/welcomePage', (Route<dynamic> route) => false);
                         } else {
@@ -224,6 +312,36 @@ class _VarificationScreen extends State<VarificationScreen> {
                             });
                           });
                         }
+                        }
+                        else
+                         if (_finalCode == _code){
+                           print("final code");
+                           final SharedPreferences prefs =
+                           await SharedPreferences.getInstance();
+                           prefs.setString('token', _formData['token']);
+                           prefs.setString('userEmail', _formData['email']);
+                           prefs.setInt('userId', _formData['userId']);
+                           prefs.setString('first_name', _formData['firstName']);
+                           prefs.setString('last_name', _formData['lastName']);
+                           prefs.setString('dob', _formData['dob']);
+                           prefs.setString(
+                               'contact_no', _formData['phoneNumber']);
+                           _submit(model.sendOtpCode);
+                           //    model.sendOtpCode(int.parse(_code));
+                           Navigator.of(context).pushNamedAndRemoveUntil(
+                               '/welcomePage', (Route<dynamic> route) => false);
+                        }else{
+                           {
+                             setState(() {
+                               widget.codeFlag = true;
+                             });
+                             Timer(Duration(seconds: 3), () {
+                               setState(() {
+                                 widget.codeFlag = false;
+                               });
+                             });
+                           }
+                         }
                       },
                     ))
                   ],

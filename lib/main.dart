@@ -195,7 +195,7 @@ class MyHomePage extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 60),
                                   child: Text(
-                                    'LOG IN',
+                                    'LOGIN',
                                     style: TextStyle(
                                         fontFamily: 'Bold', fontSize: 24),
                                   ),

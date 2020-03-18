@@ -37,6 +37,10 @@ class _DrawerBuilderState extends State<DrawerBuilder> {
         "Settings",
         'assets/gear.png',
       ),
+      new MenuItem(
+        "Logout",
+        'assets/logout.png',
+      ),
     ];
     return menuItems;
   }
@@ -45,20 +49,20 @@ class _DrawerBuilderState extends State<DrawerBuilder> {
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
+          height: 500,
           color: Colors.white,
           child: Column(
             children: <Widget>[
               Container(
                   alignment: Alignment.topLeft,
-                  width: MediaQuery.of(context).size.width,
+                  //     width: MediaQuery.of(context).size.width,
                   color: Theme.of(context).backgroundColor,
                   height: 160,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                  ScopedModelDescendant<MainModel>(
-                  builder: (context, child, model) =>
-                      Padding(
+                      ScopedModelDescendant<MainModel>(
+                        builder: (context, child, model) => Padding(
                           padding: EdgeInsets.only(left: 20.0, top: 25),
                           child: Container(
                             width: 70,
@@ -71,16 +75,19 @@ class _DrawerBuilderState extends State<DrawerBuilder> {
                               child: FadeInImage(
                                 fit: BoxFit.cover,
                                 //   image: NetworkImage(product.image),
-                                image: model.user.image != null ? NetworkImage(
-                                    model.user.image): AssetImage(
-                                  'assets/profile.png',
-                                ),
+                                image: model.user.image != null
+                                    ? NetworkImage(model.user.image)
+                                    : AssetImage(
+                                        'assets/profile.png',
+                                      ),
                                 placeholder: AssetImage(
                                   'assets/profile.png',
                                 ),
                               ),
                             ),
-                          ))),
+                          ),
+                        ),
+                      ),
                       ScopedModelDescendant<MainModel>(
                           builder: (context, child, model) => Container(
                                 padding: EdgeInsets.only(left: 20, top: 20),
@@ -100,53 +107,61 @@ class _DrawerBuilderState extends State<DrawerBuilder> {
                   padding: EdgeInsets.all(0.0),
                   itemCount: _menuItems.length,
                   itemBuilder: (context, index) {
-                    return Container(
-                      color: _currentSelected == index
-                          ? Theme.of(context).disabledColor
-                          : Colors.white,
-                      child: ListTile(
-                        leading: Container(
-                            width: 30,
-                            height: 30,
-                            child: new Image.asset(
-                              '${_menuItems[index].iconName}',
-                            )),
-                        title: Text(
-                          _menuItems[index].title,
-                          style: TextStyle(
+                    return ScopedModelDescendant<MainModel>(
+                        builder: (context, child, model) => Container(
                               color: _currentSelected == index
-                                  ? Theme.of(context).backgroundColor
-                                  : Colors.black,
-                              fontSize: 16),
-                        ),
-                        onTap: () {
-                          setState(() {
-                            _currentSelected = index;
-                            if (_currentSelected == 0) {
-                              Navigator.pop(context);
-                              Navigator.pushReplacementNamed(
-                                  context, '/profilePage');
-                            }
-                            if (_currentSelected == 1) {
-                              Navigator.pop(context);
-                              Navigator.pushNamed(context, '/yourScansPage');
-                            }
-                          /*  if (_currentSelected == 2) {
-                             *//* Navigator.pop(context);
-                              Navigator.pushReplacementNamed(
-                                  context, '/inboxScreen');*//*
-                            }*/
-                            if (_currentSelected == 2) {
-                              Navigator.pop(context);
-                              Navigator.of(context).push(
-                                  MaterialPageRoute<dynamic>(
-                                      builder: (BuildContext context) =>
-                                          SettingScreen()));
-                            }
-                          });
-                        },
-                      ),
-                    );
+                                  ? Theme.of(context).disabledColor
+                                  : Colors.white,
+                              child: ListTile(
+                                leading: Container(
+                                    width: 30,
+                                    height: 30,
+                                    child: new Image.asset(
+                                      '${_menuItems[index].iconName}',
+                                    )),
+                                title: Text(
+                                  _menuItems[index].title,
+                                  style: TextStyle(
+                                      color: _currentSelected == index
+                                          ? Theme.of(context).backgroundColor
+                                          : Colors.black,
+                                      fontSize: 16),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    _currentSelected = index;
+                                    if (_currentSelected == 0) {
+                                      Navigator.pop(context);
+                                      Navigator.pushReplacementNamed(
+                                          context, '/profilePage');
+                                    }
+                                    if (_currentSelected == 1) {
+                                      Navigator.pop(context);
+                                      Navigator.pushNamed(
+                                          context, '/yourScansPage');
+                                    }
+                                    if (_currentSelected == 2) {
+                                      Navigator.pop(context);
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute<dynamic>(
+                                              builder: (BuildContext context) =>
+                                                  SettingScreen()));
+                                    }
+                                    if (_currentSelected == 3) {
+//                                      Navigator.of(context).popUntil((route) => route.isFirst);
+                                    Navigator.popUntil(context,ModalRoute.withName('/home'));
+//                                      Navigator.pop(context);
+
+//                                      Navigator.of(context)
+//                                          .pushNamedAndRemoveUntil(
+//                                              '/myHomePage',
+//                                              (Route<dynamic> route) => false);
+                                      model.logout();
+                                    }
+                                  });
+                                },
+                              ),
+                            ));
                   },
                 ),
               )

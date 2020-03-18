@@ -82,8 +82,9 @@ class _YourScansState extends State<YourScans> {
                 child: Text('Location of mole:${data.querySpotPlace}')),
             content: Container(
                 color: Colors.transparent,
-               // height: MediaQuery.of(context).size.height / 2,
-                child: Column(mainAxisSize: MainAxisSize.min,
+                // height: MediaQuery.of(context).size.height / 2,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     // Image.network(),
                     CachedNetworkImage(
@@ -105,6 +106,28 @@ class _YourScansState extends State<YourScans> {
                 )),
           );
         });
+  }
+
+  bool newMsg(int id) {
+    for (int i = 0; i < widget._model.readFlagObjects.length; i++) {
+      if (widget._model.readFlagObjects[i].id == id &&
+          widget._model.readFlagObjects[i].flag == true) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void undoreadmsg(int id) {
+    print("iddddddddddddddddddddddddddddddd");
+    print(id);
+    for (int i = 0; i < widget._model.readFlagObjects.length; i++) {
+      print(widget._model.readFlagObjects[i].id);
+      if (widget._model.readFlagObjects[i].id == id) {
+        widget._model.readFlagObjects[i].flag = false;
+        widget._model.justtosetstate();
+      }
+    }
   }
 
   @override
@@ -154,7 +177,7 @@ class _YourScansState extends State<YourScans> {
                   alwaysVisibleScrollThumb: true,
                   backgroundColor: Theme.of(context).backgroundColor,
                   controller: _rrectController,
-                //  labelTextBuilder: (offset) => Text("${offset.floor()}"),
+                  //  labelTextBuilder: (offset) => Text("${offset.floor()}"),
                   child: ListView(
                     controller: _rrectController,
                     children: model.allQueries
@@ -212,21 +235,25 @@ class _YourScansState extends State<YourScans> {
                                               child: Container(
                                                 child: Column(
                                                   children: <Widget>[
-                                                    Container(
-                                                      child: Text(
-                                                        'Location of mole:${data.querySpotPlace}',
-                                                        style: TextStyle(
-                                                            color:
-                                                                primaryColor),
-                                                      ),
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      margin:
-                                                          EdgeInsets.fromLTRB(
-                                                              10.0,
-                                                              0.0,
-                                                              0.0,
-                                                              5.0),
+                                                    Row(
+                                                      children: <Widget>[
+                                                        Container(
+                                                          child: Text(
+                                                            'Location of mole:${data.querySpotPlace}',
+                                                            style: TextStyle(
+                                                                color:
+                                                                    primaryColor),
+                                                          ),
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          margin: EdgeInsets
+                                                              .fromLTRB(
+                                                                  10.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  5.0),
+                                                        ),
+                                                      ],
                                                     ),
                                                     Container(
                                                       child: Text(
@@ -244,6 +271,20 @@ class _YourScansState extends State<YourScans> {
                                                               0.0,
                                                               0.0,
                                                               0.0),
+                                                    ),
+                                                    Container(alignment: Alignment.centerRight,
+                                                      child: newMsg(data.id)
+                                                          ? /*Container(child: Text("n"),)*/
+                                                      ClipOval(
+                                                              child: Container(
+                                                                  height: 20,
+                                                                  width: 20,
+                                                                  color: Colors
+                                                                      .yellowAccent,
+                                                                  child:
+                                                                      Text("")),
+                                                            )
+                                                          : Text(""),
                                                     )
                                                   ],
                                                 ),
@@ -251,6 +292,7 @@ class _YourScansState extends State<YourScans> {
                                                     EdgeInsets.only(left: 20.0),
                                               ),
                                               onTap: () {
+                                                undoreadmsg(data.id);
                                                 Navigator.push(
                                                   context,
                                                   MaterialPageRoute(

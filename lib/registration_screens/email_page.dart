@@ -69,7 +69,7 @@ class _EmailPageState extends State<EmailPage> {
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue)),
-                          labelText: 'E-Mail',
+                          labelText: 'E-mail',
                           filled: true,
                           fillColor: Colors.white),
                       keyboardType: TextInputType.emailAddress,
@@ -79,7 +79,7 @@ class _EmailPageState extends State<EmailPage> {
                             !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
                                 .hasMatch(value)) {
                           // ignore: missing_return, missing_return
-                          return 'Please enter a valid email';
+                          return 'Please enter a valid e-mail';
                         }
                       },
                       onSaved: (String value) {

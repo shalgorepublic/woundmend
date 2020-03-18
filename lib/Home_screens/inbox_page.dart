@@ -37,10 +37,23 @@ class _InboxScreenState extends State<InboxScreen> {
   Timer timer;
   ScrollController _rrectController = ScrollController();
   File imageTaken;
+  final List<String> _dropdownValues = [
+    "HEAD",
+    "FOREHEAD",
+    "FACE",
+    "LEFT ARM",
+    "RIGHT ARM",
+    "RIGHT THIGH",
+    "LEFT THIGH",
+    "RIGHT FEET",
+    "LEFT FEET",
+  ];
+  String placeOfMole;
 
   @override
   void initState() {
     // TODO: implement initState
+
     timer = Timer.periodic(Duration(seconds: 5) , (Timer t) => fetchData());
 
     super.initState();
@@ -51,11 +64,71 @@ class _InboxScreenState extends State<InboxScreen> {
     timer?.cancel();
     super.dispose();
   }
+  Future<void> _showLocationOfMoleDialogue(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(title: Text("Please Select the Location of mole"),
+          content: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return Container(
+                alignment: Alignment.center,
+                height: MediaQuery.of(context).size.height / 5,
+                child: Column(
+                  children: <Widget>[
+                    DropdownButton(
+                      items: _dropdownValues
+                          .map((value) => DropdownMenuItem(
+                        child: Text(value),
+                        value: value,
+                      ))
+                          .toList(),
+                      onChanged: (String value) {
+                        setState(() {
+                          placeOfMole = value;
+                        });
+                        /* Timer(Duration(milliseconds: 500), () {
+                if (placeOfMole != null) {
+                //  Navigator.of(context).pop(true);
+                 // imagepicker();
+                }
+              });*/
+                      },
+                      isExpanded: true,
+                      hint: Text('Select'),
+                      value: placeOfMole,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    RaisedButton(
+                      color: Theme.of(context).accentColor,
+                      child: Text("SUBMIT",style: TextStyle(color: Colors.white),),
+                      onPressed: () {
+                        if (placeOfMole != null) {
+                          Navigator.of(context).pop(true);
+                          _showDialogue(context);
+                        }
+                      },
+                    )
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
   Future<void> _showImageDialogue(BuildContext context, data) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(contentPadding: EdgeInsets.all(0),
+              title: Container(
+                  alignment: Alignment.center,
+                 /* child: Text('Location of mole:${data.querySpotPlace}')),*/
+                  child: Text('Location of mole:Left')),
             content: Container(
                 child: CachedNetworkImage(
                       imageUrl:
@@ -405,7 +478,7 @@ class _InboxScreenState extends State<InboxScreen> {
                       child: Icon(Icons.attach_file),
                     ),
                     onTap: () {
-                      _showDialogue(context);
+                      _showLocationOfMoleDialogue(context);
                     },
                   ),
                   SizedBox(width: 5,),
@@ -425,7 +498,7 @@ class _InboxScreenState extends State<InboxScreen> {
                           var msg = _textFieldController.text;
                           _textFieldController.text = '';
                           SystemChannels.textInput.invokeMethod('TextInput.hide');
-                          sendMsg(imageTaken , msg);
+                          sendMsg(imageTaken,msg,placeOfMole);
                           setState(() {
                             imageTaken =null;
                           });
@@ -446,31 +519,30 @@ class _InboxScreenState extends State<InboxScreen> {
   }
 
 
-  void sendMsg(File fileImage , message) async {
+  void sendMsg(File fileImage , message,locationOfMole) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.get('token');
     print(token);
     print(fileImage);
     print("helo image");
     print(message);
+    print(locationOfMole);
     if (fileImage != null) {
       print("helo image");
       FormData formData = FormData.fromMap({
-        "message": message ,
+        "message": message,
+        "query_spot_place":locationOfMole,
         "image":
           await MultipartFile.fromFile(fileImage.path ,
-              filename: fileImage.toString()) ,
+              filename: fileImage.toString()),
       });
-      print("form data");
-      print(formData.toString());
       Response response;
-
       try {
         var dio = Dio();
         response = (await dio.post(
           "http://dermpro.herokuapp.com//api/v1/query_spots/${widget
-              .id}/feedback" ,
-          data: formData ,
+              .id}/feedback",
+          data: formData,
           options: new Options(
             headers: {HttpHeaders.authorizationHeader: token} ,
           ) ,

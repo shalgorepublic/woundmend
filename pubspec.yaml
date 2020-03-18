@@ -40,6 +40,7 @@ dependencies:
   fancy_shimmer_image: ^1.0.0+1
   flutter_mailer: ^0.4.2
   path_provider: ^1.6.5
+  flutter_local_notifications: ^0.6.0
 
 
 
@@ -96,6 +97,7 @@ flutter:
     - assets/sun.jpeg
     - assets/splash.png
     - assets/art.png
+    - assets/logout.png
     - assets/cancer.jpg
     - assets/cancer2.jpg
     - assets/firstimage.png

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:derm_pro/registration_screens/forgot_password_success.dart';
 import 'package:derm_pro/scoped_models/main.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
@@ -299,7 +298,7 @@ class _RegisterFormState extends State<RegisterForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String firstName;
   String lastName;
-  String dob;
+  String dob= DateFormat('dd-MMM-yyyy').format(new DateTime(DateTime.now().year - 16));
   int userId;
   bool loading = false;
   String gender;
@@ -482,7 +481,7 @@ class _RegisterFormState extends State<RegisterForm> {
                             width: MediaQuery.of(context).size.width,
                             child: RaisedButton(
                               child: Text(
-                                'Save',
+                                'SAVE',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.white,
@@ -624,15 +623,17 @@ class _RegisterFormState extends State<RegisterForm> {
   Future<Null> _selectDate(BuildContext context) async {
     DateTime picked = await showDatePicker(
         context: context,
-        initialDate: selectedDate,
+        initialDate: new DateTime(DateTime.now().year - 16),
         firstDate: DateTime(1950, 8),
         lastDate: lastDatePicking);
     setState(() {
-      selectedDate = picked;
+      selectedDate = picked == null ?new DateTime(DateTime.now().year - 16): picked ;
       String formattedDate = DateFormat('dd-MMM-yyyy').format(picked);
       print(picked);
-      dateHint = formattedDate;
+      dateHint = DateFormat('dd-MMM-yyyy').format(new DateTime(DateTime.now().year - 16));
       dob = formattedDate;
     });
   }
+
+
 }

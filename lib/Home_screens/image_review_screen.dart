@@ -77,7 +77,7 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
           Container(
             padding: EdgeInsets.only(top: 20, right: 30, left: 30),
             child: Text(
-              "Make sure the photo is sharp,centered and free of hair or other obstructing objects",
+              "Make sure the photo is sharp, centered and free of hair or other obstructing objects.",
               style: TextStyle(fontSize: 16, fontFamily: "Reguler"),
             ),
           ),
@@ -136,7 +136,7 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
                       width: MediaQuery.of(context).size.width,
                       child: RaisedButton(
                         child: Text(
-                          'Retake',
+                          'RETAKE',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white,

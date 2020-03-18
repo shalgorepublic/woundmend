@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'package:derm_pro/models/query_spot_model.dart';
+import 'package:derm_pro/models/read_chat_model.dart';
 import 'package:derm_pro/models/tickets_model.dart';
 import 'package:derm_pro/models/uv.dart';
 import 'package:derm_pro/scoped_models/connected_models.dart';
@@ -15,13 +16,21 @@ class ChatModel extends ConnectedModel {
   bool _querySpotLoading = false;
   List<ImageData> _images = [];
   List<QuerySpot> _allqueries;
+  List<ChatReadFlag> readFlagObjects = [];
+
   List<QuerySpot> get allQueries {
     return _allqueries;
   }
 
+  /* List<ChatReadFlag> get readFlagObjects {
+    return _readFlagObjects;
+  }*/
 
+  void justtosetstate() {
+    notifyListeners();
+  }
 
-  Future<bool> postImage(File fileImage,String message) async {
+  Future<bool> postImage(File fileImage, String message) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.get('token');
     print(token);
@@ -34,7 +43,7 @@ class ChatModel extends ConnectedModel {
       print("helo image");
       FormData formData = FormData.fromMap({
         "message": "disease",
-        "query_spot_place":message,
+        "query_spot_place": message,
         "images": [
           await MultipartFile.fromFile(fileImage.path,
               filename: fileImage.toString())
@@ -71,44 +80,45 @@ class ChatModel extends ConnectedModel {
       }
     }
   }
-  Future<Map<String, dynamic>> fetchQueriesSpots() async{
+
+  Future<Map<String, dynamic>> fetchQueriesSpots() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.get('token');
     final int userId = prefs.get('userId');
     print(userId);
     _querySpotLoading = true;
     notifyListeners();
-      Response response;
-      try {
-        final response = await http.get(
-          'http://dermpro.herokuapp.com//api/v1/patients/${userId}',
-          headers: {HttpHeaders.authorizationHeader: token},
-        );
-    print(response.statusCode);
-    print("query spot responce");
-    print(response);
-        final Map<String , dynamic> responseData = json.decode(response.body);
+    Response response;
+    try {
+      final response = await http.get(
+        'http://dermpro.herokuapp.com//api/v1/patients/${userId}',
+        headers: {HttpHeaders.authorizationHeader: token},
+      );
+      print(response.statusCode);
+      print("query spot responce");
+      print(response);
+      final Map<String, dynamic> responseData = json.decode(response.body);
 
-        final Map<String , dynamic> finalData = responseData['data'];
-    _querySpotLoading = false;
-    notifyListeners();
-    print(response.statusCode);
-    if (response.statusCode == 200) {
-    print('request succedes');
+      final Map<String, dynamic> finalData = responseData['data'];
+      _querySpotLoading = false;
+      notifyListeners();
+      print(response.statusCode);
+      if (response.statusCode == 200) {
+        print('request succedes');
 //    _allqueries = new List<QuerySpot>();
-    _allqueries = List<QuerySpot>.from(finalData['user']["query_spots"].map((x) => QuerySpot.fromJson(x)));
-    notifyListeners();
-    return {'success':true};
-    } else
-      print("server Error");
-    return {'success':false};
-
+        _allqueries = List<QuerySpot>.from(
+            finalData['user']["query_spots"].map((x) => QuerySpot.fromJson(x)));
+        notifyListeners();
+        return {'success': true};
+      } else
+        print("server Error");
+      return {'success': false};
     } catch (e) {
-    print(e);
-    _imageLoading = false;
-    notifyListeners();
-    print('helo error');
-    return {};
+      print(e);
+      _imageLoading = false;
+      notifyListeners();
+      print('helo error');
+      return {};
     }
   }
 }

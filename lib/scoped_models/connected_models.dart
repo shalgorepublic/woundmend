@@ -159,6 +159,10 @@ class UserModel extends ConnectedModel {
         bool hasError = true;
         String message = 'Something went wrong.';
         if (finalData['success'] == true) {
+          final SharedPreferences prefs =
+          await SharedPreferences.getInstance();
+          prefs.setInt('userId', finalData['user']['id']);
+        //  prefs.setString('token', finalData['auth_token']);
           hasError = false;
           message = 'Authentication Succeeded';
           _authenticatedUser = User(
@@ -170,6 +174,7 @@ class UserModel extends ConnectedModel {
             phoneNumber: finalData['user']['contact_no'],
             otp: finalData['user']['confirmation_code'],
             token: finalData['auth_token'],
+            image: finalData['avatar'],
             password: password,
           );
           _userSubject.add(true);
@@ -299,7 +304,7 @@ class UserModel extends ConnectedModel {
   void logout() async {
     _userSubject.add(false);
     _authenticatedUser = null;
-    notifyListeners();
+   // notifyListeners();
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('token');
     prefs.remove('userEmail');
@@ -310,6 +315,7 @@ class UserModel extends ConnectedModel {
     prefs.remove('contact_no');
     prefs.remove('password');
     prefs.remove('avatar');
+    notifyListeners();
   }
 
   Future<Map<String, dynamic>> forgotPassword(name) async {
@@ -459,6 +465,54 @@ class UserModel extends ConnectedModel {
         prefs.setString('avatar', finalData['user']['avatar']);
         notifyListeners();
         return {'success': true, 'message': finalData['message']};
+      } else
+        _isLoading = false;
+      notifyListeners();
+      return {'success': true, 'message': finalData['message']};
+    } catch (error) {
+      _isLoading = false;
+      notifyListeners();
+      return {'success': false, 'message': "Some thing went wrong"};
+    }
+  }
+  Future<Map<String, dynamic>>  reSendOtpCode() async {
+    final SharedPreferences prefs =
+    await SharedPreferences.getInstance();
+    final int userId = prefs.get('userId');
+    http.Response response;
+    final Map<String, dynamic> updatedData = {
+      'user_id': userId
+    };
+ //   _isLoading = true;
+ //   notifyListeners();
+    try {
+      response = await http.put(
+          'http://dermpro.herokuapp.com//api/v1/users/resend_otp',
+          body: {'user_id':userId.toString()});
+      final Map<String, dynamic> responseData = json.decode(response.body);
+      final Map<String, dynamic> finalData = responseData['data'];
+      bool hasError = true;
+      _isLoading = true;
+      notifyListeners();
+      String message = 'Something went wrong.';
+      if (finalData['message'] == "Updated") {
+        hasError = false;
+        message = 'Authentication Succeeded';
+        _isLoading = false;
+        _authenticatedUser = User(
+            id: finalData['user']['id'],
+            email: finalData['user']['email'],
+            firstName: finalData['user']['first_name'],
+            lastName: finalData['user']['last_name'],
+            dob: finalData['user']['dob'],
+            phoneNumber: finalData['user']['contact_no'],
+            otp: finalData['user']['confirmation_code'],
+            image: finalData['user']['avatar'],
+            token: finalData['auth_token'],
+            password: _authenticatedUser.password);
+
+        notifyListeners();
+        return {'success': true, 'message': finalData};
       } else
         _isLoading = false;
       notifyListeners();

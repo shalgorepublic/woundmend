@@ -24,6 +24,18 @@ class _SupportScreenState extends State<SupportScreen> {
   File FileImage;
   String message;
   bool loading = false;
+  final List<String> _dropdownValues = [
+    "HEAD",
+    "FOREHEAD",
+    "FACE",
+    "LEFT ARM",
+    "Right ARM",
+    "RIGHT THIGH",
+    "Left THIGH",
+    "RIGHT FEET",
+    "Left FEET",
+  ];
+  String placeOfMole;
 
   _openGalery(BuildContext context) async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
@@ -147,6 +159,63 @@ class _SupportScreenState extends State<SupportScreen> {
     // TODO: implement initState
     super.initState();
   }
+  Future<void> _showLocationOfMoleDialogue(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(title: Text("Please Select the Location of mole"),
+          content: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return Container(
+                alignment: Alignment.center,
+                height: MediaQuery.of(context).size.height / 5,
+                child: Column(
+                  children: <Widget>[
+                    DropdownButton(
+                      items: _dropdownValues
+                          .map((value) => DropdownMenuItem(
+                        child: Text(value),
+                        value: value,
+                      ))
+                          .toList(),
+                      onChanged: (String value) {
+                        setState(() {
+                          placeOfMole = value;
+                        });
+                        /* Timer(Duration(milliseconds: 500), () {
+                if (placeOfMole != null) {
+                //  Navigator.of(context).pop(true);
+                 // imagepicker();
+                }
+              });*/
+                      },
+                      isExpanded: true,
+                      hint: Text('Select'),
+                      value: placeOfMole,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    RaisedButton(
+                      color: Theme.of(context).accentColor,
+                      child: Text("Submit"),
+                      onPressed: () {
+                        if (placeOfMole != null) {
+                          Navigator.of(context).pop(true);
+                          _showDialogue(context);
+                        }
+                      },
+                    )
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
