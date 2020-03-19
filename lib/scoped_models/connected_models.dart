@@ -18,6 +18,7 @@ class ConnectedModel extends Model {
 class UserModel extends ConnectedModel {
   AuthMode _mode = AuthMode.SignUp;
   bool _imageUploadingFlag = false;
+  String _gender;
 
   AuthMode get mode => _mode;
   File _userImage;
@@ -26,6 +27,9 @@ class UserModel extends ConnectedModel {
 
   User get user {
     return _authenticatedUser;
+  }
+  String get gender {
+    return _gender;
   }
 
   bool get loading {
@@ -128,6 +132,9 @@ class UserModel extends ConnectedModel {
         return false;
       }
     }
+  }
+  void changeGender(String value){
+    _gender = value;
   }
 
   Future<Map<String, dynamic>> authenticate(String email, String password,
@@ -273,6 +280,9 @@ class UserModel extends ConnectedModel {
     final String password = prefs.get('password');
     final int userId = prefs.get('userId');
     final String image = prefs.get('avatar');
+    final String gender = prefs.get('gender');
+    _gender = gender;
+    notifyListeners();
     print(image);
     print(userEmail);
     print(first_name);
@@ -280,6 +290,7 @@ class UserModel extends ConnectedModel {
     print(token);
     print(dob);
     print(userId);
+    print(gender);
     if (token != null) {
       _authenticatedUser = User(
           id: userId,
@@ -353,7 +364,7 @@ class UserModel extends ConnectedModel {
   }
 
   Future<Map<String, dynamic>> update(String name, String lastName, String dob,
-      int userId, String gender) async {
+      int userId) async {
     http.Response response;
     _isLoading = true;
     notifyListeners();
@@ -361,7 +372,7 @@ class UserModel extends ConnectedModel {
       'first_name': name,
       'last_name': lastName,
       'dob': dob,
-      'gender': gender
+      'gender': _gender
     };
     String token = _authenticatedUser.token;
     try {
@@ -373,7 +384,7 @@ class UserModel extends ConnectedModel {
       final Map<String, dynamic> finalData = responseData['data'];
       bool hasError = true;
       _isLoading = true;
-      print("helo shahdi");
+      print("helo shahdiiiiiiiiiiiiiiiiii");
       print(finalData);
       notifyListeners();
       String message = 'Something went wrong.';
@@ -391,8 +402,16 @@ class UserModel extends ConnectedModel {
             phoneNumber: finalData['user']['contact_no'],
             otp: finalData['user']['confirmation_code'],
             image: finalData['user']['avatar'],
+            gender: finalData['user']['gender'],
             token: finalData['auth_token'],
             password: _authenticatedUser.password);
+        _gender = finalData['user']['gender'];
+        print(_gender);
+        print(_gender);
+        print(_gender);
+        print(_gender);
+        print(_gender);
+//            gender: finalData['user']['gender']);
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('token', finalData['auth_token']);
         prefs.setString('userEmail', finalData['user']['email']);
@@ -403,6 +422,7 @@ class UserModel extends ConnectedModel {
         prefs.setString('dob', finalData['user']['dob']);
         prefs.setString('contact_no', finalData['user']['contact_no']);
         prefs.setString('avatar', finalData['user']['avatar']);
+        prefs.setString('gender', finalData['user']['gender']);
         notifyListeners();
         return {'success': true, 'message': finalData['message']};
       } else

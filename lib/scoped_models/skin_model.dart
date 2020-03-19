@@ -214,7 +214,8 @@ class SkinModel extends ConnectedModel {
 
   void skinSelectedFlagTrue() {
     _skinSelectedFlag = true;
-    print(_selectedOptionId);
+    print("heloooooooooooooo");
+    print(_skinSelectedFlag);
     notifyListeners();
   }
 

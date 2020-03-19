@@ -10,6 +10,8 @@ import 'package:pin_entry_text_field/pin_entry_text_field.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/services.dart';
+
 
 class VarificationScreen extends StatefulWidget {
   final Map<String, dynamic> formData;
@@ -29,6 +31,7 @@ class _VarificationScreen extends State<VarificationScreen> {
   bool _onEditing = true;
   String _code;
   String _finalCode;
+  FocusNode _focusNode = FocusNode();
   void _submit(Function sendOtp) async {
     Map<String, dynamic> successInformation;
     successInformation = await sendOtp(_code);
@@ -140,6 +143,9 @@ class _VarificationScreen extends State<VarificationScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       //  onWillPop: _onBackedPress,
+      onWillPop: (){
+
+      },
         child: Scaffold(
             body: ListView(
           children: <Widget>[
@@ -194,6 +200,7 @@ class _VarificationScreen extends State<VarificationScreen> {
                           _code = pin;
                         });
                       }, // onSubmit
+
                     ),
                     ScopedModelDescendant<MainModel>(
                       builder: (context, child, model) =>

@@ -50,7 +50,7 @@ class _EmailPageState extends State<EmailPage> {
                 Container(
                   padding: EdgeInsets.only(top: 20, bottom: 10),
                   child: Text(
-                    "Enter Your Email to Login",
+                    "Enter Your E-mail to Login",
                     style: TextStyle(
                         fontSize: 18,
                         fontFamily: 'Bold',
@@ -79,7 +79,7 @@ class _EmailPageState extends State<EmailPage> {
                             !RegExp(r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
                                 .hasMatch(value)) {
                           // ignore: missing_return, missing_return
-                          return 'Please enter a valid e-mail';
+                          return 'Please enter a valid E-mail';
                         }
                       },
                       onSaved: (String value) {

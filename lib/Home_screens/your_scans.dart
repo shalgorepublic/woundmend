@@ -205,15 +205,15 @@ class _YourScansState extends State<YourScans> {
                                                                       Color>(
                                                                   themeColor),
                                                         ),
-                                                        width: 50.0,
-                                                        height: 50.0,
+                                                        width: 60.0,
+                                                        height: 60.0,
                                                         padding: EdgeInsets.all(
                                                             15.0),
                                                       ),
                                                       imageUrl:
                                                           "http://dermpro.herokuapp.com${data.images.first}",
-                                                      width: 50.0,
-                                                      height: 50.0,
+                                                      width: 60.0,
+                                                      height: 60.0,
                                                       fit: BoxFit.cover,
                                                     )
                                                   : Icon(
@@ -232,7 +232,7 @@ class _YourScansState extends State<YourScans> {
                                           ),
                                           Flexible(
                                             child: GestureDetector(
-                                              child: Container(
+                                              child: Container(padding: EdgeInsets.only(top:15),
                                                 child: Column(
                                                   children: <Widget>[
                                                     Row(
@@ -242,7 +242,7 @@ class _YourScansState extends State<YourScans> {
                                                             'Location of mole:${data.querySpotPlace}',
                                                             style: TextStyle(
                                                                 color:
-                                                                    primaryColor),
+                                                                    primaryColor,fontSize: 12),
                                                           ),
                                                           alignment: Alignment
                                                               .centerLeft,
@@ -277,8 +277,8 @@ class _YourScansState extends State<YourScans> {
                                                           ? /*Container(child: Text("n"),)*/
                                                       ClipOval(
                                                               child: Container(
-                                                                  height: 20,
-                                                                  width: 20,
+                                                                  height: 15,
+                                                                  width: 15,
                                                                   color: Colors
                                                                       .yellowAccent,
                                                                   child:

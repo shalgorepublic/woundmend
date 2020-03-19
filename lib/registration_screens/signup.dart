@@ -101,7 +101,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         onChanged: (bool newValue) {
                           setState(() {
                             checkBoxValue = newValue;
-                            value = !value;
+                            if(value == true){
+                              value = false;
+                            }
                           });
                         }),
                     Expanded(
@@ -171,7 +173,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               Container(
                 padding: EdgeInsets.only(bottom: 30, left: 30, right: 30),
-                child: Text('Your privacy is out most responsibility',
+                child: Text('Your privacy is our most responsibility',
                     style: TextStyle(
                         fontSize: 14.0,
                         color: Theme.of(context).highlightColor,
@@ -234,7 +236,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Text(
-                            'LOG IN',
+                            'LOGIN',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 18),
                           ),

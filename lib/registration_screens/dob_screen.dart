@@ -15,6 +15,7 @@ class _DobScreen extends State<DobScreen> {
   Map<String,dynamic> _formData;
   _DobScreen(this._formData);
   String dateHint;
+  String dob= DateFormat('dd-MMM-yyyy').format(new DateTime(DateTime.now().year - 16));
   DateTime lastDatePicking;
   DateTime selectedDate = DateTime.parse("1970-01-01T11:00:00.000Z");
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -31,17 +32,31 @@ class _DobScreen extends State<DobScreen> {
       'date': dateHint
     };
   }
-  Future<Null> _selectDate(BuildContext context) async {
+  /*Future<Null> _selectDate(BuildContext context) async {
      DateTime picked = await showDatePicker(
         context: context,
-        initialDate: selectedDate,
+        initialDate: new DateTime(DateTime.now().year - 16),
         firstDate: DateTime(1950, 8),
         lastDate: lastDatePicking);
     setState(() {
-      selectedDate = picked;
+      selectedDate = picked == null ?new DateTime(DateTime.now().year - 16): picked ;
       String formattedDate = DateFormat('dd-MMM-yyyy').format(picked);
       print(picked);
-      dateHint = formattedDate;
+      dateHint =  DateFormat('dd-MMM-yyyy').format(new DateTime(DateTime.now().year - 16));
+    });
+  }*/
+  Future<Null> _selectDate(BuildContext context) async {
+    DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: new DateTime(DateTime.now().year - 16),
+        firstDate: DateTime(1950, 8),
+        lastDate: lastDatePicking);
+    setState(() {
+      selectedDate = picked == null ?new DateTime(DateTime.now().year - 16): picked ;
+      String formattedDate = DateFormat('dd-MMM-yyyy').format(picked);
+      print(picked);
+      dateHint = DateFormat('dd-MMM-yyyy').format(new DateTime(DateTime.now().year - 16));
+      dob = formattedDate;
     });
   }
   @override
@@ -51,15 +66,14 @@ class _DobScreen extends State<DobScreen> {
     DateTime lastDate = date2.subtract(Duration(days: 5840,));
     String formattedDate = DateFormat('dd-MMM-yyyy').format(lastDate);
     setState(() {
-      dateHint = formattedDate;
+      dateHint =  DateFormat('dd-MMM-yyyy').format(new DateTime(DateTime.now().year - 16));
       selectedDate = lastDate;
       lastDatePicking = lastDate;
-      print(lastDatePicking);
-      print(lastDatePicking);
     });
+    print("helo                 deeeeeeeeeeeeeeeeeeeteeeeeeeeee");
+    print(dateHint);
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,7 +139,7 @@ class _DobScreen extends State<DobScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 Text(
-                                  dateHint,
+                                  dob,
                                   style: TextStyle(fontSize: 18),
                                 ),
                                 Container(

@@ -81,8 +81,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
                   child: Container(child: Text("Personal Details")),
                 ),onTap: (){
-                  Navigator.of(context).push(MaterialPageRoute<dynamic>(
-                      builder: (BuildContext context) => EditProfile()));
+                  Navigator.pushNamed(context, 'EditProfilePage');
                 },),
                 GestureDetector(child:
                 Container(

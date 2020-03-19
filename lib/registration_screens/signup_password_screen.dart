@@ -117,7 +117,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                               validator: (String value) {
                                 if (value.isEmpty || value.length < 6) {
                                   // ignore: missing_return, missing_return
-                                  return 'Please enter a valid password';
+                                  return 'Password must be more than 6 charater';
                                 }
                               },
                               onSaved: (String value) {

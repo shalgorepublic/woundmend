@@ -10,6 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toast/toast.dart';
 
 class EditProfile extends StatefulWidget {
+  final model;
+  EditProfile(this.model);
   @override
   _EditProfileState createState() => _EditProfileState();
 }
@@ -19,14 +21,39 @@ class _EditProfileState extends State<EditProfile> {
   final double circleBorderWidth = 5.0;
   int _radioValue1 = 0;
   int correctScore = 0;
+  String gender;
 
   void _handleRadioValueChange1(int value) {
     setState(() {
       _radioValue1 = value;
-      //  print(_radioValue1);
+      if(_radioValue1 == 0){
+        gender = 'Male';
+      }
+      else
+        {
+          gender = "Female";
+        }
+      widget.model.changeGender(gender);
     });
   }
+  @override
+  void initState() {
+    // TODO: implement initState
 
+    if(widget.model.gender == 'Male'){
+      setState(() {
+        _radioValue1 = 0;
+      });
+    }
+    else
+      {
+        setState(() {
+          _radioValue1 = 1;
+        });
+      }
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -309,16 +336,18 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   void initState() {
-    print(widget.object['model']);
     firstName = widget.object['model'].user.firstName;
     lastName = widget.object['model'].user.lastName;
     dob = widget.object['model'].user.dob;
     userEmail = widget.object['model'].user.email;
     userId = widget.object['model'].user.id;
+//    gender = widget.object['model'].user.id;
     setState(() {
       if (widget.object['value'] == 0) {
+        print("0");
         gender = 'Male';
       } else {
+        print('1');
         gender = 'Female';
       }
     });
@@ -331,8 +360,6 @@ class _RegisterFormState extends State<RegisterForm> {
       dateHint = formattedDate;
       selectedDate = lastDate;
       lastDatePicking = lastDate;
-      print(lastDatePicking);
-      print(lastDatePicking);
     });
     super.initState();
   }
@@ -574,11 +601,8 @@ class _RegisterFormState extends State<RegisterForm> {
       lastName,
       dob,
       userId,
-      gender,
     );
     if (successInformation['success']) {
-      print("helo shhaid");
-      print(successInformation);
       Navigator.pushNamed(context, '/profilePage');
     } else {
       showDialog<dynamic>(
