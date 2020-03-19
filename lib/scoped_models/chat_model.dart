@@ -30,15 +30,16 @@ class ChatModel extends ConnectedModel {
     notifyListeners();
   }
 
-  Future<bool> postImage(File fileImage, String message, String locationOfmole) async {
+  Future<bool> postImage(File fileImage, String disease, String locationOfmole,String description) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.get('token');
   //  _imageLoading = true;
   //  notifyListeners();
     if (fileImage != null) {
       FormData formData = FormData.fromMap({
-        "disease": message,
+        "disease": disease,
         "query_spot_place": locationOfmole,
+        "message": description,
         "images": [
           await MultipartFile.fromFile(fileImage.path,
               filename: fileImage.toString())
@@ -72,7 +73,7 @@ class ChatModel extends ConnectedModel {
       }
     }
   }
-  Future<bool> postImageToGetDisease(File fileImage, String locationOfMole) async {
+  Future<bool> postImageToGetDisease(File fileImage, String locationOfMole,String message) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.get('token');
     print(token);
@@ -98,7 +99,7 @@ class ChatModel extends ConnectedModel {
         notifyListeners();
         final Map<String, dynamic> responseData = json.decode(response.toString());
         if (response.statusCode == 200) {
-          postImage(fileImage, responseData['prediction'],locationOfMole);
+          postImage(fileImage, responseData['prediction'],locationOfMole,message);
           return true;
         } else
           return true;

@@ -17,6 +17,8 @@ class ImageReviewScreen extends StatefulWidget {
 
 class _ImageReviewScreenState extends State<ImageReviewScreen> {
   File _image;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String message;
 
   Future imagepicker() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
@@ -24,13 +26,13 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
       _image = image as File;
     });
     if (_image != null) {
-      Navigator.push<dynamic>(
+     /* Navigator.push<dynamic>(
         context,
         MaterialPageRoute<dynamic>(
           builder: (context) => ImageReviewScreen(
               {'image': _image, 'location': widget.data['location']}),
         ),
-      );
+      );*/
     }
   }
 
@@ -120,12 +122,13 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
       appBar: AppBar(
         title: Text("Review"),
       ),
-      body: Column(
+      body:SingleChildScrollView(child:
+      Column(
         children: <Widget>[
           _image != null
               ? Image.file(
                   _image,
-                  height: MediaQuery.of(context).size.height / 2.3,
+                  height: MediaQuery.of(context).size.height / 2.5,
                   width: MediaQuery.of(context).size.width,
                 )
               : Container(),
@@ -136,8 +139,30 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
               style: TextStyle(fontSize: 16, fontFamily: "Reguler"),
             ),
           ),
+          Form(
+            key: _formKey,
+            child: Container(
+                margin: const EdgeInsets.only(right: 20, left: 20),
+                padding: EdgeInsets.only(bottom: 20, top: 20),
+                child: TextFormField(
+                  maxLines: 2,
+                  decoration: InputDecoration(
+                      filled: true,
+                      hintText: "Description",
+                      fillColor: Colors.white),
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return 'Please enter description';
+                    }
+                  },
+                  onSaved: (String value) {
+                    message = value;
+                  },
+                )),
+          ),
           Container(
-              padding: EdgeInsets.only(top: 50, left: 30, right: 30),
+              padding: EdgeInsets.only( left: 30, right: 30),
               alignment: Alignment.center,
               child: Column(
                 children: <Widget>[
@@ -155,12 +180,16 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
                               fontSize: 18),
                         ),
                         onPressed: () async {
+                          if (!_formKey.currentState.validate()) {
+                            return;
+                          }
+                          _formKey.currentState.save();
                           _showDialogue(context);
 
                          /* bool value = await model.postImage(
                               _image, widget.data['location']);*/
                            bool value = await model.postImageToGetDisease(
-                              _image,widget.data['location']);
+                              _image,widget.data['location'],message);
                           if (value) {
                             Navigator.of(context).pop(true);
                             Toast.show("Image Uploaded", context,
@@ -216,7 +245,7 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
                 ],
               )),
         ],
-      ),
+      )),
     );
   }
 }
