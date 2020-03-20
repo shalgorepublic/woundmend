@@ -416,14 +416,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
+              ScopedModelDescendant<MainModel>(
+              builder: (context, child, model) =>
                   GestureDetector(
                     child: Container(
                       padding: EdgeInsets.only(left: 50, top: 10),
                       child: Column(
                         children: <Widget>[
+                          model.notificationFlag?
+                          Container(padding: EdgeInsets.only(),
+                              width: 26,
+                              height: 25,
+                              child: new Image.asset(
+                                'assets/inbox_icon.png',
+                              )):
                           Icon(
-                            Icons.mail,
-                            color: Colors.white,
+                           Icons.mail,
+                            color:Colors.white,
                           ),
                           Container(
                             child: Text(
@@ -436,9 +445,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                     onTap: () {
                       //   Navigator.pop(context);
+                      model.setNotificationFlag();
                       Navigator.pushNamed(context, '/yourScansPage');
                     },
-                  ),
+                  )),
                   GestureDetector(
                     child: Container(
                         padding: EdgeInsets.only(right: 50, top: 10),
@@ -621,61 +631,6 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                         });
                                       },
                                     ))),
-                            /* ScopedModelDescendant<MainModel>(
-                              builder: (context, child, model) => Flexible(
-                                  flex: 1,
-                                  child: Container(
-                                      height: 25,
-                                      padding: EdgeInsets.only(right: 10),
-                                      child: RaisedButton(
-                                        padding:
-                                            EdgeInsets.only(left: 5, right: 5),
-                                        elevation: 0,
-                                        child: Text(
-                                          model.riskType,
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: !flagtwo
-                                                  ? Colors.green
-                                                  : Colors.white),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        color: flagtwo
-                                            ? Colors.green
-                                            : Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                          side: BorderSide(
-                                            color: Colors.white,
-                                            width: 0.0,
-                                          ),
-                                          borderRadius:
-                                              new BorderRadius.circular(3.0),
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            flagtwo = true;
-                                            if (flagone == true) {
-                                              flagone = false;
-                                            }
-                                            if (flagthree == true) {
-                                              flagthree = false;
-                                            }
-                                          });
-                                          if (!model.riskTypeSurveyFlag && !model.secondRiskTypeFlag ) {
-                                            Navigator.pushNamed(
-                                                context, '/riskPage');
-                                          } else
-                                            Navigator.push<dynamic>(
-                                              context,
-                                              MaterialPageRoute<dynamic>(
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        RiskResultScreen(model),
-                                              ),
-                                            );
-                                        },
-                                      ))),
-                            ),*/
                             ScopedModelDescendant<MainModel>(
                                 builder: (context, child, model) => Container(
                                     height: 25,
@@ -795,6 +750,7 @@ class FirebaseNotifications {
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
 //        print(message['notification']['title']);
+      model.setNotificationFlag();
         showOngoingNotification(notifications,
             title: message['notification']['title'],
             body: message['notification']['body']);
@@ -841,6 +797,7 @@ class FirebaseNotifications {
       },
       onResume: (Map<String, dynamic> message) async {
         print('on resume $message');
+        model.setNotificationFlag();
         model.fetchQueriesSpots();
         showOngoingNotification(notifications,
             title: 'helo on resume', body: 'helo body');

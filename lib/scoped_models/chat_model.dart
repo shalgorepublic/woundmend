@@ -13,6 +13,7 @@ import 'package:dio/dio.dart';
 
 class ChatModel extends ConnectedModel {
   bool _imageLoading = false;
+  bool _notificationFlag = false;
   bool _querySpotLoading = false;
   List<ImageData> _images = [];
   List<QuerySpot> _allqueries;
@@ -21,13 +22,18 @@ class ChatModel extends ConnectedModel {
   List<QuerySpot> get allQueries {
     return _allqueries;
   }
-
-  /* List<ChatReadFlag> get readFlagObjects {
-    return _readFlagObjects;
-  }*/
+  bool get  notificationFlag{
+    return _notificationFlag;
+  }
 
   void justtosetstate() {
     notifyListeners();
+  }
+  void setNotificationFlag(){
+    _notificationFlag = !_notificationFlag;
+    notifyListeners();
+    print("helo notiiiiiiiiii flag");
+    print(_notificationFlag);
   }
 
   Future<bool> postImage(File fileImage, String disease, String locationOfmole,String description) async {

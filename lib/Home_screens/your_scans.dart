@@ -143,29 +143,6 @@ class _YourScansState extends State<YourScans> {
             Navigator.pop(context);
           },
         ),
-        /* actions: [
-          Container(
-              padding: EdgeInsets.only(right: 15),
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(right: 5),
-                    child: Icon(Icons.search),
-                  ),
-                  ScopedModelDescendant<MainModel>(builder:
-                      (BuildContext context, Widget child, MainModel model) {
-                    return GestureDetector(
-                      child: Icon(Icons.dehaze),
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute<dynamic>(
-                            builder: (BuildContext context) =>
-                                MyTicketsScreen(model)));
-                      },
-                    );
-                  })
-                ],
-              ))
-        ],*/
       ),
       body: ScopedModelDescendant<MainModel>(
         builder: (context, child, model) => model.allQueries == null

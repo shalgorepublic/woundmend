@@ -47,10 +47,10 @@ class ArticleModel extends ConnectedModel {
         'http://dermpro.herokuapp.com//api/v1/topics',
         headers: {HttpHeaders.authorizationHeader: token},
       );
-      print(response.statusCode);
-      print(response);
       if (response.statusCode == 200) {
         var finalData = json.decode(response.body);
+        print("helooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+        print(finalData);
         print(finalData['data']['topics'].length);
         if (finalData['data']['success']) {
           if (finalData['data']['topics'] != null) {
@@ -59,13 +59,16 @@ class ArticleModel extends ConnectedModel {
               _topics.add(new Topics.fromJson(v));
               _articleLoading = false;
             });
+
             if(_topics.length != null) {
+
               for (int i = 0; i < _topics.length; i++) {
+
                 BoolObject _valueOfBool = new BoolObject(value : false);
+
                 _listOfBoolObjects.add(_valueOfBool);
               }
             }
-            print(_listOfBoolObjects[1].value);
             notifyListeners();
             return {
               'success': true,'message':'success true'
@@ -74,9 +77,8 @@ class ArticleModel extends ConnectedModel {
             _articleLoading = false;
           _topics = null;
           notifyListeners();
-            print("some thing went wrong");
             return {
-              'success': false,'message':'some thing went wrong'
+              'success': false,'message':'No Topics Found'
             };
 
         }

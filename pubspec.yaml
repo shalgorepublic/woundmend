@@ -42,6 +42,8 @@ dependencies:
   path_provider: ^1.6.5
   flutter_local_notifications: ^0.6.0
   url_launcher: ^5.4.2
+  rate_my_app: ^0.6.0+2
+
 
 
 
@@ -114,6 +116,7 @@ flutter:
     - assets/tenthimage.png
     - assets/eleventhimage.png
     - assets/twelthimage.png
+    - assets/inbox_icon.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
