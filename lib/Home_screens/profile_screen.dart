@@ -22,6 +22,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:camera_camera/camera_camera.dart';
+
 import 'package:toast/toast.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -127,11 +129,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
     }
   }
-
+File val;
   _openCamera(BuildContext context) async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    val = await showDialog(
+        context: context,
+        builder: (context) => Camera(
+          mode: CameraMode.normal,
+          orientationEnablePhoto: CameraOrientation.all,
+          imageMask: CameraFocus.circle(
+            color: Colors.black.withOpacity(0.5),
+          ),
+        ));
     setState(() {
-      _image = image;
+      _image = val;
     });
     Navigator.of(context).pop();
     if (_image != null) {
