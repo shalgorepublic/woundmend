@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class AlertScreen extends StatelessWidget {
-  String firstText = "Skin cancer often is first detected as a skin change keep an eye on changes to your skin.";
-  String secondText = "DermPro helps you keep track of skin changes and visualise hard to see areas(such as your back) but does not diagnose skin cancer.";
-  String thirdText = "It should not replace any recommded preventive skin checks and medical consultation.";
+  String firstText = "Skin Cancer early detection is critical for your health. Early detection and treatment can protect from cancer.";
+  String secondText = "DermPro assists in early detection by visualising your skin and keep a track of its changes with time. ";
+  String thirdText = "DermPro shouldn’t be taken as an alternative to any ongoing medical treatment procedure or medication. ";
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height-150,
+      height: MediaQuery.of(context).size.height-200,
 //      margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 60.0,),
 //      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 60.0,),
       child: ListView(
@@ -22,9 +22,9 @@ class AlertScreen extends StatelessWidget {
             child: Center(
               //child: Text("helo"),
               child: Image.asset(
-                'assets/loupe.jpg',
-                width: 80,
-                height: 100,
+                'assets/logo.png',
+                width: 200,
+                height: 70,
               ),
             ),
           ),
@@ -44,7 +44,7 @@ class AlertScreen extends StatelessWidget {
               MyWidget(thirdText),
             ],
           )),
-          SizedBox(height: 50,),
+          SizedBox(height: 20,),
     ScopedModelDescendant<MainModel>(
     builder: (BuildContext context, Widget child, MainModel model) {
     return

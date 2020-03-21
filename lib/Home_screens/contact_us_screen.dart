@@ -8,7 +8,7 @@ import 'package:scoped_model/scoped_model.dart';
 
 class ContactUsScreen extends StatelessWidget {
   String firstText =
-      'We would love to hear your feedback on the app.Please remember that DermPro Does not provide you with any assessment on the photos you take with the app.Thank You!';
+      'Please contact us in case of any technical support required. DermPro provides basic assessment on the photos you take with the app, Professional advice will be only provided by your DermPro Doctor.';
 
   @override
   Widget build(BuildContext context) {

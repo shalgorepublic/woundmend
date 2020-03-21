@@ -82,9 +82,7 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
     final Widget imagePath = Column(
         children: attachment.map((String file) => Text('$file')).toList());
 
-    return new MaterialApp(
-      theme: ThemeData(primaryColor: Theme.of(context).backgroundColor),
-      home: new Scaffold(
+    return Scaffold(
         key: _scafoldKey,
         appBar: new AppBar(
           title: const Text('feedback'),
@@ -118,7 +116,7 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                       controller: _bodyController,
                       maxLines: 2,
                       decoration: const InputDecoration(
-                          labelText: 'Body', border: OutlineInputBorder()),
+                          labelText: 'Please enter your feedback', border: OutlineInputBorder()),
                     ),
                   ),
                   imagePath,
@@ -126,31 +124,7 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
               ),
             ),
         ),
-       /* floatingActionButton: FloatingActionButton.extended(
-          icon: const Icon(Icons.camera),
-          label: const Text('Add Image'),
-          onPressed: _picker,
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        bottomNavigationBar: BottomAppBar(
-          notchMargin: 4.0,
-          // shape: CircularNotchedRectangle(),
-          // color: Theme.of(context).primaryColor,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Builder(
-                builder: (BuildContext context) => FlatButton(
-                  textColor: Theme.of(context).primaryColor,
-                  child: const Text('add text File'),
-                  onPressed: () => _onCreateFile(context),
-                ),
-              )
-            ],
-          ),
-        ),*/
-      ),
-    );
+      );
   }
 
   void _picker() async {

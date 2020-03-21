@@ -48,7 +48,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
         context: context ,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('En Error Occured') ,
+            title: Text('An Error Occurred') ,
             content: Text(message) ,
             actions: <Widget>[
               FlatButton(
@@ -140,150 +140,76 @@ class _LibraryScreenState extends State<LibraryScreen> {
         model.articleLoading == false
             ? model.allTopics != null
             ? Container(
-            child: ListView(
+            child:Column(
               children: <Widget>[
-                Container(
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .height ,
-                    child: new ListView.builder(
-                        shrinkWrap: true ,
-                        itemCount: model.allTopics.length,
-                        itemBuilder: (BuildContext ctxt , int indexs) {
-                          return Column(children: <Widget>[
-                            Container(
-                              alignment: Alignment.centerLeft ,
-                              padding: EdgeInsets.only(
-                                  top: 20 , left: 20 , bottom: 20) ,
-                              color: Theme
-                                  .of(context)
-                                  .hoverColor ,
-                              child: Container(
-                                  child: Text(
-                                    model.allTopics[indexs].title ,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold) ,
-                                  )) ,
-                            ) ,
-                            flag
-                                ? Container(
-                                child: Column(
-                                  children: <Widget>[
-                                    Container(
-                                      height: 56 * 2.0 ,
-                                      child: Column(
-                                        children:
-                                        model.allTopics[indexs]
-                                            .articles
-                                            .map(
-                                                (data) =>
-                                                Container(
-                                                  child: model.allTopics[indexs]
-                                                      .articles
-                                                      .indexOf(data) >
-                                                      1
-                                                      ? Container()
-                                                      : InkWell(
-                                                    child:
-                                                    ListTile(
-                                                      title:
-                                                      Text(data.title) ,
-                                                    ) ,
-                                                    onTap:
-                                                        () {
-                                                      print(model
-                                                          .allTopics[indexs]
-                                                          .articles.indexOf(
-                                                          data));
-                                                      print(indexs);
-                                                     final indexData = Data(firstIndex: indexs,secondIndex:  model.allTopics[indexs].articles.indexOf(data));
-                                                      Navigator.push(
-                                                        context ,
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              ArticleDetailScreen(indexData),
-                                                        ) ,
-                                                      );
-                                                    } ,
-                                                  ) ,
-                                                ))
-                                            .toList() ,
-                                      ) ,
-                                    )
-                                  ] ,
-                                ))
-                                : Container(
-                                child: Column(
-                                  children: <Widget>[
-                                    Container(
-                                      height: 56 *
-                                          model.allTopics[indexs]
-                                              .articles.length
-                                              .toDouble() ,
-                                      child: Column(
-                                        children: model
-                                            .allTopics[indexs].articles
-                                            .map((data) =>
+                    Expanded(
+                child: new ListView.builder(
+//                        shrinkWrap: true,
+                    itemCount: model.allTopics.length,
+                    itemBuilder: (BuildContext ctxt , int indexs) {
+                      return Column(children: <Widget>[
+                        Container(
+                          alignment: Alignment.centerLeft ,
+                          padding: EdgeInsets.only(
+                              top: 20 , left: 20 , bottom: 20) ,
+                          color: Theme
+                              .of(context)
+                              .hoverColor ,
+                          child: Container(
+                              child: Text(
+                                model.allTopics[indexs].title ,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold) ,
+                              )) ,
+                        ) ,
+                        Container(
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  height: 56 *  model.allTopics[indexs]
+                                      .articles.length.toDouble() ,
+                                  child: Column(
+                                    children:
+                                    model.allTopics[indexs]
+                                        .articles
+                                        .map(
+                                            (data) =>
                                             Container(
-                                              child: InkWell(
-                                                child: ListTile(
-                                                  title: Text(
-                                                      data.title) ,
+                                              child:InkWell(
+                                                child:
+                                                ListTile(
+                                                  title:
+                                                  Text(data.title) ,
                                                 ) ,
-                                                onTap: () {
-                                                  print("preess");
+                                                onTap:
+                                                    () {
+                                                  print(model
+                                                      .allTopics[indexs]
+                                                      .articles.indexOf(
+                                                      data));
+                                                  print(indexs);
                                                   final indexData = Data(firstIndex: indexs,secondIndex:  model.allTopics[indexs].articles.indexOf(data));
                                                   Navigator.push(
                                                     context ,
                                                     MaterialPageRoute(
-                                                      builder:
-                                                          (context) =>
-                                                          ArticleDetailScreen(indexData) ,
+                                                      builder: (context) =>
+                                                          ArticleDetailScreen(indexData),
                                                     ) ,
                                                   );
                                                 } ,
                                               ) ,
                                             ))
-                                            .toList() ,
-                                      ) ,
-                                    )
-                                  ] ,
-                                )) ,
-                            flag
-                                ? Container(
-                                alignment: Alignment.center ,
-                                child: InkWell(
-                                  child: Container(
-                                    alignment: Alignment.center ,
-                                    padding:
-                                    EdgeInsets.only(bottom: 10) ,
-                                    child: Text(
-                                      "MORE" ,
-                                      style: TextStyle(
-                                          color: Theme
-                                              .of(context)
-                                              .accentColor ,
-                                          fontSize: 14) ,
-                                    ) ,
+                                        .toList() ,
                                   ) ,
-                                  onTap: () {
-                                    setState(() {
-                                      flag = !flag;
-                                      indexValue = model.allTopics
-                                          .indexOf(model
-                                          .allTopics[indexs]);
-                                      model.changeBoolValue(
-                                          indexValue);
-                                    });
-                                  } ,
-                                ))
-                                : Container() ,
-                          ]);
-                        }))
-              ] ,
-            ))
-            : Container()
+                                )
+                              ] ,
+                            )),
+
+                      ]);
+                    })),
+              ],)
+            )
+            : Container(child: Text("helo"),)
             : Center(child: CircularProgressIndicator()));
   }
 

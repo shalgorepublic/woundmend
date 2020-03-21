@@ -1,3 +1,4 @@
+import 'package:camera_camera/camera_camera.dart';
 import 'package:derm_pro/scoped_models/main.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -17,13 +18,22 @@ class ImageReviewScreen extends StatefulWidget {
 
 class _ImageReviewScreenState extends State<ImageReviewScreen> {
   File _image;
+  File val;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String message;
-
   Future imagepicker() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+//    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    val = await showDialog(
+        context: context,
+        builder: (context) => Camera(
+          mode: CameraMode.normal,
+          orientationEnablePhoto: CameraOrientation.all,
+          imageMask: CameraFocus.circle(
+            color: Colors.black.withOpacity(0.5),
+          ),
+        ));
     setState(() {
-      _image = image as File;
+      _image = val;
     });
     if (_image != null) {
      /* Navigator.push<dynamic>(
@@ -35,7 +45,6 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
       );*/
     }
   }
-
   Future<void> _showDialogue(BuildContext context) {
     return showDialog(
         context: context,

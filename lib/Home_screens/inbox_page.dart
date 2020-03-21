@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:camera_camera/camera_camera.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -160,12 +161,24 @@ class _InboxScreenState extends State<InboxScreen> {
     });
     Navigator.of(context).pop();
   }
-
+  File val;
   _openCamera(BuildContext context) async {
-    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+   /* var image = await ImagePicker.pickImage(source: ImageSource.camera);
     setState(() {
       imageTaken = image;
       print(imageTaken.path);
+    });*/
+    val = await showDialog(
+        context: context,
+        builder: (context) => Camera(
+          mode: CameraMode.normal,
+          orientationEnablePhoto: CameraOrientation.all,
+          imageMask: CameraFocus.circle(
+            color: Colors.black.withOpacity(0.5),
+          ),
+        ));
+    setState(() {
+      imageTaken = val;
     });
     Navigator.of(context).pop();
   }

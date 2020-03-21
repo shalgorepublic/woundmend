@@ -27,16 +27,21 @@ class SettingsModel extends ConnectedModel {
   }
 
   Future<Map<String, dynamic>> postInquiry(
-      String message, File fileImage) async {
+      String title, File fileImage,String message, String description) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.get('token');
     _supportMessageLoading = true;
     print(_supportMessageLoading);
+    print(description);
+    print(message);
+    print(title);
     notifyListeners();
     if (fileImage != null) {
       print("helo image");
       FormData formData = FormData.fromMap({
-        "title": message,
+        "title": title,
+        "message": message,
+        "description": description,
         "image":  await MultipartFile.fromFile(fileImage.path,
             filename: fileImage.toString())
       });
@@ -75,7 +80,9 @@ class SettingsModel extends ConnectedModel {
       {
       print("helo null image");
       FormData formData = FormData.fromMap({
-        "title": message,
+        "title": title,
+        "message": message,
+        "description": description,
       });
       Response response;
 
@@ -130,6 +137,43 @@ class SettingsModel extends ConnectedModel {
       final ticketclass = ticketclassFromJson(response.body);
       _tickets = ticketclass.data.tickets;
       print(_tickets.length);
+      _fetchTicketsLoading = false;
+      notifyListeners();
+    } catch (error) {
+      print(error);
+      _fetchTicketsLoading = false;
+
+      _fetchTicketsLoading = false;
+      print("in catch block");
+      notifyListeners();
+      notifyListeners();
+    }
+  }
+  Future<Map<String, dynamic>> postAppRating(int starCount) async {
+//    _fetchTicketsLoading = true;
+//    notifyListeners();
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String token = prefs.get('token');
+    final int userId = prefs.get('userId');
+    print(userId);
+    print(starCount.runtimeType);
+     var updatedData = {
+      'star': starCount,
+      'user_id':userId,
+    };
+    http.Response response;
+    try {
+      response = await http.post(
+        'http://dermpro.herokuapp.com//api/v1/ratings',
+        headers: {HttpHeaders.authorizationHeader: token},
+        body: updatedData
+
+
+      );
+
+      var temp_data = jsonDecode(response.body);
+      print("data222222222222");
+      print(temp_data);
       _fetchTicketsLoading = false;
       notifyListeners();
     } catch (error) {
