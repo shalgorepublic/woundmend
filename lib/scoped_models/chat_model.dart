@@ -130,15 +130,17 @@ class ChatModel extends ConnectedModel {
     Response response;
     try {
       final response = await http.get(
-        'http://dermpro.herokuapp.com//api/v1/patients/${userId}',
+        'https://dermpro.herokuapp.com//api/v1/patients/${userId}',
         headers: {HttpHeaders.authorizationHeader: token},
       );
       print(response.statusCode);
       print("query spot responce");
       print(response);
       final Map<String, dynamic> responseData = json.decode(response.body);
-
+      print("helooooooooooooooo");
+      print(responseData);
       final Map<String, dynamic> finalData = responseData['data'];
+      print("checkinfgggggggggggg");
       _querySpotLoading = false;
       notifyListeners();
       print(response.statusCode);

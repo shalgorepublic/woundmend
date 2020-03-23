@@ -83,7 +83,7 @@ class _PasswordScreen extends State<PasswordScreen> {
          context: context,
          builder: (BuildContext context) {
            return AlertDialog(
-             title: Text('En Error Occured'),
+             title: Text('Alert'),
              content: Text("Some thing went wrong"),
              actions: <Widget>[
                FlatButton(

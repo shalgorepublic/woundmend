@@ -17,6 +17,9 @@ class SkinModel extends ConnectedModel {
   int _totalScore = 0;
   bool _skinTypeSurveyFlag = false;
   FinalSkinResult _finalSkinResult;
+  String _firstImage;
+  String _secondImage;
+  int _color;
 
   bool _skinSelectedFlag = false;
   int _selectedOptionId = null;
@@ -39,6 +42,16 @@ class SkinModel extends ConnectedModel {
   String get skinType {
     return _skinType;
   }
+  String get firstImage {
+    return _firstImage;
+  }
+  String get secondImage {
+    return _secondImage;
+  }
+  int get color {
+    return _color;
+  }
+
 
   String get descriptions {
     return _descriptions;
@@ -145,6 +158,12 @@ class SkinModel extends ConnectedModel {
     }
   }
 
+  void setImagesAndColor(String firstImage, String secondImage, int color){
+    _firstImage = firstImage;
+    _secondImage = secondImage;
+    _color = color;
+    notifyListeners();
+  }
   void nextQuestion() {
     _currentQuestionIndex = _currentQuestionIndex + 1;
     _currentQuestion = _finalQuestions[currentQuestionIndex];
@@ -282,31 +301,55 @@ class SkinModel extends ConnectedModel {
               if (skinResult['skin_type'] == 'Pale White Skin') {
                 _skinType = 'Pale White Skin';
                 _descriptions = firstType['description'];
+                _firstImage = 'assets/ninthimage.png';
+                _secondImage = 'assets/firstimage.png';
+                _color = 0xFFEFDC62;
+                _totalScore = 1;
                 notifyListeners();
               }
               if (skinResult['skin_type'] == 'White Skin') {
                 _skinType = 'White Skin';
                 _descriptions = secondType['description'];
+                _firstImage ='assets/eleventhimage.png';
+                _secondImage = 'assets/twelthimage.png';
+                _color = 0xFFE9B964;
+                _totalScore = 7;
                 notifyListeners();
               }
               if (skinResult['skin_type'] == 'Light Brown Skin') {
                 _skinType = 'Light Brown Skin';
                 _descriptions = thirdType['description'];
+                _firstImage = 'assets/tenthimage.png';
+                _secondImage = 'assets/secondimage.png';
+                _color = 0xFFB06639;
+                _totalScore = 14;
                 notifyListeners();
               }
               if (skinResult['skin_type'] == 'Moderate brown Skin') {
                 _skinType = 'Moderate Brown Skin';
                 _descriptions = fourthType['description'];
+                _firstImage = 'assets/thirdimage.png';
+                _secondImage = 'assets/fourthimage.png';
+                _color = 0xFF8E5029;
+                _totalScore = 21;
                 notifyListeners();
               }
               if (skinResult['skin_type'] == 'Dark Brown Skin') {
                 _skinType = 'Dark Brown Skin';
                 _descriptions = fifthType['description'];
+                _firstImage = 'assets/fifthimage.png';
+                _secondImage = 'assets/sixthimage.png';
+                _color = 0xFF793308;
+                _totalScore = 28;
                 notifyListeners();
               }
               if (skinResult['skin_type'] == 'Pigmented dark Brown') {
                 _skinType = 'Deeply Dark';
                 _descriptions = sixthType['description'];
+                _firstImage = 'assets/seventhimage.png';
+                _secondImage = 'assets/eightimage.png';
+                _color = 0xFF351A1D;
+                _totalScore= 35;
                 notifyListeners();
               }
               if (skinResult['risk'] == 'Low Risk') {

@@ -52,6 +52,7 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
           return AlertDialog(
               content: Row(
             children: <Widget>[
+
               Container(
                 padding: EdgeInsets.only(right: 20),
                 child: CircularProgressIndicator(),
@@ -82,7 +83,7 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
                 ),
               ),
               Text(
-                "Thanks for using dermpro app, we will get back to you shourtly.",
+                "Thanks for using dermpro app, we will get back to you shortly.",
                 style: TextStyle(
                     fontSize: 14,
                     fontFamily: 'Bold',
@@ -94,7 +95,7 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
                 width: MediaQuery.of(context).size.width/2,
                 child: RaisedButton(
                   child: Text(
-                    'Ok',
+                    'OK',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
@@ -241,7 +242,7 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
                         ),
                         onPressed: () {
                           imagepicker();
-                          Navigator.pop(context);
+                         // Navigator.pop(context);
                           // _submit(model.update);
                         },
                         color: Theme.of(context).backgroundColor,
@@ -251,6 +252,7 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
                       ),
                     );
                   }),
+                  SizedBox(height: 10,)
                 ],
               )),
         ],

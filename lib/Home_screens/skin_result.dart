@@ -62,6 +62,7 @@ class _SkinResultScreenState extends State<SkinResultScreen> {
         color = 0xFFEFDC62;
         print(color);
       });
+      widget.model.setImagesAndColor(image1,image2,color);
     }
     if (widget.model.totalScore >= 7 && widget.model.totalScore <= 13) {
       setState(() {
@@ -70,6 +71,7 @@ class _SkinResultScreenState extends State<SkinResultScreen> {
         image2 = 'assets/twelthimage.png';
         color = 0xFFE9B964;
       });
+      widget.model.setImagesAndColor(image1,image2,color);
     }
     if (widget.model.totalScore >= 14 && widget.model.totalScore <= 20) {
       setState(() {
@@ -78,6 +80,7 @@ class _SkinResultScreenState extends State<SkinResultScreen> {
         image2 = 'assets/secondimage.png';
         color = 0xFFB06639;
       });
+      widget.model.setImagesAndColor(image1,image2,color);
     }
     if (widget.model.totalScore >= 21 && widget.model.totalScore <= 27) {
       setState(() {
@@ -86,6 +89,7 @@ class _SkinResultScreenState extends State<SkinResultScreen> {
         image2 = 'assets/fourthimage.png';
         color = 0xFF8E5029;
       });
+      widget.model.setImagesAndColor(image1,image2,color);
     }
     if (widget.model.totalScore >= 28 && widget.model.totalScore <= 34) {
       setState(() {
@@ -94,6 +98,7 @@ class _SkinResultScreenState extends State<SkinResultScreen> {
         image2 = 'assets/sixthimage.png';
         color = 0xFF793308;
       });
+      widget.model.setImagesAndColor(image1,image2,color);
     }
     if (widget.model.totalScore >= 35) {
       setState(() {
@@ -102,6 +107,7 @@ class _SkinResultScreenState extends State<SkinResultScreen> {
         image2 = 'assets/eightimage.png';
         color = 0xFF351A1D;
       });
+      widget.model.setImagesAndColor(image1,image2,color);
     }
     widget.model.finalResult(finalResult['type'],finalResult['description'],widget.model.user.id,widget.model.riskType);
     super.initState();
@@ -122,12 +128,14 @@ class _SkinResultScreenState extends State<SkinResultScreen> {
               padding: EdgeInsets.only(top: 50, left: 150, right: 150),
               child: Column(
                 children: <Widget>[
+              ScopedModelDescendant<MainModel>(
+              builder: (context, child, model) =>
                   Container(
                       decoration: new BoxDecoration(
-                          color: Color(color),
+                          color: Color(model.color),
                           borderRadius:
                           new BorderRadius.all(Radius.circular(10))),
-                      padding: EdgeInsets.only(top: 30, bottom: 30)),
+                      padding: EdgeInsets.only(top: 30, bottom: 30))),
                 ],
               ),
             ),
@@ -159,7 +167,7 @@ class _SkinResultScreenState extends State<SkinResultScreen> {
                child: Center(
                  //child: Text("helo"),
                  child: Image.asset(
-                   image1,
+                   model.firstImage,
                    width: 150,
                    height: 150,
                  ),
@@ -170,7 +178,7 @@ class _SkinResultScreenState extends State<SkinResultScreen> {
                child: Center(
                  //child: Text("helo"),
                  child: Image.asset(
-                   image2,
+                   model.secondImage,
                    width: 150,
                    height: 150,
                  ),

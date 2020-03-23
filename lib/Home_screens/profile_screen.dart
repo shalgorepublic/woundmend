@@ -752,8 +752,6 @@ class FirebaseNotifications {
     if (Platform.isIOS) iOS_Permission();
 
     _firebaseMessaging.getToken().then((token) {
-      print("fcm token");
-      print(token);
       model.updateToken(token);
     });
 
@@ -779,6 +777,7 @@ class FirebaseNotifications {
 //          print(temp.id);
 //          print(model.readFlagObjects.first.id);
           model.readFlagObjects.add(temp);
+
           print(model.readFlagObjects.first.id);
           print("hehhadasdasdas");
         } else {
@@ -830,3 +829,4 @@ class FirebaseNotifications {
     });
   }
 }
+
