@@ -29,7 +29,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: IconButton(
                     icon: Icon(
                       Icons.arrow_back,
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).accentColor,
                     ),
                     onPressed: () {
                       Navigator.pop(context);
@@ -53,13 +53,13 @@ class _SignupScreenState extends State<SignupScreen> {
                   style: TextStyle(
                       fontSize: 22,
                       fontFamily: 'Bold',
-                      color: Theme.of(context).backgroundColor),
+                      color: Theme.of(context).accentColor),
                 ),
               ),
               Container(
                 width: 50,
                 height: 2,
-                color: Theme.of(context).backgroundColor,
+                color: Theme.of(context).accentColor,
               ),
               Container(
                 padding:
@@ -127,7 +127,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               style: TextStyle(
                                 fontSize: 14.0,
                                 fontFamily: 'Reguler',
-                                color: Theme.of(context).backgroundColor,
+                                color: Theme.of(context).accentColor,
                                 decoration: TextDecoration.underline,
                               ),
                             ),
@@ -148,7 +148,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               text: "Privicy Policy.",
                               style: TextStyle(
                                 fontSize: 14.0,
-                                color: Theme.of(context).backgroundColor,
+                                color: Theme.of(context).accentColor,
                                 fontFamily: 'Reguler',
                                 decoration: TextDecoration.underline,
                               ),
@@ -234,7 +234,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           style: TextStyle(fontSize: 12),
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 40),
                           child: Text(
                             'LOGIN',
                             style: TextStyle(

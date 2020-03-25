@@ -45,7 +45,7 @@ class _PasswordScreen extends State<PasswordScreen> {
            context: context,
            builder: (BuildContext context) {
              return AlertDialog(
-               title: Text('An Error Occured',style: TextStyle(fontFamily: 'Bold'),),
+               title: Text('Alert',style: TextStyle(fontFamily: 'Bold'),),
                content: Text("Number not verified",style: TextStyle(fontFamily: 'Reguler'),),
                actions: <Widget>[
                  FlatButton(
@@ -63,7 +63,7 @@ class _PasswordScreen extends State<PasswordScreen> {
          context: context,
          builder: (BuildContext context) {
            return AlertDialog(
-             title: Text('An Error Occured',style: TextStyle(fontFamily: 'Bold'),),
+             title: Text('Alert',style: TextStyle(fontFamily: 'Bold'),),
              content: Text(successInformation['data']['data']['message'],style: TextStyle(fontFamily: 'Reguler'),),
              actions: <Widget>[
                FlatButton(
@@ -134,13 +134,13 @@ class _PasswordScreen extends State<PasswordScreen> {
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).backgroundColor),
+                        color: Theme.of(context).accentColor),
                   ),
                 ),
                 Container(
                   width: 50,
                   height: 2,
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).accentColor,
                 ),
               Form(
                 key: _formKey,
@@ -155,10 +155,10 @@ class _PasswordScreen extends State<PasswordScreen> {
                           textAlignVertical: TextAlignVertical.center,
                           decoration: InputDecoration(
                               border: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Theme.of(context).backgroundColor)),
+                                  borderSide: BorderSide(color: Theme.of(context).accentColor)),
                               labelText: 'Password',
                               hintText: 'Enter your password',
-                              labelStyle: TextStyle(fontSize: 18),
+                              labelStyle: TextStyle(fontSize: 18,color: Theme.of(context).accentColor),
                               filled: true,
                               fillColor: Colors.white,
                           suffixIcon:IconButton(
@@ -167,7 +167,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                               passwordVisible
                                   ? Icons.visibility
                                   : Icons.visibility_off,
-                              color: Theme.of(context).backgroundColor,
+                              color: Theme.of(context).accentColor,
                             ),
                             onPressed: () {
                               // Update the state i.e. toogle the state of passwordVisible variable
@@ -204,7 +204,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                                     "Forgot Password?",
                                     style: TextStyle(
                                         color:
-                                            Theme.of(context).backgroundColor),
+                                            Theme.of(context).accentColor),
                                   ))
                             ],
                           ),
@@ -218,9 +218,9 @@ class _PasswordScreen extends State<PasswordScreen> {
               builder: (BuildContext context, Widget child, MainModel model) {
                 return model.isLoading ? Center(
                   child: Row(mainAxisAlignment:MainAxisAlignment.center,children: [
-                    CircularProgressIndicator(),
+                    CircularProgressIndicator(backgroundColor: Theme.of(context).accentColor,),
                     SizedBox(width: 20,),
-                    Text("Please Wait...",style: TextStyle(color: Theme.of(context).backgroundColor),)
+                    Text("Please Wait...",style: TextStyle(color: Theme.of(context).accentColor),)
                   ]),
                 ) : Container();
               }),

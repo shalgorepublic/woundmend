@@ -62,7 +62,7 @@ class _SkinTypeState extends State<SkinType> {
             appBar: AppBar(
               title: Text("Skin Type"),
               centerTitle: true,
-              backgroundColor: Theme.of(context).backgroundColor,
+              backgroundColor: Theme.of(context).accentColor,
             ),
             body: ListView(
               children: <Widget>[

@@ -68,13 +68,13 @@ class _SecondEmailPageState extends State<SecondEmailPage> {
                     style: TextStyle(
                         fontSize: 16,
                         fontFamily: 'Bold',
-                        color: Theme.of(context).backgroundColor),
+                        color: Theme.of(context).accentColor),
                   ),
                 ),
                 Container(
                   width: 50,
                   height: 2,
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).accentColor,
                 ),
                 Form(
                   key: _formKey,
@@ -90,11 +90,12 @@ class _SecondEmailPageState extends State<SecondEmailPage> {
                                     BorderRadius.all(Radius.circular(4)),
                                 borderSide: BorderSide(
                                     width: 1,
-                                    color: Theme.of(context).backgroundColor),
+                                    color: Theme.of(context).accentColor),
                               ),
                               border: OutlineInputBorder(
                                   borderSide: new BorderSide()),
                               labelText: 'E-mail',
+                              labelStyle: TextStyle(color: Theme.of(context).accentColor),
                               filled: true,
                               fillColor: Colors.white),
                           keyboardType: TextInputType.emailAddress,

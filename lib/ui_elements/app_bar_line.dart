@@ -13,12 +13,12 @@ class AppBarLine extends StatelessWidget {
       Container(
         height: 10 ,
         width: screenWidth / 2 ,
-        color: Colors.green ,
+        color: Theme.of(context).backgroundColor ,
       ) ,
       Container(
         height: 10 ,
         width: screenWidth / 2 ,
-        color: Colors.blue ,
+        color: Theme.of(context).accentColor,
       ) ,
     ],),);
   }

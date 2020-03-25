@@ -19,7 +19,7 @@ class MySeparator extends StatelessWidget {
               width: dashWidth,
               height: dashHeight,
               child: DecoratedBox(
-                decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+                decoration: BoxDecoration(color: Theme.of(context).accentColor),
               ),
             );
           }),

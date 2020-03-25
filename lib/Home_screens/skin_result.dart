@@ -218,20 +218,28 @@ class _SkinResultScreenState extends State<SkinResultScreen> {
                           ),
                         ),
                       ),
-                      GestureDetector(
-                        child: Container(padding:EdgeInsets.only(bottom: 20),
-                          alignment: Alignment.center,
-                          child: Text(
-                            "Retake",
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).backgroundColor),
+                      Container(padding: EdgeInsets.only(bottom: 20),
+                        alignment: Alignment.bottomCenter,
+                        child: SizedBox(
+                          width: 220.0,
+                          height: 40.0,
+                          child: new RaisedButton(
+                            color: Theme.of(context).accentColor,
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5)),
+                            child: new Text(
+                              'RETAKE',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.white),
+                            ),
+                            onPressed: () {
+                              Navigator.pushReplacementNamed(context, '/skinPage');
+                            },
                           ),
                         ),
-                        onTap: () {
-                          Navigator.pushReplacementNamed(context, '/skinPage');
-                        },
-                      )
+                      ),
                     ],
                   )) ])
        );

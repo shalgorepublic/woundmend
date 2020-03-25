@@ -30,7 +30,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                title: Text('En Error Occured'),
+                title: Text('Alert'),
                 content: Text(successInformation['message']),
                 actions: <Widget>[
                   FlatButton(
@@ -50,7 +50,7 @@ class ForgotPasswordScreen extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('En Error Occured'),
+              title: Text('Alert'),
               content: Text("Some thing went wrong"),
               actions: <Widget>[
                 FlatButton(

@@ -56,7 +56,7 @@ class _DrawerBuilderState extends State<DrawerBuilder> {
               Container(
                   alignment: Alignment.topLeft,
                   //     width: MediaQuery.of(context).size.width,
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).accentColor,
                   height: 160,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

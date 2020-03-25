@@ -19,9 +19,6 @@ class _RadioGroupState extends State<RadioGroup> {
   int id;
   @override
   void initState() {
-//    model.fetchQuestions();
-    print("flaaaaaaaaaaaaaaaaaaaag");
-    print(widget.model.skinSelectedFlag);
     super.initState();
   }
   ScrollController _rrectController = ScrollController();
@@ -51,7 +48,7 @@ class _RadioGroupState extends State<RadioGroup> {
                   "Select One features that best matches you",
                   style: TextStyle(
                       fontSize: 13,
-                      color: model.skinSelectedFlag ? Colors.red : Colors.blue),
+                      color: model.skinSelectedFlag ? Colors.red : Theme.of(context).backgroundColor),
                 ),
               ),
             ),

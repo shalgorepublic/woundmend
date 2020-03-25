@@ -66,7 +66,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
     //  drawer: DrawerBuilder() ,
-      appBar: AppBar(
+      appBar: AppBar(backgroundColor: Theme.of(context).accentColor,
         title: Text("FAQ") ,
         centerTitle: true ,
         leading: new IconButton(
@@ -119,7 +119,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                   shape: BoxShape.circle ,
                   color: Theme
                       .of(context)
-                      .backgroundColor) ,
+                      .accentColor) ,
               child: Icon(
                 Icons.add ,
                 size: 30 ,
@@ -219,7 +219,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
           height: 60 ,
           color: Theme
               .of(context)
-              .backgroundColor ,
+              .accentColor ,
           child: Column(
             children: <Widget>[
               Row(
@@ -229,7 +229,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     height: 10 ,
                     color: Theme
                         .of(context)
-                        .backgroundColor ,
+                        .accentColor,
                     width: MediaQuery
                         .of(context)
                         .size
@@ -256,7 +256,7 @@ class _LibraryScreenState extends State<LibraryScreen> {
                     height: 10 ,
                     color: Theme
                         .of(context)
-                        .backgroundColor ,
+                        .accentColor ,
                     width: MediaQuery
                         .of(context)
                         .size

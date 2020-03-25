@@ -56,17 +56,17 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         theme: ThemeData(
           hoverColor: hexToColor('#F9F9F9'),
-          backgroundColor: hexToColor('#2BA2D6'),
-          //blue
+          backgroundColor: hexToColor('#FFD700'),
+          //yellow
           disabledColor: hexToColor('#F1F1F1'),
           //blue
           primarySwatch: Colors.blue,
           brightness: Brightness.light,
-          accentColor: hexToColor('#8CC63F'),
+          accentColor: hexToColor('#64AE01'),
           //green//
           textSelectionColor: hexToColor('#444444'),
           //black//
-          dividerColor: hexToColor('#6F6F6F'),
+          dividerColor: hexToColor('#D5D5D5'),
           //grey//
           highlightColor: hexToColor('#707070'),
           //lightgrey//

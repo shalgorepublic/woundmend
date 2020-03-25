@@ -133,14 +133,8 @@ class ChatModel extends ConnectedModel {
         'https://dermpro.herokuapp.com//api/v1/patients/${userId}',
         headers: {HttpHeaders.authorizationHeader: token},
       );
-      print(response.statusCode);
-      print("query spot responce");
-      print(response);
       final Map<String, dynamic> responseData = json.decode(response.body);
-      print("helooooooooooooooo");
-      print(responseData);
       final Map<String, dynamic> finalData = responseData['data'];
-      print("checkinfgggggggggggg");
       _querySpotLoading = false;
       notifyListeners();
       print(response.statusCode);
@@ -150,6 +144,8 @@ class ChatModel extends ConnectedModel {
         _allqueries = List<QuerySpot>.from(
             finalData['user']["query_spots"].map((x) => QuerySpot.fromJson(x)));
         notifyListeners();
+        print("heloooooooooooooooooooooooooooooooo");
+        print(_allqueries[1].feedbacks[5].userRole);
         return {'success': true};
       } else
         print("server Error");

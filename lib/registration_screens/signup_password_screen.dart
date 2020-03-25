@@ -66,7 +66,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                                 fontFamily: 'Bold' ,
                                 color: Theme
                                     .of(context)
-                                    .backgroundColor) ,
+                                    .accentColor) ,
                           ) ,
                         ) ,
                         Container(
@@ -74,7 +74,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                           height: 2 ,
                           color: Theme
                               .of(context)
-                              .backgroundColor ,
+                              .accentColor,
                         ) ,
                   Form(
                     key: _formKey,
@@ -90,12 +90,12 @@ class _PasswordScreen extends State<PasswordScreen> {
                                     BorderRadius.all(Radius.circular(4)),
                                     borderSide: BorderSide(
                                         width: 1,
-                                        color: Theme.of(context).backgroundColor),
+                                        color: Theme.of(context).accentColor),
                                   ),
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide()) ,
                                   labelText: 'Password' ,
-                                  labelStyle: TextStyle(fontSize: 18),
+                                  labelStyle: TextStyle(fontSize: 18,color: Theme.of(context).accentColor),
                                   filled: true ,
                                   fillColor: Colors.white,
                                 suffixIcon:IconButton(
@@ -104,7 +104,7 @@ class _PasswordScreen extends State<PasswordScreen> {
                                     passwordVisible
                                         ? Icons.visibility
                                         : Icons.visibility_off,
-                                    color: Theme.of(context).backgroundColor,
+                                    color: Theme.of(context).accentColor,
                                   ),
                                   onPressed: () {
                                     // Update the state i.e. toogle the state of passwordVisible variable

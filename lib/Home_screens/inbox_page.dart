@@ -55,7 +55,7 @@ class _InboxScreenState extends State<InboxScreen> {
   void initState() {
     // TODO: implement initState
 
-    timer = Timer.periodic(Duration(seconds: 5) , (Timer t) => fetchData());
+    timer = Timer.periodic(Duration(seconds: 5), (Timer t) => fetchData());
 
     super.initState();
   }
@@ -65,11 +65,13 @@ class _InboxScreenState extends State<InboxScreen> {
     timer?.cancel();
     super.dispose();
   }
+
   Future<void> _showLocationOfMoleDialogue(BuildContext context) {
     return showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(title: Text("Please Select the Location of mole"),
+        return AlertDialog(
+          title: Text("Please Select the Location of mole"),
           content: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
               return Container(
@@ -80,9 +82,9 @@ class _InboxScreenState extends State<InboxScreen> {
                     DropdownButton(
                       items: _dropdownValues
                           .map((value) => DropdownMenuItem(
-                        child: Text(value),
-                        value: value,
-                      ))
+                                child: Text(value),
+                                value: value,
+                              ))
                           .toList(),
                       onChanged: (String value) {
                         setState(() {
@@ -104,7 +106,10 @@ class _InboxScreenState extends State<InboxScreen> {
                     ),
                     RaisedButton(
                       color: Theme.of(context).accentColor,
-                      child: Text("SUBMIT",style: TextStyle(color: Colors.white),),
+                      child: Text(
+                        "SUBMIT",
+                        style: TextStyle(color: Colors.white),
+                      ),
                       onPressed: () {
                         if (placeOfMole != null) {
                           Navigator.of(context).pop(true);
@@ -121,32 +126,35 @@ class _InboxScreenState extends State<InboxScreen> {
       },
     );
   }
+
   Future<void> _showImageDialogue(BuildContext context, data) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(contentPadding: EdgeInsets.all(0),
+          return AlertDialog(
+              contentPadding: EdgeInsets.all(0),
               title: Container(
                   alignment: Alignment.center,
-                 /* child: Text('Location of mole:${data.querySpotPlace}')),*/
+                  /* child: Text('Location of mole:${data.querySpotPlace}')),*/
                   child: Text('Location of mole:Left')),
-            content: Container(
+              content: Container(
                 child: CachedNetworkImage(
-                      imageUrl:
-                      'http://dermpro.herokuapp.com${data}',
-                      placeholder: (context, url) =>
-                      new
-                     Center(child:Column(mainAxisSize:MainAxisSize.min,children: <Widget>[
-                        CircularProgressIndicator(),
-                      ],)),
-                      errorWidget: (context, url, error) =>
-                      new Icon(Icons.error),
-                    ),
-          ));
+                  imageUrl: 'http://dermpro.herokuapp.com${data}',
+                  placeholder: (context, url) => new Center(
+                      child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      CircularProgressIndicator(),
+                    ],
+                  )),
+                  errorWidget: (context, url, error) => new Icon(Icons.error),
+                ),
+              ));
         });
   }
+
   void fetchData() async {
-    Map<String , dynamic> result = await widget.model.fetchQueriesSpots();
+    Map<String, dynamic> result = await widget.model.fetchQueriesSpots();
     print(result);
     if (result['success'] == true) {
       setState(() {
@@ -154,6 +162,7 @@ class _InboxScreenState extends State<InboxScreen> {
       });
     }
   }
+
   _openGalery(BuildContext context) async {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
@@ -161,9 +170,11 @@ class _InboxScreenState extends State<InboxScreen> {
     });
     Navigator.of(context).pop();
   }
+
   File val;
+
   _openCamera(BuildContext context) async {
-   /* var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    /* var image = await ImagePicker.pickImage(source: ImageSource.camera);
     setState(() {
       imageTaken = image;
       print(imageTaken.path);
@@ -171,12 +182,12 @@ class _InboxScreenState extends State<InboxScreen> {
     val = await showDialog(
         context: context,
         builder: (context) => Camera(
-          mode: CameraMode.normal,
-          orientationEnablePhoto: CameraOrientation.all,
-          imageMask: CameraFocus.circle(
-            color: Colors.black.withOpacity(0.5),
-          ),
-        ));
+              mode: CameraMode.normal,
+              orientationEnablePhoto: CameraOrientation.all,
+              imageMask: CameraFocus.circle(
+                color: Colors.black.withOpacity(0.5),
+              ),
+            ));
     setState(() {
       imageTaken = val;
     });
@@ -243,294 +254,283 @@ class _InboxScreenState extends State<InboxScreen> {
   @override
   Widget build(BuildContext context) {
     var feedlist = widget.model.allQueries;
-    return  Scaffold(
-          appBar: AppBar(title: Text("Inbox")) ,
-         // drawer: DrawerBuilder() ,
-          body: ScopedModelDescendant<MainModel>(
-              builder: (context , child , model) =>
-              ListView(children: <Widget>[
-
-                Container(
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .height ,
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width ,
-                    margin: EdgeInsets.only(bottom: 10) ,
-                    child: DraggableScrollbar.rrect(
-                      alwaysVisibleScrollThumb: true ,
-                      backgroundColor: Theme
-                          .of(context)
-                          .backgroundColor ,
-                      controller: _rrectController ,
-                      labelTextBuilder: (offset) =>
-                          Text("${offset.floor()}") ,
-                      child: ListView.builder(
-                        itemCount: feedlist
-                            .singleWhere((element) => element.id == widget.id)
-                            .feedbacks
-                            .length ,
-                        controller: _rrectController ,
-                        reverse: true ,
-                        shrinkWrap: true ,
-                        itemBuilder: (context , index) {
-                          return Container(
-                              margin: EdgeInsets.only(bottom: 2) ,
-                              child: feedlist
-                                  .singleWhere((element) =>
-                              element.id == widget.id)
-                                  .feedbacks[index]
-                                  .userRole ==
-                                  'doctor'
-                                  ? Container(
-                                child: Column(
-                                  children: <Widget>[
-                                    Bubble(
-                                        margin: BubbleEdges.only(
-                                            top: 10 , right: 80) ,
-                                        nip: BubbleNip.leftTop ,
-                                        color: Color.fromRGBO(
-                                            225 , 255 , 199 , 1.0) ,
-                                        alignment: Alignment.topLeft ,
-                                        child: Container(
-                                            child: Column(
+    return Scaffold(
+      appBar: AppBar(title: Text("Inbox"),backgroundColor: Theme.of(context).accentColor,),
+      // drawer: DrawerBuilder() ,
+      body: ScopedModelDescendant<MainModel>(
+          builder: (context, child, model) => Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.only(bottom: 10),
+              child: DraggableScrollbar.rrect(
+                alwaysVisibleScrollThumb: true,
+                backgroundColor: Theme.of(context).backgroundColor,
+                controller: _rrectController,
+                child: ListView.builder(
+                  itemCount: feedlist
+                      .singleWhere((element) => element.id == widget.id)
+                      .feedbacks
+                      .length,
+                  controller: _rrectController,
+                  reverse: true,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return
+                        //Container(child:Text(feedlist[1].feedbacks[index].userRole.toString()),);
+                        Container(
+                            margin: EdgeInsets.only(bottom: 2),
+                            child: feedlist
+                                        .singleWhere((element) =>
+                                            element.id == widget.id)
+                                        .feedbacks[index]
+                                        .userRole
+                                        .toString() ==
+                                    'Role.DOCTOR'
+                                ? Container(
+                                    margin: EdgeInsets.only(right: 100),
+                                    alignment: Alignment.centerLeft,
+                                    child: Column(
+                                      children: <Widget>[
+                                        Bubble(
+                                            margin: BubbleEdges.only(
+                                              top: 10,
+                                            ),
+                                            nip: BubbleNip.leftTop,
+                                            color: Color.fromRGBO(
+                                                225, 255, 199, 1.0),
+                                            alignment: Alignment.topLeft,
+                                            child: Container(
+                                                child: Column(
                                               children: <Widget>[
                                                 Align(
 //                              width: 100,
 //                              color: Colors.blueGrey,
-                                                  alignment: Alignment
-                                                      .topLeft ,
+                                                  alignment: Alignment.topLeft,
                                                   child: Text(feedlist
-                                                      .singleWhere((
-                                                      element) =>
-                                                  element.id ==
-                                                      widget.id)
+                                                      .singleWhere((element) =>
+                                                          element.id ==
+                                                          widget.id)
                                                       .feedbacks[index]
-                                                      .message) ,
-                                                ) ,
+                                                      .message),
+                                                ),
                                                 Align(
                                                     alignment:
-                                                    Alignment.topLeft ,
+                                                        Alignment.topLeft,
                                                     child: Padding(
-                                                      padding: EdgeInsets
-                                                          .only(
-                                                          left: 10 , top: 2) ,
+                                                      padding: EdgeInsets.only(
+                                                          left: 10, top: 2),
                                                       child: Text(
-                                                        DateFormat.MMMMd()
-                                                            .add_jm()
-                                                            .format(feedlist
+                                                        feedlist
                                                             .singleWhere(
                                                                 (element) =>
-                                                            element
-                                                                .id ==
-                                                                widget
-                                                                    .id)
-                                                            .feedbacks[
-                                                        index]
-                                                            .createdAt) ,
+                                                                    element
+                                                                        .id ==
+                                                                    widget.id)
+                                                            .feedbacks[index]
+                                                            .createdAt,
                                                         style: TextStyle(
-                                                            fontSize: 10 ,
+                                                            fontSize: 10,
                                                             color: Colors
-                                                                .blueGrey) ,
-                                                      ) ,
-                                                    )) ,
-                                              ] ,
-                                            ))) ,
-                                    feedlist
-                                        .singleWhere((element) =>
-                                    element.id == widget.id)
-                                        .feedbacks[index]
-                                        .image !=
-                                        null
-                                        ?GestureDetector(child:
-                                    Container(
-                                        padding: EdgeInsets.only(
-                                            left: 10 , top: 5) ,
-                                        alignment: Alignment.topLeft ,
-                                        child: ClipRRect(
-                                            child: Image.network(
-                                                'http://dermpro.herokuapp.com${feedlist
+                                                                .blueGrey),
+                                                      ),
+                                                    )),
+                                              ],
+                                            ))),
+                                        feedlist
                                                     .singleWhere((element) =>
-                                                element.id == widget.id)
+                                                        element.id == widget.id)
                                                     .feedbacks[index]
-                                                    .image}' ,
-                                                width: 100 ,
-                                                height: 100 ,
-                                                fit: BoxFit.fill))),onTap: (){
-                                      _showImageDialogue(context, feedlist
-                                          .singleWhere((element) =>
-                                      element.id == widget.id)
-                                          .feedbacks[index]
-                                          .image);
-                                    },)
-                                        : Container()
-                                  ] ,
-                                ) ,
-                              )
-                                  :Container(child: Column(children: <Widget>[
-                                Bubble(
-                                    margin: BubbleEdges.only(top: 10 ,
-                                        left: 80) ,
-                                    nip: BubbleNip.rightTop ,
-                                    style: BubbleStyle(
-                                        padding: BubbleEdges.all(10)) ,
-                                    color: Color.fromRGBO(212 , 234 , 244 ,
-                                        1.0) ,
-                                    alignment: Alignment.topRight ,
-                                    child: Container(
-                                        child: Column(
-                                          children: <Widget>[
-                                            Container(
-                                              child: Align(
-//                              width: 100,
-//                              color: Colors.blueGrey,
-                                                alignment: Alignment.topRight ,
-                                                child: Text(feedlist
-                                                    .singleWhere((element) =>
-                                                element.id == widget.id)
-                                                    .feedbacks[index]
-                                                    .message) ,
-                                              ) ,
-                                            ) ,
-                                            Align(
-                                                alignment: Alignment.topRight ,
-                                                child: Padding(
+                                                    .image !=
+                                                null
+                                            ? GestureDetector(
+                                                child: Container(
                                                     padding: EdgeInsets.only(
-                                                        right: 10 , top: 2) ,
-                                                    child: Text(
+                                                        left: 10, top: 5),
+                                                    alignment:
+                                                        Alignment.topLeft,
+                                                    child: ClipRRect(
+                                                        child: Image.network(
+                                                            'http://dermpro.herokuapp.com${feedlist.singleWhere((element) => element.id == widget.id).feedbacks[index].image}',
+                                                            width: 100,
+                                                            height: 100,
+                                                            fit: BoxFit.fill))),
+                                                onTap: () {
+                                                  _showImageDialogue(
+                                                      context,
                                                       feedlist
                                                           .singleWhere(
                                                               (element) =>
-                                                          element.id ==
-                                                              widget.id)
+                                                                  element.id ==
+                                                                  widget.id)
                                                           .feedbacks[index]
-                                                          .createdAt,
-                                                      style:
-                                                      TextStyle(fontSize: 10) ,
-                                                    ))) ,
-                                          ] ,
-                                        )
-                                    )),
-                                feedlist
-                                    .singleWhere((element) =>
-                                element.id == widget.id)
-                                    .feedbacks[index]
-                                    .image !=
-                                    null
-
-                                    ?
-                                GestureDetector(child:
-                                Container(
-                                    padding: EdgeInsets.only(
-                                        right: 10 , top: 5) ,
-                                    alignment: Alignment.topRight ,
-                                    child: ClipRRect(
-                                        child: Image.network(
-                                            'http://dermpro.herokuapp.com${feedlist
-                                                .singleWhere((element) =>
-                                            element.id == widget.id)
-                                                .feedbacks[index]
-                                                .image}' ,
-                                            width: 100 ,
-                                            height: 100 ,
-                                            fit: BoxFit.fill))),onTap: (){
-                                  _showImageDialogue(context, feedlist
-                                      .singleWhere((element) =>
-                                  element.id == widget.id)
-                                      .feedbacks[index]
-                                      .image);
-                                },)
-                                    : Container()
-                              ],),)
-                          );
-                        } ,
-                      ) ,
-                    ))
-              ],)
-
-    ) ,
-          bottomNavigationBar: Padding(
-            padding: MediaQuery
-                .of(context)
-                .viewInsets ,
-            child: Container(
-              height: 60 ,
-              padding: EdgeInsets.symmetric(horizontal: 5) ,
-              color: Colors.white ,
-              child: Row(
-                children: <Widget>[
-                  Container(
-                      margin: EdgeInsets.all(2) ,
-                      height: 50 ,
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width/1.3,
-                      alignment: Alignment.center ,
+                                                          .image);
+                                                },
+                                              )
+                                            : Container()
+                                      ],
+                                    ),
+                                  )
+                                : Container(
+                                    alignment: Alignment.topRight,
+                                    child: Column(
+                                      children: <Widget>[
+                                        Bubble(
+                                            margin: BubbleEdges.only(
+                                                top: 10, left: 80),
+                                            nip: BubbleNip.rightTop,
+                                            style: BubbleStyle(
+                                                padding: BubbleEdges.all(10)),
+                                            color: Color.fromRGBO(
+                                                212, 234, 244, 1.0),
+                                            alignment: Alignment.topRight,
+                                            child: Container(
+                                                child: Column(
+                                              children: <Widget>[
+                                                Container(
+                                                  child: Align(
+//                              width: 100,
+//                              color: Colors.blueGrey,
+                                                    alignment:
+                                                        Alignment.topRight,
+                                                    child: Text(feedlist
+                                                        .singleWhere(
+                                                            (element) =>
+                                                                element.id ==
+                                                                widget.id)
+                                                        .feedbacks[index]
+                                                        .message),
+                                                  ),
+                                                ),
+                                                Align(
+                                                    alignment:
+                                                        Alignment.topRight,
+                                                    child: Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                right: 10,
+                                                                top: 2),
+                                                        child: Text(
+                                                          feedlist
+                                                              .singleWhere(
+                                                                  (element) =>
+                                                                      element
+                                                                          .id ==
+                                                                      widget.id)
+                                                              .feedbacks[index]
+                                                              .createdAt,
+                                                          style: TextStyle(
+                                                              fontSize: 10),
+                                                        ))),
+                                              ],
+                                            ))),
+                                        feedlist
+                                                    .singleWhere((element) =>
+                                                        element.id == widget.id)
+                                                    .feedbacks[index]
+                                                    .image !=
+                                                null
+                                            ? GestureDetector(
+                                                child: Container(
+                                                    padding: EdgeInsets.only(
+                                                        right: 10, top: 5),
+                                                    alignment:
+                                                        Alignment.topRight,
+                                                    child: ClipRRect(
+                                                        child: Image.network(
+                                                            'http://dermpro.herokuapp.com${feedlist.singleWhere((element) => element.id == widget.id).feedbacks[index].image}',
+                                                            width: 100,
+                                                            height: 100,
+                                                            fit: BoxFit.fill))),
+                                                onTap: () {
+                                                  _showImageDialogue(
+                                                      context,
+                                                      feedlist
+                                                          .singleWhere(
+                                                              (element) =>
+                                                                  element.id ==
+                                                                  widget.id)
+                                                          .feedbacks[index]
+                                                          .image);
+                                                },
+                                              )
+                                            : Container()
+                                      ],
+                                    ),
+                                  ));
+                  },
+                ),
+              ))),
+      bottomNavigationBar: Padding(
+        padding: MediaQuery.of(context).viewInsets,
+        child: Container(
+          height: 60,
+          padding: EdgeInsets.symmetric(horizontal: 5),
+          color: Colors.white,
+          child: Row(
+            children: <Widget>[
+              Container(
+                  margin: EdgeInsets.all(2),
+                  height: 50,
+                  width: MediaQuery.of(context).size.width / 1.3,
+                  alignment: Alignment.center,
 //                  color: hexToColor('#3A3171'),
-                      child: TextField(
-                        controller: _textFieldController ,
-                        textAlign: TextAlign.left ,
-                        decoration: new InputDecoration(
-                            border: new OutlineInputBorder(  borderSide: BorderSide(color: Theme.of(context).backgroundColor),
-                              borderRadius: const BorderRadius.all(
-                                const Radius.circular(5.0) ,
-                              ) ,
-                            ) ,
-                            hintStyle: new TextStyle(color: Colors.grey[800]) ,
-                            hintText: "Type your message..." ,
-                            fillColor: Colors.white70) ,
-                      )) ,
-                  GestureDetector(
-                    child: Container(
-                      child: Icon(Icons.attach_file),
-                    ),
-                    onTap: () {
-                      _showLocationOfMoleDialogue(context);
-                    },
+                  child: TextField(
+                    controller: _textFieldController,
+                    textAlign: TextAlign.left,
+                    decoration: new InputDecoration(
+                        border: new OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Theme.of(context).backgroundColor),
+                          borderRadius: const BorderRadius.all(
+                            const Radius.circular(5.0),
+                          ),
+                        ),
+                        hintStyle: new TextStyle(color: Colors.grey[800]),
+                        hintText: "Type your message...",
+                        fillColor: Colors.white70),
+                  )),
+              GestureDetector(
+                child: Container(
+                  child: Icon(Icons.attach_file),
+                ),
+                onTap: () {
+                  _showLocationOfMoleDialogue(context);
+                },
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              GestureDetector(
+                  child: Icon(
+                    Icons.send,
+                    color: Theme.of(context).accentColor,
+                    size: 30.0,
+                    semanticLabel: 'Send your message!',
                   ),
-                  SizedBox(width: 5,),
-                  GestureDetector
-                    (child:Icon(
-                        Icons.send ,
-                        color: Theme
-                            .of(context)
-                            .backgroundColor ,
-                        size: 30.0 ,
-                        semanticLabel: 'Send your message!' ,
-                      ) ,
-                      onTap: () {
-                        if (_textFieldController.text
-                            .toString()
-                            .isNotEmpty) {
-                          var msg = _textFieldController.text;
-                          _textFieldController.text = '';
-                          SystemChannels.textInput.invokeMethod('TextInput.hide');
-                          sendMsg(imageTaken,msg,placeOfMole);
-                          setState(() {
-                            imageTaken =null;
-                          });
-                        }
+                  onTap: () {
+                    if (_textFieldController.text.toString().isNotEmpty) {
+                      var msg = _textFieldController.text;
+                      _textFieldController.text = '';
+                      SystemChannels.textInput.invokeMethod('TextInput.hide');
+                      sendMsg(imageTaken, msg, placeOfMole);
+                      setState(() {
+                        imageTaken = null;
+                      });
+                    } else {
+                      //   showToast("Please enter something",
+                      //        gravity: Toast.BOTTOM);
+                    }
 
-                        else {
-                          //   showToast("Please enter something",
-                          //        gravity: Toast.BOTTOM);
-                        }
-
-                        // showToast(_textFieldController.text.toString(),gravity: Toast.BOTTOM);
-                      })
-                ] ,
-              ) ,
-            ) ,
-          ) ,
-        );
+                    // showToast(_textFieldController.text.toString(),gravity: Toast.BOTTOM);
+                  })
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
-
-  void sendMsg(File fileImage , message,locationOfMole) async {
+  void sendMsg(File fileImage, message, locationOfMole) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String token = prefs.get('token');
     print(token);
@@ -542,21 +542,19 @@ class _InboxScreenState extends State<InboxScreen> {
       print("helo image");
       FormData formData = FormData.fromMap({
         "message": message,
-        "query_spot_place":locationOfMole,
-        "image":
-          await MultipartFile.fromFile(fileImage.path ,
-              filename: fileImage.toString()),
+        "query_spot_place": locationOfMole,
+        "image": await MultipartFile.fromFile(fileImage.path,
+            filename: fileImage.toString()),
       });
       Response response;
       try {
         var dio = Dio();
         response = (await dio.post(
-          "http://dermpro.herokuapp.com//api/v1/query_spots/${widget
-              .id}/feedback",
+          "http://dermpro.herokuapp.com//api/v1/query_spots/${widget.id}/feedback",
           data: formData,
           options: new Options(
-            headers: {HttpHeaders.authorizationHeader: token} ,
-          ) ,
+            headers: {HttpHeaders.authorizationHeader: token},
+          ),
         ));
         print(response.statusCode);
         print("message respoce");
@@ -577,19 +575,18 @@ class _InboxScreenState extends State<InboxScreen> {
     } else {
       print("helo null image");
       FormData formData = FormData.fromMap({
-        "message": message ,
+        "message": message,
       });
       Response response;
 
       try {
         var dio = Dio();
         response = (await dio.post(
-          "http://dermpro.herokuapp.com//api/v1/query_spots/${widget
-              .id}/feedback" ,
-          data: formData ,
+          "http://dermpro.herokuapp.com//api/v1/query_spots/${widget.id}/feedback",
+          data: formData,
           options: new Options(
-            headers: {HttpHeaders.authorizationHeader: token} ,
-          ) ,
+            headers: {HttpHeaders.authorizationHeader: token},
+          ),
         ));
 
         print(response.statusCode);

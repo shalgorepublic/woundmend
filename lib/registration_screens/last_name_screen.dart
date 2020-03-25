@@ -72,13 +72,13 @@ class _LastNameScreenState extends State<LastNameScreen> {
                             style: TextStyle(
                                 fontSize: 16,
                                 fontFamily: 'Bold',
-                                color: Theme.of(context).backgroundColor),
+                                color: Theme.of(context).accentColor),
                           ),
                         ),
                         Container(
                           width: 50,
                           height: 2,
-                          color: Theme.of(context).backgroundColor,
+                          color: Theme.of(context).accentColor,
                         ),
                   Form(
                     key: _formKey,
@@ -94,11 +94,13 @@ class _LastNameScreenState extends State<LastNameScreen> {
                                     BorderRadius.all(Radius.circular(4)),
                                     borderSide: BorderSide(
                                         width: 1,
-                                        color: Theme.of(context).backgroundColor),
+                                        color: Theme.of(context).accentColor),
                                   ),
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide()),
-                                  labelText: 'Last Name',hoverColor: Colors.red,
+                                  labelText: 'Last Name',
+                                  labelStyle: TextStyle(color: Theme.of(context).accentColor),
+                                  hoverColor: Colors.red,
                                   filled: true,
                                   fillColor: Colors.white),
                               keyboardType: TextInputType.text,

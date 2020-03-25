@@ -70,8 +70,6 @@ class _DobScreen extends State<DobScreen> {
       selectedDate = lastDate;
       lastDatePicking = lastDate;
     });
-    print("helo                 deeeeeeeeeeeeeeeeeeeteeeeeeeeee");
-    print(dateHint);
     super.initState();
   }
   @override
@@ -109,13 +107,13 @@ class _DobScreen extends State<DobScreen> {
                     style: TextStyle(
                         fontSize: 16,
                         fontFamily: 'Bold',
-                        color: Theme.of(context).backgroundColor),
+                        color: Theme.of(context).accentColor),
                   ),
                 ),
                 Container(
                   width: 50,
                   height: 2,
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).accentColor,
                 ),
             Form(
                 key: _formKey,
@@ -146,7 +144,7 @@ class _DobScreen extends State<DobScreen> {
                                   child: IconButton(
                                     icon: Icon(
                                       Icons.calendar_today,
-                                      color: Theme.of(context).backgroundColor,
+                                      color: Theme.of(context).accentColor,
 
                                     ),
                                     onPressed: () {

@@ -44,6 +44,104 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
         ),
       );*/
     }
+
+  }
+  _openGalery(BuildContext context) async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = image;
+    });
+    Navigator.of(context).pop();
+   /* if (_image != null) {
+      Navigator.push<dynamic>(
+        context,
+        MaterialPageRoute<dynamic>(
+          builder: (context) =>
+              ImageReviewScreen({'image': _image, 'location': placeOfMole}),
+        ),
+      );
+    }*/
+  }
+  _openCamera(BuildContext context) async {
+    val = await showDialog(
+        context: context,
+        builder: (context) => Camera(
+          mode: CameraMode.normal,
+          orientationEnablePhoto: CameraOrientation.all,
+          imageMask: CameraFocus.circle(
+            color: Colors.black.withOpacity(0.5),
+          ),
+        ));
+    setState(() {
+      _image = val;
+    });
+    Navigator.of(context).pop();
+   /* if (_image != null) {
+      Navigator.push<dynamic>(
+        context,
+        MaterialPageRoute<dynamic>(
+          builder: (context) =>
+              ImageReviewScreen({'image': _image, 'location': placeOfMole}),
+        ),
+      );
+
+
+    }*/}
+  Future<void> _showImageDialogue(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Make a Choice"),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  GestureDetector(
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(left: 3),
+                          child: Image.asset(
+                            'assets/art.png',
+                            width: 22,
+                            height: 22,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Text("Gallery"),
+                      ],
+                    ),
+                    onTap: () {
+                      _openGalery(context);
+                    },
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8),
+                  ),
+                  GestureDetector(
+                    child: Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.camera,
+                          color: Theme.of(context).highlightColor,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text("Camera"),
+                      ],
+                    ),
+                    onTap: () {
+                      _openCamera(context);
+                    },
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
   Future<void> _showDialogue(BuildContext context) {
     return showDialog(
@@ -241,7 +339,8 @@ class _ImageReviewScreenState extends State<ImageReviewScreen> {
                               fontSize: 18),
                         ),
                         onPressed: () {
-                          imagepicker();
+//                          imagepicker();
+                        _showImageDialogue(context);
                          // Navigator.pop(context);
                           // _submit(model.update);
                         },

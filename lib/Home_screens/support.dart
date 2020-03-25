@@ -147,7 +147,7 @@ class _SupportScreenState extends State<SupportScreen> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(
-              'An Error Occured' ,
+              'Alert' ,
               style: TextStyle(fontFamily: 'Bold') ,
             ) ,
             content: Text(
@@ -241,7 +241,7 @@ class _SupportScreenState extends State<SupportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(backgroundColor: Theme.of(context).accentColor,
         title: Text("Contact us") ,
         actions: [
           Container(

@@ -57,7 +57,7 @@ class _YourScansState extends State<YourScans> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('En Error Occured'),
+            title: Text('Alert'),
             content: Text(message),
             actions: <Widget>[
               FlatButton(
@@ -119,8 +119,6 @@ class _YourScansState extends State<YourScans> {
   }
 
   void undoreadmsg(int id) {
-    print("iddddddddddddddddddddddddddddddd");
-    print(id);
     for (int i = 0; i < widget._model.readFlagObjects.length; i++) {
       print(widget._model.readFlagObjects[i].id);
       if (widget._model.readFlagObjects[i].id == id) {
@@ -134,7 +132,7 @@ class _YourScansState extends State<YourScans> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: DrawerBuilder(),
-      appBar: AppBar(
+      appBar: AppBar(backgroundColor: Theme.of(context).accentColor,
         title: Text("Your Scans"),
         centerTitle: true,
         leading: new IconButton(
@@ -209,7 +207,9 @@ class _YourScansState extends State<YourScans> {
                                           ),
                                           Flexible(
                                             child: GestureDetector(
-                                              child: Container(padding: EdgeInsets.only(top:15),
+                                              child: Container(
+                                                padding:
+                                                    EdgeInsets.only(top: 15),
                                                 child: Column(
                                                   children: <Widget>[
                                                     Row(
@@ -219,7 +219,8 @@ class _YourScansState extends State<YourScans> {
                                                             'Location of mole:${data.querySpotPlace}',
                                                             style: TextStyle(
                                                                 color:
-                                                                    primaryColor,fontSize: 12),
+                                                                    primaryColor,
+                                                                fontSize: 12),
                                                           ),
                                                           alignment: Alignment
                                                               .centerLeft,
@@ -249,10 +250,12 @@ class _YourScansState extends State<YourScans> {
                                                               0.0,
                                                               0.0),
                                                     ),
-                                                    Container(alignment: Alignment.centerRight,
+                                                    Container(
+                                                      alignment:
+                                                          Alignment.centerRight,
                                                       child: newMsg(data.id)
                                                           ? /*Container(child: Text("n"),)*/
-                                                      ClipOval(
+                                                          ClipOval(
                                                               child: Container(
                                                                   height: 15,
                                                                   width: 15,

@@ -90,7 +90,7 @@ class _PhoneScreen extends State<PhoneScreen> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('En Error Occured'),
+            title: Text('Alert'),
             content: Text("Some thing went wrong"),
             actions: <Widget>[
               FlatButton(
@@ -140,13 +140,13 @@ class _PhoneScreen extends State<PhoneScreen> {
                     style: TextStyle(
                         fontSize: 16,
                         fontFamily: 'Bold',
-                        color: Theme.of(context).backgroundColor),
+                        color: Theme.of(context).accentColor),
                   ),
                 ),
                 Container(
                   width: 50,
                   height: 2,
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).accentColor,
                 ),
                 Form(
                   key: _formKey,
@@ -163,7 +163,7 @@ class _PhoneScreen extends State<PhoneScreen> {
                                       BorderRadius.all(Radius.circular(4)),
                                   borderSide: BorderSide(
                                       width: 1,
-                                      color: Theme.of(context).backgroundColor),
+                                      color: Theme.of(context).accentColor),
                                 ),
                                 border: OutlineInputBorder(
                                     borderSide: BorderSide()),
@@ -179,7 +179,7 @@ class _PhoneScreen extends State<PhoneScreen> {
                                       ),
                                     ),
                                     child: Text("+92",style: TextStyle(color: Theme.of(context).textSelectionColor),)),
-                                labelStyle: TextStyle(fontSize: 18),
+                                labelStyle: TextStyle(fontSize: 18,color: Theme.of(context).accentColor),
                                 filled: true,
                                 fillColor: Colors.white),
                             keyboardType: TextInputType.number,

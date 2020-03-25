@@ -318,7 +318,7 @@ File val;
                   return <Widget>[
                     SliverAppBar(
                       automaticallyImplyLeading: true,
-                      backgroundColor: Theme.of(context).backgroundColor,
+                      backgroundColor: Theme.of(context).accentColor,
                       floating: false,
                       pinned: true,
                       flexibleSpace: ScopedModelDescendant<MainModel>(
@@ -391,7 +391,7 @@ File val;
               height: 60,
               width: 60,
               child: FloatingActionButton(
-                backgroundColor: Colors.blue,
+                backgroundColor: Theme.of(context).accentColor,
                 elevation: 0,
                 onPressed: () {
                   _showDialogue(context);
@@ -422,7 +422,7 @@ File val;
             color: Colors.white,
             child: Container(
               height: 60,
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).accentColor,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -539,18 +539,18 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
               //    color: Theme.of(context).backgroundColor,
               border: Border.all(
                 color: Theme.of(context)
-                    .backgroundColor, //                   <--- border color
+                    .accentColor, //                   <--- border color
                 width: 0.0,
               ),
             ),
             height: 1),
         Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).accentColor,
               //    color: Theme.of(context).backgroundColor,
               border: Border.all(
                 color: Theme.of(context)
-                    .backgroundColor, //                   <--- border color
+                    .accentColor, //                   <--- border color
                 width: 0.0,
               ),
             ),
@@ -560,7 +560,7 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
           children: <Widget>[
             Container(
               height: 100,
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).accentColor,
             ),
             Padding(
                 padding: EdgeInsets.only(top: 60),
@@ -603,12 +603,12 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                         style: TextStyle(
                                             fontSize: 12,
                                             color: !flagone
-                                                ? Theme.of(context).accentColor
+                                                ? Theme.of(context).backgroundColor
                                                 : Colors.white),
                                         textAlign: TextAlign.center,
                                       ),
                                       color: flagone
-                                          ? Theme.of(context).accentColor
+                                          ? Theme.of(context).backgroundColor
                                           : Colors.white,
                                       shape: RoundedRectangleBorder(
                                         side: BorderSide(
@@ -654,12 +654,12 @@ class _ContainerWithCircleState extends State<ContainerWithCircle> {
                                         style: TextStyle(
                                             fontSize: 12,
                                             color: !flagthree
-                                                ? Theme.of(context).accentColor
+                                                ? Theme.of(context).backgroundColor
                                                 : Colors.white),
                                         textAlign: TextAlign.center,
                                       ),
                                       color: flagthree
-                                          ? Theme.of(context).accentColor
+                                          ? Theme.of(context).backgroundColor
                                           : Colors.white,
                                       shape: RoundedRectangleBorder(
                                         side: BorderSide(
@@ -771,7 +771,7 @@ class FirebaseNotifications {
 //        print(model.readFlagObjects);
 //        print(model.readFlagObjects.length);
         if (model.readFlagObjects.length == 0) {
-          print("i am herepoo 111");
+//          print("i am herepoo 111");
 //          print(id);
           ChatReadFlag temp = new ChatReadFlag(id: id, flag: true);
 //          print(temp.id);
@@ -799,10 +799,10 @@ class FirebaseNotifications {
         model.justtosetstate();
         print('tessssttttt');
         Map<String, dynamic> Result = await model.fetchQueriesSpots();
-        print("length of queries");
-        print(model.readFlagObjects);
-        print(model.allQueries.length);
-        print("helo lebgth");
+//        print("length of queries");
+//        print(model.readFlagObjects);
+//        print(model.allQueries.length);
+//        print("helo lebgth");
       },
       onResume: (Map<String, dynamic> message) async {
         print('on resume $message');

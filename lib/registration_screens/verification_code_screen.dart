@@ -11,11 +11,13 @@ import 'package:scoped_model/scoped_model.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/services.dart';
+import 'package:toast/toast.dart';
 
 
 class VarificationScreen extends StatefulWidget {
   final Map<String, dynamic> formData;
   bool codeFlag = false;
+
 
   VarificationScreen(this.formData);
 
@@ -27,7 +29,7 @@ class _VarificationScreen extends State<VarificationScreen> {
   Map<String, dynamic> _formData;
 
   _VarificationScreen(this._formData);
-
+  bool reSendCodeFlag = false;
   bool _onEditing = true;
   String _code;
   String _finalCode;
@@ -74,6 +76,14 @@ class _VarificationScreen extends State<VarificationScreen> {
         });
   }
   void _submitForm(Function reSendOtp) async {
+    setState(() {
+      reSendCodeFlag = true;
+      if(reSendCodeFlag == true){
+        Toast.show("Resending Code", context,
+            duration: Toast.LENGTH_LONG,
+            gravity: Toast.BOTTOM);
+      }
+    });
   var  successInformation = await reSendOtp();
   print("helo information");
     print(successInformation);
@@ -82,9 +92,7 @@ class _VarificationScreen extends State<VarificationScreen> {
         setState(() {
           print("first code");
           _finalCode = successInformation['message']['user']['confirmation_code'];
-          print(_finalCode);
         });
-        print("helo success");
        /* final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('token', _formData['token']);
         prefs.setString('userEmail',successInformation['user']['email']);
@@ -105,7 +113,7 @@ class _VarificationScreen extends State<VarificationScreen> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('En Error Occured'),
+              title: Text('Alert'),
               content: Text(successInformation['data']['data']['message']),
               actions: <Widget>[
                 FlatButton(
@@ -124,7 +132,7 @@ class _VarificationScreen extends State<VarificationScreen> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('En Error Occured'),
+            title: Text('Alert'),
             content: Text("Some thing went wrong"),
             actions: <Widget>[
               FlatButton(
@@ -144,7 +152,6 @@ class _VarificationScreen extends State<VarificationScreen> {
     return WillPopScope(
       //  onWillPop: _onBackedPress,
       onWillPop: (){
-
       },
         child: Scaffold(
             body: ListView(
@@ -183,7 +190,7 @@ class _VarificationScreen extends State<VarificationScreen> {
                         style: TextStyle(
                             fontSize: 16,
                             fontFamily: 'Bold',
-                            color: Theme.of(context).backgroundColor),
+                            color: Theme.of(context).accentColor),
                       ),
                     ),
                     SizedBox(
@@ -192,7 +199,7 @@ class _VarificationScreen extends State<VarificationScreen> {
                     Container(
                       width: 50,
                       height: 2,
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).accentColor,
                     ),
                     PinEntryTextField(
                       onSubmit: (String pin) {
@@ -311,7 +318,7 @@ class _VarificationScreen extends State<VarificationScreen> {
                               '/welcomePage', (Route<dynamic> route) => false);
                         } else {
                           setState(() {
-                            widget.codeFlag = true;
+//                            widget.codeFlag = true;
                           });
                           Timer(Duration(seconds: 3), () {
                             setState(() {
@@ -339,14 +346,9 @@ class _VarificationScreen extends State<VarificationScreen> {
                                '/welcomePage', (Route<dynamic> route) => false);
                         }else{
                            {
-                             setState(() {
-                               widget.codeFlag = true;
-                             });
-                             Timer(Duration(seconds: 3), () {
-                               setState(() {
-                                 widget.codeFlag = false;
-                               });
-                             });
+                             Toast.show("Invalid Code", context,
+                                 duration: Toast.LENGTH_LONG,
+                                 gravity: Toast.BOTTOM);
                            }
                          }
                       },
@@ -357,18 +359,6 @@ class _VarificationScreen extends State<VarificationScreen> {
               SizedBox(
                 height: 40,
               ),
-              widget.codeFlag
-                  ? Container(
-                      padding: EdgeInsets.all(5),
-                      child: Text("Invalid code"),
-                      decoration: BoxDecoration(
-                        border: Border.all(width: 1.0),
-                        borderRadius: BorderRadius.all(Radius.circular(
-                                5.0) //                 <--- border radius here
-                            ),
-                      ),
-                    )
-                  : Container(),
             ])
           ],
         )));

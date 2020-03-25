@@ -56,13 +56,13 @@ class _NameScreenState extends State<NameScreen> {
                                 //letterSpacing: 1.0,
                                 fontSize: 16,
                                 fontFamily: 'Bold',
-                                color: Theme.of(context).backgroundColor),
+                                color: Theme.of(context).accentColor),
                           ),
                         ),
                         Container(
                           width: 50,
                           height: 2,
-                          color: Theme.of(context).backgroundColor,
+                          color: Theme.of(context).accentColor,
                         ),
                   Form(
                     key: _formKey,
@@ -78,11 +78,12 @@ class _NameScreenState extends State<NameScreen> {
                                     BorderRadius.all(Radius.circular(4)),
                                     borderSide: BorderSide(
                                         width: 1,
-                                        color: Theme.of(context).backgroundColor),
+                                        color: Theme.of(context).accentColor),
                                   ),
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide()),
                                   labelText: 'First Name',
+                                  labelStyle: TextStyle(color: Theme.of(context).accentColor),
                                   filled: true,
                                   fillColor: Colors.white),
                               keyboardType: TextInputType.text,

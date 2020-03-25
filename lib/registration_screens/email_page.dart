@@ -54,13 +54,13 @@ class _EmailPageState extends State<EmailPage> {
                     style: TextStyle(
                         fontSize: 18,
                         fontFamily: 'Bold',
-                        color: Theme.of(context).backgroundColor),
+                        color: Theme.of(context).accentColor),
                   ),
                 ),
                 Container(
                   width: 50,
                   height: 2,
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).accentColor,
                 ),
                 Container(
                     margin: const EdgeInsets.only(right: 10, left: 10),
@@ -68,8 +68,9 @@ class _EmailPageState extends State<EmailPage> {
                     child: TextFormField(
                       decoration: InputDecoration(
                           border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.blue)),
+                              borderSide: BorderSide(color: Theme.of(context).accentColor)),
                           labelText: 'E-mail',
+                          labelStyle: TextStyle(color: Theme.of(context).accentColor),
                           filled: true,
                           fillColor: Colors.white),
                       keyboardType: TextInputType.emailAddress,
